@@ -1,5 +1,11 @@
 import React from "react";
 
+import CalendarTable from "./home/CalendarTable";
+
 export default function Home() {
-  return <div>Home</div>;
+  return (
+    <div>
+      <CalendarTable />
+    </div>
+  );
 }
