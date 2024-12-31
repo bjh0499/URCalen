@@ -1,8 +1,8 @@
 import React from "react";
 import { useState } from "react";
 
-import CalendarHeader from "./calendarHeader/CalendarHeader";
-import CalendarTable from "./calendarTable/CalendarTable";
+import Nav from "./nav/Nav";
+import Calendar from "./calendar/Calendar";
 
 export default function Home() {
   let today = new Date();
@@ -13,11 +13,8 @@ export default function Home() {
 
   return (
     <div>
-      <CalendarHeader
-        monthSelector={monthSelector}
-        setMonthSelector={setMonthSelector}
-      />
-      <CalendarTable monthSelector={monthSelector} />
+      <Nav monthSelector={monthSelector} setMonthSelector={setMonthSelector} />
+      <Calendar monthSelector={monthSelector} />
     </div>
   );
 }

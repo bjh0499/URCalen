@@ -18,7 +18,7 @@ export default function CalendarTable({ monthSelector }) {
       });
       inputDay = new Date(inputDay.valueOf() + 86400000);
     }
-    calendarRows.push(<CalendarRow dayList={dayList} />);
+    calendarRows.push(<CalendarRow key={i} dayList={dayList} />);
   }
 
   return <div>{calendarRows}</div>;
