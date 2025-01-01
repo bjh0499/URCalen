@@ -13,12 +13,15 @@ export default function CalendarTable({ monthSelector }) {
     let dayList = [];
     for (let j = 0; j < 7; j++) {
       dayList.push({
+        month: inputDay.getMonth(),
         date: inputDay.getDate(),
         day: inputDay.getDay(),
       });
       inputDay = new Date(inputDay.valueOf() + 86400000);
     }
-    calendarRows.push(<CalendarRow key={i} dayList={dayList} />);
+    calendarRows.push(
+      <CalendarRow key={i} dayList={dayList} monthSelector={monthSelector} />
+    );
   }
 
   return <div>{calendarRows}</div>;
