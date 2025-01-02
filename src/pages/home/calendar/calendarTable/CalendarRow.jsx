@@ -2,11 +2,16 @@ import React from "react";
 
 import CalendarCell from "./CalendarCell";
 
-export default function CalendarRow({ dayList, monthSelector }) {
+export default function CalendarRow({ dayList, monthSelector, holidays }) {
   let calendarCells = [];
   dayList.forEach((dayObj, i) => {
     calendarCells.push(
-      <CalendarCell key={i} dayObj={dayObj} monthSelector={monthSelector} />
+      <CalendarCell
+        key={i}
+        dayObj={dayObj}
+        monthSelector={monthSelector}
+        holidays={holidays}
+      />
     );
   });
 
