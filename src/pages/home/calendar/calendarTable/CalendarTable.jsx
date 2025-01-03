@@ -30,5 +30,9 @@ export default function CalendarTable({ monthSelector, holidays }) {
     );
   }
 
-  return <div>{calendarRows}</div>;
+  return (
+    <div className="h-4/5 w-full flex flex-col justify-center items-center">
+      {calendarRows}
+    </div>
+  );
 }

@@ -15,5 +15,9 @@ export default function CalendarRow({ dayList, monthSelector, holidays }) {
     );
   });
 
-  return <div className="flex flex-row">{calendarCells}</div>;
+  return (
+    <div className="h-1/6 w-full flex jusfity-center items-center">
+      {calendarCells}
+    </div>
+  );
 }
