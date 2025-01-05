@@ -21,7 +21,7 @@ export default function Home() {
     <div>
       <Nav monthSelector={monthSelector} setMonthSelector={setMonthSelector} />
       <Calendar monthSelector={monthSelector} holidays={holidays} />
-      <img id="1px" src="/1px.png" style={{ display: "none" }} />
+      <img className="hidden" id="1px" src="/1px.png" />
     </div>
   );
 }

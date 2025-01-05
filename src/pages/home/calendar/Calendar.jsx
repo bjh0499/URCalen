@@ -5,6 +5,8 @@ import CalendarTable from "./calendarTable/CalendarTable";
 
 export default function Calendar({ monthSelector, holidays }) {
   const [drag, setDrag] = useState(false);
+  let startX = -1;
+  let startY = -1;
   const [calendarSize, setCalendarSize] = useState({
     width: "384px",
     height: "384px",
@@ -15,10 +17,35 @@ export default function Calendar({ monthSelector, holidays }) {
     let onePx = document.createElement("img");
     onePx.src = "/1px.png";
     e.dataTransfer.setDragImage(onePx, 0, 0);
+    startX = e.clientX;
+    startY = e.clientY;
+    console.log(e);
+  }
+
+  function handleDrag(e) {
+    //
   }
 
   function handleDragEnd(e) {
-    console.log("drag end");
+    let widthString = calendarSize.width;
+    let heightString = calendarSize.height;
+    let finalX = Math.max(
+      Number(widthString.substring(0, widthString.length - 2)) +
+        e.clientX -
+        startX,
+      384
+    );
+    let finalY = Math.max(
+      Number(widthString.substring(0, widthString.length - 2)) +
+        e.clientY -
+        startY,
+      384
+    );
+
+    setCalendarSize({
+      width: finalX + "px",
+      height: finalY + "px",
+    });
   }
 
   return (
@@ -27,6 +54,7 @@ export default function Calendar({ monthSelector, holidays }) {
       style={calendarSize}
       draggable={true}
       onDragStart={handleDragStart}
+      onDrag={handleDrag}
       onDragEnd={handleDragEnd}
     >
       <CalendarHeader monthSelector={monthSelector} />
