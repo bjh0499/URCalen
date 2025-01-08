@@ -1,7 +1,7 @@
 import React from "react";
 
 export default function CalendarCell({ dayObj, monthSelector, holidays }) {
-  let giveClass = "w-full h-full flex justify-center items-center ";
+  let giveClass = "w-full h-full flex justify-center items-center text-xs ";
   let isHoliday = false;
 
   for (let i = 0; i < holidays.length; i++) {
