@@ -1,25 +1,38 @@
 import React, { useState } from "react";
-import { ResizableBox } from "react-resizable";
+import { Resizable } from "react-resizable";
 
 import CalendarHeader from "./calendarHeader/CalendarHeader";
 import CalendarTable from "./calendarTable/CalendarTable";
 
 export default function Calendar({ monthSelector, holidays }) {
-  const handleOnResize = (e) => {
-    console.log(e);
+  const [sizeState, setSizeState] = useState({
+    width: 384,
+    height: 384,
+  });
+
+  const handleOnResize = (e, { node, size, handle }) => {
+    setSizeState({
+      width: size.width,
+      height: size.height,
+    });
   };
 
   return (
-    <ResizableBox
-      width={384}
-      height={384}
-      minConstraints={[384, 384]}
+    <Resizable
+      width={sizeState.width}
+      height={sizeState.height}
       onResize={handleOnResize}
     >
-      <div className="w-full h-full border">
+      <div
+        className="w-full h-full border"
+        style={{
+          width: sizeState.width + "px",
+          height: sizeState.height + "px",
+        }}
+      >
         <CalendarHeader monthSelector={monthSelector} />
         <CalendarTable monthSelector={monthSelector} holidays={holidays} />
       </div>
-    </ResizableBox>
+    </Resizable>
   );
 }
