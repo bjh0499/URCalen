@@ -21,10 +21,11 @@ export default function Calendar({ monthSelector, holidays }) {
     <Resizable
       width={sizeState.width}
       height={sizeState.height}
+      minConstraints={[384, 384]}
       onResize={handleOnResize}
     >
       <div
-        className="w-full h-full border"
+        className="w-full h-full"
         style={{
           width: sizeState.width + "px",
           height: sizeState.height + "px",
