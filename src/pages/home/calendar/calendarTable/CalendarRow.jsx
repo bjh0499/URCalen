@@ -2,7 +2,12 @@ import React from "react";
 
 import CalendarCell from "./CalendarCell";
 
-export default function CalendarRow({ dayList, monthSelector, holidays }) {
+export default function CalendarRow({
+  dayList,
+  monthSelector,
+  holidays,
+  sizeState,
+}) {
   let calendarCells = [];
   dayList.forEach((dayObj, i) => {
     calendarCells.push(
@@ -11,6 +16,7 @@ export default function CalendarRow({ dayList, monthSelector, holidays }) {
         dayObj={dayObj}
         monthSelector={monthSelector}
         holidays={holidays}
+        sizeState={sizeState}
       />
     );
   });

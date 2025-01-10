@@ -2,7 +2,7 @@ import React from "react";
 
 import CalendarRow from "./CalendarRow";
 
-export default function CalendarTable({ monthSelector, holidays }) {
+export default function CalendarTable({ monthSelector, holidays, sizeState }) {
   let inputDay = new Date(monthSelector.year, monthSelector.month, 1);
   while (inputDay.getDay() > 0) {
     inputDay = new Date(inputDay.valueOf() - 86400000);
@@ -26,6 +26,7 @@ export default function CalendarTable({ monthSelector, holidays }) {
         dayList={dayList}
         monthSelector={monthSelector}
         holidays={holidays}
+        sizeState={sizeState}
       />
     );
   }

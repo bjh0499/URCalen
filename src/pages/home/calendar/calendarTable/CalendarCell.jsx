@@ -1,8 +1,31 @@
 import React from "react";
 
-export default function CalendarCell({ dayObj, monthSelector, holidays }) {
-  let giveClass = "w-full h-full flex justify-center items-center text-xs ";
+export default function CalendarCell({
+  dayObj,
+  monthSelector,
+  holidays,
+  sizeState,
+}) {
+  let giveClass = "w-full h-full flex justify-center items-center ";
   let isHoliday = false;
+
+  if (sizeState.width < 324) {
+    giveClass += "text-xs ";
+  } else if (sizeState.width < 378) {
+    giveClass += "text-sm ";
+  } else if (sizeState.width < 432) {
+    giveClass += "text-base ";
+  } else if (sizeState.width < 486) {
+    giveClass += "text-lg ";
+  } else if (sizeState.width < 540) {
+    giveClass += "text-xl ";
+  } else if (sizeState.width < 648) {
+    giveClass += "text-2xl ";
+  } else if (sizeState.width < 810) {
+    giveClass += "text-3xl ";
+  } else {
+    giveClass += "text-4xl ";
+  }
 
   for (let i = 0; i < holidays.length; i++) {
     if (

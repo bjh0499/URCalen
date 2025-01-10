@@ -6,8 +6,8 @@ import CalendarTable from "./calendarTable/CalendarTable";
 
 export default function Calendar({ monthSelector, holidays }) {
   const [sizeState, setSizeState] = useState({
-    width: 384,
-    height: 384,
+    width: 320,
+    height: 320,
   });
 
   const handleOnResize = (e, { node, size, handle }) => {
@@ -21,7 +21,7 @@ export default function Calendar({ monthSelector, holidays }) {
     <Resizable
       width={sizeState.width}
       height={sizeState.height}
-      minConstraints={[384, 384]}
+      minConstraints={[320, 320]}
       onResize={handleOnResize}
     >
       <div
@@ -32,7 +32,11 @@ export default function Calendar({ monthSelector, holidays }) {
         }}
       >
         <CalendarHeader monthSelector={monthSelector} />
-        <CalendarTable monthSelector={monthSelector} holidays={holidays} />
+        <CalendarTable
+          monthSelector={monthSelector}
+          holidays={holidays}
+          sizeState={sizeState}
+        />
       </div>
     </Resizable>
   );
