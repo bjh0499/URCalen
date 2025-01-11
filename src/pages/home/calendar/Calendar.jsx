@@ -17,12 +17,22 @@ export default function Calendar({ monthSelector, holidays }) {
     });
   };
 
+  const handleOnDragStart = (e) => {
+    console.log(e);
+  };
+
+  const handleOnDrag = (e) => {
+    console.log(e);
+  };
+
   return (
     <Resizable
       width={sizeState.width}
       height={sizeState.height}
       minConstraints={[320, 320]}
       onResize={handleOnResize}
+      onDragStart={handleOnDragStart}
+      onDrag={handleOnDrag}
     >
       <div
         className="w-full h-full"
