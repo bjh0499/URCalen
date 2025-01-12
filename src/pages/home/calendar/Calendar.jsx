@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { forwardRef, useState } from "react";
 import { Resizable } from "react-resizable";
 
 import CalendarHeader from "./calendarHeader/CalendarHeader";
@@ -17,29 +17,17 @@ export default function Calendar({ monthSelector, holidays }) {
     });
   };
 
-  const handleOnDragStart = (e) => {
-    console.log(e);
-  };
-
-  const handleOnDrag = (e) => {
-    console.log(e);
-  };
-
-  return (
-    <Resizable
-      width={sizeState.width}
-      height={sizeState.height}
-      minConstraints={[320, 320]}
-      onResize={handleOnResize}
-      onDragStart={handleOnDragStart}
-      onDrag={handleOnDrag}
-    >
+  const CalendarHandle = forwardRef((props, ref) => {
+    const { handleAxis, ...restProps } = props;
+    return (
       <div
+        ref={ref}
         className="w-full h-full"
         style={{
           width: sizeState.width + "px",
           height: sizeState.height + "px",
         }}
+        {...restProps}
       >
         <CalendarHeader monthSelector={monthSelector} />
         <CalendarTable
@@ -48,6 +36,16 @@ export default function Calendar({ monthSelector, holidays }) {
           sizeState={sizeState}
         />
       </div>
-    </Resizable>
+    );
+  });
+
+  return (
+    <Resizable
+      width={sizeState.width}
+      height={sizeState.height}
+      minConstraints={[320, 320]}
+      onResize={handleOnResize}
+      handle={CalendarHandle}
+    />
   );
 }
