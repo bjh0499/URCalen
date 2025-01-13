@@ -1,5 +1,6 @@
-import React, { forwardRef, useState } from "react";
+import React, { useState } from "react";
 import { Resizable } from "react-resizable";
+import Draggable from "react-draggable";
 
 import CalendarHeader from "./calendarHeader/CalendarHeader";
 import CalendarTable from "./calendarTable/CalendarTable";
@@ -17,35 +18,29 @@ export default function Calendar({ monthSelector, holidays }) {
     });
   };
 
-  const CalendarHandle = forwardRef((props, ref) => {
-    const { handleAxis, ...restProps } = props;
-    return (
-      <div
-        ref={ref}
-        className="w-full h-full"
-        style={{
-          width: sizeState.width + "px",
-          height: sizeState.height + "px",
-        }}
-        {...restProps}
-      >
-        <CalendarHeader monthSelector={monthSelector} />
-        <CalendarTable
-          monthSelector={monthSelector}
-          holidays={holidays}
-          sizeState={sizeState}
-        />
-      </div>
-    );
-  });
-
   return (
-    <Resizable
-      width={sizeState.width}
-      height={sizeState.height}
-      minConstraints={[320, 320]}
-      onResize={handleOnResize}
-      handle={CalendarHandle}
-    />
+    <Draggable cancel={".react-resizable-handle"}>
+      <Resizable
+        width={sizeState.width}
+        height={sizeState.height}
+        minConstraints={[320, 320]}
+        onResize={handleOnResize}
+      >
+        <div
+          className="w-full h-full"
+          style={{
+            width: sizeState.width + "px",
+            height: sizeState.height + "px",
+          }}
+        >
+          <CalendarHeader monthSelector={monthSelector} />
+          <CalendarTable
+            monthSelector={monthSelector}
+            holidays={holidays}
+            sizeState={sizeState}
+          />
+        </div>
+      </Resizable>
+    </Draggable>
   );
 }
