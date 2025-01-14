@@ -15,11 +15,23 @@ export default function Home() {
     month: today.getMonth(),
   });
 
+  const [calendars, setCalendars] = useState([]);
+  const [calendarId, setCalendarId] = useState(0);
+
   // HACK: Calendar에서 1px 이미지를 불러올 때, 바로 불러오면 첫 드래그에서는 엉뚱한 아이콘이 나타남
   // 따라서 부득이하게 1px 이미지를 HTML 상에서 로딩하게 함
   return (
-    <div>
-      <Nav monthSelector={monthSelector} setMonthSelector={setMonthSelector} />
+    <div className="w-screen h-screen">
+      <Nav
+        monthSelector={monthSelector}
+        setMonthSelector={setMonthSelector}
+        calendars={calendars}
+        setCalendars={setCalendars}
+        calendarId={calendarId}
+        setCalendarId={setCalendarId}
+        holidays={holidays}
+      />
+      {calendars}
       <Calendar monthSelector={monthSelector} holidays={holidays} />
       <img className="hidden" id="1px" src="/1px.png" />
     </div>
