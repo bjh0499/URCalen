@@ -2,7 +2,6 @@ import React from "react";
 import { useState } from "react";
 
 import Nav from "./nav/Nav";
-import Calendar from "./calendar/Calendar";
 import loadHolidays from "../../utils/loadHolidays";
 
 export default function Home() {
@@ -32,7 +31,6 @@ export default function Home() {
         holidays={holidays}
       />
       {calendars}
-      <Calendar monthSelector={monthSelector} holidays={holidays} />
       <img className="hidden" id="1px" src="/1px.png" />
     </div>
   );

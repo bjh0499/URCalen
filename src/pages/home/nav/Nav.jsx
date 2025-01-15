@@ -39,10 +39,11 @@ export default function Nav({
 
   const addCalendar = () => {
     setCalendarId(calendarId + 1);
-    setCalendars([
+    setCalendars(() => [
       ...calendars,
       <Calendar
-        id={calendarId}
+        key={calendarId}
+        calendarId={calendarId}
         monthSelector={monthSelector}
         holidays={holidays}
       />,

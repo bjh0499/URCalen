@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .react-resizable {
-  position: relative;
+  position: absolute;
 }
 .react-resizable-handle {
   position: absolute;
