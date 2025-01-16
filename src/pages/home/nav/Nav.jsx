@@ -45,6 +45,7 @@ export default function Nav({
         key={calendarId}
         calendarId={calendarId}
         monthSelector={monthSelector}
+        setMonthSelector={setMonthSelector}
         holidays={holidays}
       />,
     ]);

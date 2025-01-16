@@ -5,7 +5,7 @@ import Draggable from "react-draggable";
 import CalendarHeader from "./calendarHeader/CalendarHeader";
 import CalendarTable from "./calendarTable/CalendarTable";
 
-export default function Calendar({ calendarId, monthSelector, holidays }) {
+export default function Calendar({ monthSelector, holidays }) {
   const [sizeState, setSizeState] = useState({
     width: 320,
     height: 320,
@@ -19,7 +19,7 @@ export default function Calendar({ calendarId, monthSelector, holidays }) {
   };
 
   return (
-    <Draggable key={calendarId} cancel={".react-resizable-handle"}>
+    <Draggable cancel={".react-resizable-handle"}>
       <Resizable
         width={sizeState.width}
         height={sizeState.height}
