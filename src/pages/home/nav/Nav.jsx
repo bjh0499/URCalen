@@ -5,7 +5,6 @@ import NavDivButton from "./NavDivButton";
 export default function Nav({
   setMonthSelector,
   setCalendarKeyList,
-  setCalendarNum,
   calendarId,
   setCalendarId,
 }) {
@@ -44,7 +43,6 @@ export default function Nav({
 
   const addCalendar = () => {
     setCalendarId((prev) => prev + 1);
-    setCalendarNum((prev) => prev + 1);
     setCalendarKeyList((prev) => [...prev, calendarId]);
   };
 

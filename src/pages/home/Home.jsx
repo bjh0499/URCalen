@@ -16,7 +16,6 @@ export default function Home() {
   });
 
   const [calendarKeyList, setCalendarKeyList] = useState([]);
-  const [calendarNum, setCalendarNum] = useState(0);
   const [calendarId, setCalendarId] = useState(0);
 
   return (
@@ -24,7 +23,6 @@ export default function Home() {
       <Nav
         setMonthSelector={setMonthSelector}
         setCalendarKeyList={setCalendarKeyList}
-        setCalendarNum={setCalendarNum}
         calendarId={calendarId}
         setCalendarId={setCalendarId}
       />
