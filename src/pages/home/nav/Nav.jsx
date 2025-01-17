@@ -1,63 +1,68 @@
 import React from "react";
 
 import NavDivButton from "./NavDivButton";
-import Calendar from "../calendar/Calendar";
 
 export default function Nav({
-  monthSelector,
   setMonthSelector,
-  calendars,
-  setCalendars,
+  setCalendarKeyList,
+  setCalendarNum,
   calendarId,
   setCalendarId,
-  holidays,
 }) {
   const prevYear = () => {
-    setMonthSelector({
-      year: monthSelector.year - 1,
-      month: monthSelector.month,
+    setMonthSelector((prev) => {
+      return {
+        year: prev.year - 1,
+        month: prev.month,
+      };
     });
   };
   const prevMonth = () => {
-    setMonthSelector({
-      year: monthSelector.year - (monthSelector.month === 0),
-      month: (monthSelector.month + 11) % 12,
+    setMonthSelector((prev) => {
+      return {
+        year: prev.year - (prev.month === 0),
+        month: (prev.month + 11) % 12,
+      };
     });
   };
   const nextMonth = () => {
-    setMonthSelector({
-      year: monthSelector.year + (monthSelector.month === 11),
-      month: (monthSelector.month + 1) % 12,
+    setMonthSelector((prev) => {
+      return {
+        year: prev.year + (prev.month === 11),
+        month: (prev.month + 1) % 12,
+      };
     });
   };
   const nextYear = () => {
-    setMonthSelector({
-      year: monthSelector.year + 1,
-      month: monthSelector.month,
+    setMonthSelector((prev) => {
+      return {
+        year: prev.year + 1,
+        month: prev.month,
+      };
     });
   };
 
   const addCalendar = () => {
-    setCalendarId(calendarId + 1);
-    setCalendars(() => [
-      ...calendars,
-      <Calendar
-        key={calendarId}
-        calendarId={calendarId}
-        monthSelector={monthSelector}
-        setMonthSelector={setMonthSelector}
-        holidays={holidays}
-      />,
-    ]);
+    setCalendarId((prev) => prev + 1);
+    setCalendarNum((prev) => prev + 1);
+    setCalendarKeyList((prev) => [...prev, calendarId]);
   };
+
+  const buttonPropsList = [];
+  buttonPropsList.push({ text: "◀◀", clickFunc: prevYear });
+  buttonPropsList.push({ text: "◀", clickFunc: prevMonth });
+  buttonPropsList.push({ text: "▶", clickFunc: nextMonth });
+  buttonPropsList.push({ text: "▶▶", clickFunc: nextYear });
+  buttonPropsList.push({ text: "+", clickFunc: addCalendar });
 
   return (
     <div className="flex items-center">
-      <NavDivButton text="◀◀" clickFunc={prevYear} />
-      <NavDivButton text="◀" clickFunc={prevMonth} />
-      <NavDivButton text="▶" clickFunc={nextMonth} />
-      <NavDivButton text="▶▶" clickFunc={nextYear} />
-      <NavDivButton text="+" clickFunc={addCalendar} />
+      {buttonPropsList.map((buttonProps) => (
+        <NavDivButton
+          text={buttonProps.text}
+          clickFunc={buttonProps.clickFunc}
+        />
+      ))}
     </div>
   );
 }
