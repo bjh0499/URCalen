@@ -27,7 +27,14 @@ export default function Home() {
         setCalendarId={setCalendarId}
       />
       {calendarKeyList.map((key) => (
-        <Calendar key={key} monthSelector={monthSelector} holidays={holidays} />
+        <Calendar
+          key={key}
+          calendarKey={key}
+          monthSelector={monthSelector}
+          holidays={holidays}
+          calendarKeyList={calendarKeyList}
+          setCalendarKeyList={setCalendarKeyList}
+        />
       ))}
     </div>
   );

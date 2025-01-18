@@ -42,8 +42,8 @@ export default function Nav({
   };
 
   const addCalendar = () => {
+    setCalendarKeyList((prev) => [...prev, calendarId + 1]);
     setCalendarId((prev) => prev + 1);
-    setCalendarKeyList((prev) => [...prev, calendarId]);
   };
 
   const buttonPropsList = [];

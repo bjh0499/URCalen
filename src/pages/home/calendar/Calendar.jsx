@@ -4,8 +4,15 @@ import Draggable from "react-draggable";
 
 import CalendarHeader from "./calendarHeader/CalendarHeader";
 import CalendarTable from "./calendarTable/CalendarTable";
+import TempCalendarMenu from "./calendarTable/TempCalendarMenu";
 
-export default function Calendar({ monthSelector, holidays }) {
+export default function Calendar({
+  calendarKey,
+  monthSelector,
+  holidays,
+  calendarKeyList,
+  setCalendarKeyList,
+}) {
   const [sizeState, setSizeState] = useState({
     width: 320,
     height: 320,
@@ -33,6 +40,11 @@ export default function Calendar({ monthSelector, holidays }) {
             height: sizeState.height + "px",
           }}
         >
+          <TempCalendarMenu
+            calendarKey={calendarKey}
+            calendarKeyList={calendarKeyList}
+            setCalendarKeyList={setCalendarKeyList}
+          />
           <CalendarHeader monthSelector={monthSelector} />
           <CalendarTable
             monthSelector={monthSelector}
