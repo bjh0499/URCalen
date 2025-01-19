@@ -4,6 +4,7 @@ import { useState } from "react";
 import Nav from "./nav/Nav";
 import Calendar from "./calendar/Calendar";
 import loadHolidays from "../../utils/loadHolidays";
+import CalendarMenu from "./calendar/calendarTable/CalendarMenu";
 
 export default function Home() {
   // TODO: 임시로 공휴일 정보를 해당 함수에서 지정하지만, 실제 배포 시에는 서버에서 받을 방침
@@ -17,9 +18,16 @@ export default function Home() {
 
   const [calendarKeyList, setCalendarKeyList] = useState([]);
   const [calendarId, setCalendarId] = useState(0);
+  const [isContextMenuOpened, setIsContextMenuOpened] = useState(false);
+
+  const handleClick = () => {
+    if (isContextMenuOpened) {
+      setIsContextMenuOpened(() => false);
+    }
+  };
 
   return (
-    <div className="w-screen h-screen">
+    <div className="w-screen h-screen" onClick={handleClick}>
       <Nav
         setMonthSelector={setMonthSelector}
         setCalendarKeyList={setCalendarKeyList}
@@ -34,8 +42,10 @@ export default function Home() {
           holidays={holidays}
           calendarKeyList={calendarKeyList}
           setCalendarKeyList={setCalendarKeyList}
+          setIsContextMenuOpened={setIsContextMenuOpened}
         />
       ))}
+      {isContextMenuOpened ? <CalendarMenu /> : <></>}
     </div>
   );
 }

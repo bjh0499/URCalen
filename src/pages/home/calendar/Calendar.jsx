@@ -12,6 +12,7 @@ export default function Calendar({
   holidays,
   calendarKeyList,
   setCalendarKeyList,
+  setIsContextMenuOpened,
 }) {
   const [sizeState, setSizeState] = useState({
     width: 320,
@@ -23,6 +24,11 @@ export default function Calendar({
       width: size.width,
       height: size.height,
     });
+  };
+
+  const handleRightClick = (e) => {
+    e.preventDefault();
+    setIsContextMenuOpened(() => true);
   };
 
   return (
@@ -39,6 +45,7 @@ export default function Calendar({
             width: sizeState.width + "px",
             height: sizeState.height + "px",
           }}
+          onContextMenu={handleRightClick}
         >
           <TempCalendarMenu
             calendarKey={calendarKey}
