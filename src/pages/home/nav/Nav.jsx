@@ -55,8 +55,9 @@ export default function Nav({
 
   return (
     <div className="flex items-center">
-      {buttonPropsList.map((buttonProps) => (
+      {buttonPropsList.map((buttonProps, idx) => (
         <NavDivButton
+          key={idx}
           text={buttonProps.text}
           clickFunc={buttonProps.clickFunc}
         />
