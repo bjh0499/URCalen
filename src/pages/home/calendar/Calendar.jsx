@@ -12,7 +12,7 @@ export default function Calendar({
   holidays,
   calendarKeyList,
   setCalendarKeyList,
-  setIsContextMenuOpened,
+  setRightClickPosition,
 }) {
   const [sizeState, setSizeState] = useState({
     width: 320,
@@ -28,7 +28,11 @@ export default function Calendar({
 
   const handleRightClick = (e) => {
     e.preventDefault();
-    setIsContextMenuOpened(() => true);
+    console.log(e);
+    setRightClickPosition(() => ({
+      x: e.clientX,
+      y: e.clientY,
+    }));
   };
 
   return (

@@ -18,11 +18,11 @@ export default function Home() {
 
   const [calendarKeyList, setCalendarKeyList] = useState([]);
   const [calendarId, setCalendarId] = useState(0);
-  const [isContextMenuOpened, setIsContextMenuOpened] = useState(false);
+  const [rightClickPosition, setRightClickPosition] = useState({});
 
   const handleClick = () => {
-    if (isContextMenuOpened) {
-      setIsContextMenuOpened(() => false);
+    if (rightClickPosition.x !== undefined) {
+      setRightClickPosition(() => ({}));
     }
   };
 
@@ -42,10 +42,14 @@ export default function Home() {
           holidays={holidays}
           calendarKeyList={calendarKeyList}
           setCalendarKeyList={setCalendarKeyList}
-          setIsContextMenuOpened={setIsContextMenuOpened}
+          setRightClickPosition={setRightClickPosition}
         />
       ))}
-      {isContextMenuOpened ? <CalendarMenu /> : <></>}
+      {rightClickPosition.x !== undefined ? (
+        <CalendarMenu x={rightClickPosition.x} y={rightClickPosition.y} />
+      ) : (
+        <></>
+      )}
     </div>
   );
 }
