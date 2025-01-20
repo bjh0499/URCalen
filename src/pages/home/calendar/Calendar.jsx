@@ -28,7 +28,6 @@ export default function Calendar({
 
   const handleRightClick = (e) => {
     e.preventDefault();
-    console.log(e);
     setRightClickPosition(() => ({
       x: e.clientX,
       y: e.clientY,

@@ -7,8 +7,6 @@ export default function TempCalendarMenu({
   setCalendarKeyList,
 }) {
   const handleClick = () => {
-    console.log(calendarKey);
-    console.log(calendarKeyList);
     setCalendarKeyList((prev) => {
       const removeIndex = prev.indexOf(calendarKey);
       return [
