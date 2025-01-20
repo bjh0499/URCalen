@@ -38,6 +38,7 @@ export default function Calendar({
   return (
     <Draggable cancel={".react-resizable-handle"}>
       <Resizable
+        className="hover-handles"
         width={sizeState.width}
         height={sizeState.height}
         minConstraints={[320, 320]}
