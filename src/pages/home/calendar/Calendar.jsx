@@ -53,7 +53,6 @@ export default function Calendar({
         >
           <TempCalendarMenu
             calendarKey={calendarKey}
-            calendarKeyList={calendarKeyList}
             setCalendarKeyList={setCalendarKeyList}
           />
           <CalendarHeader monthSelector={monthSelector} />
