@@ -4,14 +4,11 @@ import Draggable from "react-draggable";
 
 import CalendarHeader from "./calendarHeader/CalendarHeader";
 import CalendarTable from "./calendarTable/CalendarTable";
-import TempCalendarMenu from "./calendarTable/TempCalendarMenu";
 
 export default function Calendar({
   calendarKey,
   monthSelector,
   holidays,
-  calendarKeyList,
-  setCalendarKeyList,
   setRightClickPosition,
 }) {
   const [sizeState, setSizeState] = useState({
@@ -29,6 +26,7 @@ export default function Calendar({
   const handleRightClick = (e) => {
     e.preventDefault();
     setRightClickPosition(() => ({
+      key: calendarKey,
       x: e.clientX,
       y: e.clientY,
     }));
@@ -51,10 +49,6 @@ export default function Calendar({
           }}
           onContextMenu={handleRightClick}
         >
-          <TempCalendarMenu
-            calendarKey={calendarKey}
-            setCalendarKeyList={setCalendarKeyList}
-          />
           <CalendarHeader monthSelector={monthSelector} />
           <CalendarTable
             monthSelector={monthSelector}
