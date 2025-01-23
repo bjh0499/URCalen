@@ -25,11 +25,38 @@ export default function Calendar({
 
   const handleRightClick = (e) => {
     e.preventDefault();
-    setRightClickPosition(() => ({
+
+    const clickObj = {
       key: calendarKey,
-      x: e.clientX,
-      y: e.clientY,
-    }));
+      clickX: e.clientX,
+      clickY: e.clientY,
+    };
+
+    let element = e.target;
+
+    do {
+      const styleTransform = element.style.transform;
+
+      if (styleTransform === "translate(0px)") {
+        clickObj.calendarX = 0;
+        clickObj.calendarY = 0;
+        setRightClickPosition(() => clickObj);
+        return;
+      } else {
+        const parts = /^translate\((-?\d{1,})px, (-?\d{1,})px\)$/.exec(
+          styleTransform
+        );
+
+        if (parts) {
+          clickObj.calendarX = parseInt(parts[1], 10);
+          clickObj.calendarY = parseInt(parts[2], 10);
+          setRightClickPosition(() => clickObj);
+          return;
+        } else {
+          element = element.parentElement;
+        }
+      }
+    } while (element);
   };
 
   return (

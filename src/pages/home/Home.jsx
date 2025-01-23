@@ -21,7 +21,7 @@ export default function Home() {
   const [rightClickPosition, setRightClickPosition] = useState({});
 
   const handleClick = () => {
-    if (rightClickPosition.x !== undefined) {
+    if (rightClickPosition.clickX !== undefined) {
       setRightClickPosition(() => ({}));
     }
   };
@@ -45,12 +45,15 @@ export default function Home() {
           setRightClickPosition={setRightClickPosition}
         />
       ))}
-      {rightClickPosition.x !== undefined ? (
+      {rightClickPosition.clickX !== undefined ? (
         <CalendarMenu
-          x={rightClickPosition.x}
-          y={rightClickPosition.y}
+          clickX={rightClickPosition.clickX}
+          clickY={rightClickPosition.clickY}
+          calendarX={rightClickPosition.calendarX}
+          calendarY={rightClickPosition.calendarY}
           calendarKey={rightClickPosition.key}
           setCalendarKeyList={setCalendarKeyList}
+          setRightClickPosition={setRightClickPosition}
         />
       ) : (
         <></>
