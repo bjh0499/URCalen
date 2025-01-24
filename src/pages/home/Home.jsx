@@ -6,6 +6,8 @@ import Calendar from "./calendar/Calendar";
 import loadHolidays from "../../utils/loadHolidays";
 import CalendarMenu from "./calendar/calendarTable/CalendarMenu";
 
+import StyleMenu from "./menu/StyleMenu.jsx";
+
 export default function Home() {
   // TODO: 임시로 공휴일 정보를 해당 함수에서 지정하지만, 실제 배포 시에는 서버에서 받을 방침
   let holidays = loadHolidays();
@@ -19,10 +21,15 @@ export default function Home() {
   const [calendarKeyList, setCalendarKeyList] = useState([]);
   const [calendarId, setCalendarId] = useState(0);
   const [rightClickPosition, setRightClickPosition] = useState({});
+  const [styleMenu, setStyleMenu] = useState(null);
 
   const handleClick = () => {
     if (rightClickPosition.clickX !== undefined) {
       setRightClickPosition(() => ({}));
+    }
+
+    if (styleMenu) {
+      setStyleMenu(() => null);
     }
   };
 
@@ -54,10 +61,12 @@ export default function Home() {
           calendarKey={rightClickPosition.key}
           setCalendarKeyList={setCalendarKeyList}
           setRightClickPosition={setRightClickPosition}
+          setStyleMenu={setStyleMenu}
         />
       ) : (
         <></>
       )}
+      {styleMenu ? <StyleMenu /> : <></>}
     </div>
   );
 }

@@ -8,6 +8,7 @@ export default function CalendarMenu({
   calendarKey,
   setCalendarKeyList,
   setRightClickPosition,
+  setStyleMenu,
 }) {
   const handleMenuClick = (e) => {
     e.preventDefault();
@@ -30,7 +31,12 @@ export default function CalendarMenu({
     setRightClickPosition(() => ({}));
   };
 
-  const handleItemClick2 = (e) => {
+  const handleItemClick2 = () => {
+    setStyleMenu(() => calendarKey);
+    setRightClickPosition(() => ({}));
+  };
+
+  const handleItemClickTemp = (e) => {
     console.log(calendarX);
     console.log(calendarY);
 
@@ -46,7 +52,8 @@ export default function CalendarMenu({
       onContextMenu={handleMenuRightClick}
     >
       <div onClick={handleItemClick}>달력 삭제</div>
-      <div onClick={handleItemClick2}>달력 위치 정보</div>
+      <div onClick={handleItemClick2}>달력 스타일</div>
+      <div onClick={handleItemClickTemp}>달력 위치 정보</div>
     </div>
   );
 }
