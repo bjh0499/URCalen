@@ -1,6 +1,7 @@
 import React from "react";
 
 import CalendarRow from "./CalendarRow";
+import CalendarTopRow from "./CalendarTopRow";
 
 export default function CalendarTable({ monthSelector, holidays, sizeState }) {
   let inputDay = new Date(monthSelector.year, monthSelector.month, 1);
@@ -33,6 +34,7 @@ export default function CalendarTable({ monthSelector, holidays, sizeState }) {
 
   return (
     <div className="h-4/5 w-full flex flex-col justify-center items-center">
+      <CalendarTopRow sizeState={sizeState} />
       {calendarRows}
     </div>
   );
