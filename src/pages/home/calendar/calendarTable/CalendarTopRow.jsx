@@ -1,13 +1,19 @@
 import React from "react";
 import CalendarTopCell from "./CalendarTopCell";
 
-export default function CalendarTopRow({ sizeState }) {
+export default function CalendarTopRow({ sizeState, calendarOption }) {
   const dayArr = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
   const calendarTopCells = [];
 
   dayArr.forEach((day, i) => {
     calendarTopCells.push(
-      <CalendarTopCell key={i} idx={i} day={day} sizeState={sizeState} />
+      <CalendarTopCell
+        key={i}
+        idx={i}
+        day={day}
+        sizeState={sizeState}
+        calendarOption={calendarOption}
+      />
     );
   });
 

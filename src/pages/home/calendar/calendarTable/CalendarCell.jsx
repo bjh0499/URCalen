@@ -5,6 +5,7 @@ export default function CalendarCell({
   monthSelector,
   holidays,
   sizeState,
+  calendarOption,
 }) {
   let giveClass = "w-full h-full flex justify-center items-center ";
   let isHoliday = false;

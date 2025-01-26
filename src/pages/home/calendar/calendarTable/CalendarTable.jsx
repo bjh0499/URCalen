@@ -28,13 +28,14 @@ export default function CalendarTable({ monthSelector, holidays, sizeState }) {
         monthSelector={monthSelector}
         holidays={holidays}
         sizeState={sizeState}
+        calendarOption={calendarOption}
       />
     );
   }
 
   return (
     <div className="h-4/5 w-full flex flex-col justify-center items-center">
-      <CalendarTopRow sizeState={sizeState} />
+      <CalendarTopRow sizeState={sizeState} calendarOption={calendarOption} />
       {calendarRows}
     </div>
   );

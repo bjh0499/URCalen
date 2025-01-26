@@ -1,6 +1,11 @@
 import React from "react";
 
-export default function CalendarTopCell({ idx, day, sizeState }) {
+export default function CalendarTopCell({
+  idx,
+  day,
+  sizeState,
+  calendarOption,
+}) {
   let giveClass = "w-full h-full flex justify-center items-center ";
 
   if (sizeState.width < 324) {

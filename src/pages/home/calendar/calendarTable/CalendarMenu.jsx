@@ -9,6 +9,7 @@ export default function CalendarMenu({
   setCalendarKeyList,
   setRightClickPosition,
   setStyleMenu,
+  setCalendarOption,
 }) {
   const handleMenuClick = (e) => {
     e.preventDefault();
