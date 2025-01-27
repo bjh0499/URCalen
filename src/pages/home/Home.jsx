@@ -67,7 +67,15 @@ export default function Home() {
       ) : (
         <></>
       )}
-      {styleMenu ? <StyleMenu /> : <></>}
+      {styleMenu ? (
+        <StyleMenu
+          calendarKey={styleMenu.calendarKey}
+          calendarOption={calendarOption}
+          setCalendarOption={setCalendarOption}
+        />
+      ) : (
+        <></>
+      )}
     </div>
   );
 }

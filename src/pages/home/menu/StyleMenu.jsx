@@ -1,9 +1,29 @@
 import React from "react";
 
-export default function StyleMenu() {
+export default function StyleMenu({
+  calendarKey,
+  calendarOption,
+  setCalendarOption,
+}) {
   const handleMenuClick = (e) => {
     e.preventDefault();
     e.stopPropagation();
+  };
+
+  const handleItemClick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const prevOption = calendarOption;
+    const prevThisOption = prevOption[calendarKey];
+    if (prevThisOption === undefined) {
+      prevThisOption = { lang: "KO" };
+    } else if (prevThisOption.lang === "KO") {
+      prevThisOption.lang = "EN";
+    } else if (prevThisOption.lang === "EN") {
+      prevThisOption.lang = "KO";
+    }
+    prevOption[calendarKey] = prevThisOption;
+    setCalendarOption(() => prevOption);
   };
 
   // https://stackoverflow.com/questions/6334495/
@@ -22,7 +42,7 @@ export default function StyleMenu() {
       }}
       onClick={handleMenuClick}
     >
-      StyleMenu
+      <div onClick={handleItemClick}>언어 변경</div>
     </div>
   );
 }

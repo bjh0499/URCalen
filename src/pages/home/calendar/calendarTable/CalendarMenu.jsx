@@ -33,7 +33,7 @@ export default function CalendarMenu({
   };
 
   const handleItemClick2 = () => {
-    setStyleMenu(() => calendarKey);
+    setStyleMenu(() => ({ calendarKey: calendarKey }));
     setRightClickPosition(() => ({}));
   };
 
