@@ -1,8 +1,16 @@
 import React from "react";
 import CalendarTopCell from "./CalendarTopCell";
 
-export default function CalendarTopRow({ sizeState, calendarOption }) {
-  const dayArr = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+export default function CalendarTopRow({
+  calendarKey,
+  sizeState,
+  calendarOption,
+}) {
+  const calendarThisOption = calendarOption[calendarKey];
+  const dayArr =
+    calendarThisOption && calendarThisOption.lang === "EN"
+      ? ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
+      : ["일", "월", "화", "수", "목", "금", "토"];
   const calendarTopCells = [];
 
   dayArr.forEach((day, i) => {

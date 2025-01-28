@@ -79,6 +79,7 @@ export default function Calendar({
         >
           <CalendarHeader monthSelector={monthSelector} />
           <CalendarTable
+            calendarKey={calendarKey}
             monthSelector={monthSelector}
             holidays={holidays}
             sizeState={sizeState}

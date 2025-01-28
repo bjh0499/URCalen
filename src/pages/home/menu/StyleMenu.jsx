@@ -13,17 +13,18 @@ export default function StyleMenu({
   const handleItemClick = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    const prevOption = calendarOption;
-    const prevThisOption = prevOption[calendarKey];
-    if (prevThisOption === undefined) {
-      prevThisOption = { lang: "KO" };
-    } else if (prevThisOption.lang === "KO") {
-      prevThisOption.lang = "EN";
-    } else if (prevThisOption.lang === "EN") {
-      prevThisOption.lang = "KO";
+    const changeOption = calendarOption;
+    let changeThisOption = changeOption[calendarKey];
+    console.log(changeThisOption);
+    if (changeThisOption === undefined) {
+      changeThisOption = { lang: "KO" };
+    } else {
+      changeThisOption.lang = changeThisOption.lang === "KO" ? "EN" : "KO";
     }
-    prevOption[calendarKey] = prevThisOption;
-    setCalendarOption(() => prevOption);
+    console.log(changeOption);
+    changeOption[calendarKey] = changeThisOption;
+    console.log(changeOption);
+    setCalendarOption(() => changeOption);
   };
 
   // https://stackoverflow.com/questions/6334495/
