@@ -13,17 +13,15 @@ export default function StyleMenu({
   const handleItemClick = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    const changeOption = calendarOption;
+    // 과거 브라우저 호환을 위해, Object.assign, structuredClone method 대신 JSON을 통한 복사 구현
+    const changeOption = JSON.parse(JSON.stringify(calendarOption));
     let changeThisOption = changeOption[calendarKey];
-    console.log(changeThisOption);
     if (changeThisOption === undefined) {
-      changeThisOption = { lang: "KO" };
+      changeThisOption = { lang: "EN" };
     } else {
       changeThisOption.lang = changeThisOption.lang === "KO" ? "EN" : "KO";
     }
-    console.log(changeOption);
     changeOption[calendarKey] = changeThisOption;
-    console.log(changeOption);
     setCalendarOption(() => changeOption);
   };
 
