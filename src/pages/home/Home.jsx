@@ -41,6 +41,8 @@ export default function Home() {
         setCalendarKeyList={setCalendarKeyList}
         calendarId={calendarId}
         setCalendarId={setCalendarId}
+        calendarOption={calendarOption}
+        setCalendarOption={setCalendarOption}
       />
       {calendarKeyList.map((key) => (
         <Calendar

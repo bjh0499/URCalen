@@ -7,6 +7,8 @@ export default function Nav({
   setCalendarKeyList,
   calendarId,
   setCalendarId,
+  calendarOption,
+  setCalendarOption,
 }) {
   const prevYear = () => {
     setMonthSelector((prev) => {
@@ -44,6 +46,12 @@ export default function Nav({
   const addCalendar = () => {
     setCalendarKeyList((prev) => [...prev, calendarId + 1]);
     setCalendarId((prev) => prev + 1);
+
+    const addOption = JSON.parse(JSON.stringify(calendarOption));
+    addOption[calendarId] = {
+      lang: "KO",
+    };
+    setCalendarOption(() => addOption);
   };
 
   const buttonPropsList = [];
