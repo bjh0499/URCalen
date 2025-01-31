@@ -12,10 +12,13 @@ export default function Calendar({
   calendarOption,
   setRightClickPosition,
 }) {
+  // TODO: export 기능을 위해 sizeState와 positionState를 각 달력에 대한 key로 참조하는 state로 만들어 최상단 component에서 관리하도록 변경 예정
   const [sizeState, setSizeState] = useState({
     width: 320,
     height: 320,
   });
+
+  const [positionState, setPositionState] = useState({});
 
   const handleOnResize = (e, { node, size, handle }) => {
     setSizeState({
@@ -60,8 +63,15 @@ export default function Calendar({
     } while (element);
   };
 
+  const handleDragStop = (e, data) => {
+    setPositionState(() => ({
+      x: data.x,
+      y: data.y,
+    }));
+  };
+
   return (
-    <Draggable cancel={".react-resizable-handle"}>
+    <Draggable cancel={".react-resizable-handle"} onStop={handleDragStop}>
       <Resizable
         className="hover-handles"
         width={sizeState.width}
