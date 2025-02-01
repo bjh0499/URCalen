@@ -22,8 +22,9 @@ export default function Home() {
   const [calendarId, setCalendarId] = useState(0);
   const [rightClickPosition, setRightClickPosition] = useState({});
   const [styleMenu, setStyleMenu] = useState(null);
-  const [calendarPosition, setCalendarPosition] = useState({});
   const [calendarOption, setCalendarOption] = useState({});
+  const [calendarPosition, setCalendarPosition] = useState({});
+  const [calendarSize, setCalendarSize] = useState({});
 
   const handleClick = () => {
     if (rightClickPosition.clickX !== undefined) {
@@ -53,7 +54,10 @@ export default function Home() {
           holidays={holidays}
           calendarOption={calendarOption}
           setRightClickPosition={setRightClickPosition}
+          calendarPosition={calendarPosition}
           setCalendarPosition={setCalendarPosition}
+          calendarSize={calendarSize}
+          setCalendarSize={setCalendarSize}
         />
       ))}
       {rightClickPosition.clickX !== undefined ? (

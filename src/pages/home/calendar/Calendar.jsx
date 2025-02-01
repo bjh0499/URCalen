@@ -11,6 +11,10 @@ export default function Calendar({
   holidays,
   calendarOption,
   setRightClickPosition,
+  calendarPosition,
+  setCalendarPosition,
+  calendarSize,
+  setCalendarSize,
 }) {
   // TODO: export 기능을 위해 sizeState와 positionState를 각 달력에 대한 key로 참조하는 state로 만들어 최상단 component에서 관리하도록 변경 예정
   const [sizeState, setSizeState] = useState({
@@ -20,6 +24,7 @@ export default function Calendar({
 
   const [positionState, setPositionState] = useState({});
 
+  // TODO: 최상단 component에서 해당 달력 크기를 관리하는 형식으로 수정
   const handleOnResize = (e, { node, size, handle }) => {
     setSizeState({
       width: size.width,
@@ -63,6 +68,7 @@ export default function Calendar({
     } while (element);
   };
 
+  // TODO: 최상단 component에서 해당 달력 위치를 관리하는 형식으로 수정
   const handleDragStop = (e, data) => {
     setPositionState(() => ({
       x: data.x,
