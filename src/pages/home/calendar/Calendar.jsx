@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Resizable } from "react-resizable";
 import Draggable from "react-draggable";
 
@@ -16,20 +16,16 @@ export default function Calendar({
   calendarSize,
   setCalendarSize,
 }) {
-  // TODO: export 기능을 위해 sizeState와 positionState를 각 달력에 대한 key로 참조하는 state로 만들어 최상단 component에서 관리하도록 변경 예정
-  const [sizeState, setSizeState] = useState({
-    width: 320,
-    height: 320,
-  });
+  const sizeState = calendarSize[calendarKey];
 
-  const [positionState, setPositionState] = useState({});
-
-  // TODO: 최상단 component에서 해당 달력 크기를 관리하는 형식으로 수정
   const handleOnResize = (e, { node, size, handle }) => {
-    setSizeState({
+    const modifiedSize = JSON.parse(JSON.stringify(calendarSize));
+    modifiedSize[calendarKey] = {
       width: size.width,
       height: size.height,
-    });
+    };
+
+    setCalendarSize(() => modifiedSize);
   };
 
   const handleRightClick = (e) => {
@@ -70,10 +66,13 @@ export default function Calendar({
 
   // TODO: 최상단 component에서 해당 달력 위치를 관리하는 형식으로 수정
   const handleDragStop = (e, data) => {
-    setPositionState(() => ({
+    const modifiedPosition = JSON.parse(JSON.stringify(calendarPosition));
+    modifiedPosition[calendarKey] = {
       x: data.x,
       y: data.y,
-    }));
+    };
+
+    setCalendarPosition(() => modifiedPosition);
   };
 
   return (

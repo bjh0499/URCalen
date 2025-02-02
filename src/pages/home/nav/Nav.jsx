@@ -9,6 +9,10 @@ export default function Nav({
   setCalendarId,
   calendarOption,
   setCalendarOption,
+  calendarPosition,
+  setCalendarPosition,
+  calendarSize,
+  setCalendarSize,
 }) {
   const prevYear = () => {
     setMonthSelector((prev) => {
@@ -44,14 +48,30 @@ export default function Nav({
   };
 
   const addCalendar = () => {
-    setCalendarKeyList((prev) => [...prev, calendarId + 1]);
     setCalendarId((prev) => prev + 1);
 
     const addOption = JSON.parse(JSON.stringify(calendarOption));
     addOption[calendarId] = {
       lang: "KO",
     };
+
+    const addPosition = JSON.parse(JSON.stringify(calendarPosition));
+    addPosition[calendarId] = {
+      x: 0,
+      y: 0,
+    };
+
+    const addSize = JSON.parse(JSON.stringify(calendarSize));
+    addSize[calendarId] = {
+      width: 320,
+      height: 320,
+    };
+
     setCalendarOption(() => addOption);
+    setCalendarPosition(() => addPosition);
+    setCalendarSize(() => addSize);
+
+    setCalendarKeyList((prev) => [...prev, calendarId]);
   };
 
   const buttonPropsList = [];
