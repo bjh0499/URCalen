@@ -40,6 +40,7 @@ export default function Home() {
     <div className="w-screen h-screen" onClick={handleClick}>
       <Nav
         setMonthSelector={setMonthSelector}
+        calendarKeyList={calendarKeyList}
         setCalendarKeyList={setCalendarKeyList}
         calendarId={calendarId}
         setCalendarId={setCalendarId}
