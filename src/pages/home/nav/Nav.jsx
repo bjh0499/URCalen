@@ -86,6 +86,7 @@ export default function Nav({
       saveCalendarData.push(calendarDataObj);
     });
 
+    // https://codesandbox.io/p/sandbox/export-js-object-to-json-download-file-react-4t2xb?file=%2Fsrc%2FApp.js%3A69%2C5-69%2C18
     const link = document.createElement("a");
     link.href = `data:text/json;chatset=utf-8,${encodeURIComponent(
       JSON.stringify(saveCalendarData)
