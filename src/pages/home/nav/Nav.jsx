@@ -75,13 +75,24 @@ export default function Nav({
     setCalendarKeyList((prev) => [...prev, calendarId]);
   };
 
-  // TODO: 해당 함수를 통해 취합된 각 달력 속성들을 파일로 만들거나 서버로 보내는 과정 구현 필요
-  const calendarInfo = () => {
+  // TODO: 선택에 따라 파일 직접 저장이 아닌 서버로 보내는 과정 구현 필요
+  const saveCalendar = () => {
+    const saveCalendarData = [];
     calendarKeyList.forEach((key) => {
-      console.log(calendarOption[key]);
-      console.log(calendarPosition[key]);
-      console.log(calendarSize[key]);
+      const calendarDataObj = {};
+      calendarDataObj.calendarOption = calendarOption[key];
+      calendarDataObj.calendarPosition = calendarPosition[key];
+      calendarDataObj.calendarSize = calendarSize[key];
+      saveCalendarData.push(calendarDataObj);
     });
+
+    const link = document.createElement("a");
+    link.href = `data:text/json;chatset=utf-8,${encodeURIComponent(
+      JSON.stringify(saveCalendarData)
+    )}`;
+    link.download = "data.json";
+    link.click();
+    link.remove();
   };
 
   // TODO: 파일이나 서버에서 받은 JSON으로 달력을 재구성하는 기능 구현 필요
@@ -93,8 +104,8 @@ export default function Nav({
   buttonPropsList.push({ text: "▶", clickFunc: nextMonth });
   buttonPropsList.push({ text: "▶▶", clickFunc: nextYear });
   buttonPropsList.push({ text: "+", clickFunc: addCalendar });
-  buttonPropsList.push({ text: "?", clickFunc: calendarInfo });
-  buttonPropsList.push({ text: "!", clickFunc: restoreCalendar });
+  buttonPropsList.push({ text: "S", clickFunc: saveCalendar });
+  buttonPropsList.push({ text: "L", clickFunc: restoreCalendar });
 
   return (
     <div className="flex items-center">
