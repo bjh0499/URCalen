@@ -96,7 +96,6 @@ export default function Nav({
     link.remove();
   };
 
-  // TODO: 파일이나 서버에서 받은 JSON으로 달력을 재구성하는 기능 구현 중
   const restoreCalendar = () => {
     const restoreProcess = (e) => {
       const file = e.target.files[0];
@@ -145,8 +144,6 @@ export default function Nav({
             alert("파일 형식이 올바르지 않거나 손상된 파일입니다.");
             return;
           }
-
-          console.log(calendarArray);
 
           setCalendarKeyList([]);
           setCalendarId(calendarArray.length);
