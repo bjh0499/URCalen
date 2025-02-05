@@ -96,8 +96,113 @@ export default function Nav({
     link.remove();
   };
 
-  // TODO: 파일이나 서버에서 받은 JSON으로 달력을 재구성하는 기능 구현 필요
-  const restoreCalendar = () => {};
+  // TODO: 파일이나 서버에서 받은 JSON으로 달력을 재구성하는 기능 구현 중
+  const restoreCalendar = () => {
+    const restoreProcess = (e) => {
+      const file = e.target.files[0];
+      const reader = new FileReader();
+
+      reader.addEventListener("load", () => {
+        try {
+          const calendarArray = JSON.parse(reader.result);
+          if (
+            Object.prototype.toString.call(calendarArray) !== "[object Array]"
+          ) {
+            alert("파일 형식이 올바르지 않거나 손상된 파일입니다.");
+            return;
+          }
+
+          const invalid = false;
+
+          for (let i = 0; i < calendarArray.length; i++) {
+            const c = calendarArray[i];
+            if (!c.calendarOption || !c.calendarPosition || !c.calendarSize) {
+              invalid = true;
+              break;
+            }
+
+            // TODO: ENUM 등 형식을 고려해서 외부에서 불러오는 방식을 고려 중
+            let cp = c.calendarOption;
+            if (!cp.lang || !["KO", "EN"].includes(cp.lang)) {
+              invalid = true;
+              break;
+            }
+
+            cp = c.calendarPosition;
+            if (!cp.x || !cp.y) {
+              invalid = true;
+              break;
+            }
+
+            cp = c.calendarSize;
+            if (!cp.width || !cp.height || cp.width < 320 || cp.height < 320) {
+              invalid = true;
+              break;
+            }
+          }
+
+          if (invalid) {
+            alert("파일 형식이 올바르지 않거나 손상된 파일입니다.");
+            return;
+          }
+
+          console.log(calendarArray);
+
+          setCalendarKeyList([]);
+          setCalendarId(calendarArray.length);
+          setCalendarOption({});
+          setCalendarPosition({});
+          setCalendarSize({});
+
+          const addOption = {};
+          const addPosition = {};
+          const addSize = {};
+          const newKeyList = [];
+
+          for (let i = 1; i <= calendarArray.length; i++) {
+            addOption[i] = JSON.parse(
+              JSON.stringify(calendarArray[i - 1].calendarOption)
+            );
+
+            addPosition[i] = JSON.parse(
+              JSON.stringify(calendarArray[i - 1].calendarPosition)
+            );
+
+            addSize[i] = JSON.parse(
+              JSON.stringify(calendarArray[i - 1].calendarSize)
+            );
+
+            newKeyList.push(i);
+          }
+
+          setCalendarOption(() => addOption);
+          setCalendarPosition(() => addPosition);
+          setCalendarSize(() => addSize);
+          setCalendarKeyList(() => newKeyList);
+        } catch (e) {
+          alert("파일 형식이 올바르지 않거나 손상된 파일입니다.");
+        }
+      });
+
+      if (!file) {
+        alert("파일이 선택되지 않았습니다.");
+        return;
+      } else if (file.type === "application/json") {
+        reader.readAsText(file);
+      } else {
+        alert("파일 형식이 올바르지 않거나 손상된 파일입니다.");
+      }
+
+      // TODO: alert으로 뜨는 오류 메시지를 별도 오류 창으로 표현할 예정
+    };
+
+    const file = document.createElement("input");
+    file.type = "file";
+    file.accept = ".json,data:text/json;chatset=utf-8";
+    file.addEventListener("change", restoreProcess);
+    file.click();
+    file.remove();
+  };
 
   const buttonPropsList = [];
   buttonPropsList.push({ text: "◀◀", clickFunc: prevYear });
