@@ -111,7 +111,7 @@ export default function Nav({
             return;
           }
 
-          const invalid = false;
+          let invalid = false;
 
           for (let i = 0; i < calendarArray.length; i++) {
             const c = calendarArray[i];

@@ -17,6 +17,7 @@ export default function Calendar({
   setCalendarSize,
 }) {
   const sizeState = calendarSize[calendarKey];
+  const positionState = calendarPosition[calendarKey];
 
   const handleOnResize = (e, { node, size, handle }) => {
     const modifiedSize = JSON.parse(JSON.stringify(calendarSize));
@@ -64,7 +65,6 @@ export default function Calendar({
     } while (element);
   };
 
-  // TODO: 최상단 component에서 해당 달력 위치를 관리하는 형식으로 수정
   const handleDragStop = (e, data) => {
     const modifiedPosition = JSON.parse(JSON.stringify(calendarPosition));
     modifiedPosition[calendarKey] = {
@@ -76,7 +76,11 @@ export default function Calendar({
   };
 
   return (
-    <Draggable cancel={".react-resizable-handle"} onStop={handleDragStop}>
+    <Draggable
+      cancel={".react-resizable-handle"}
+      defaultPosition={{ x: positionState.x, y: positionState.y }}
+      onStop={handleDragStop}
+    >
       <Resizable
         className="hover-handles"
         width={sizeState.width}
