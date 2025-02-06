@@ -146,7 +146,7 @@ export default function Nav({
           }
 
           setCalendarKeyList([]);
-          setCalendarId(calendarArray.length);
+          setCalendarId(calendarArray.length + 1);
           setCalendarOption({});
           setCalendarPosition({});
           setCalendarSize({});
