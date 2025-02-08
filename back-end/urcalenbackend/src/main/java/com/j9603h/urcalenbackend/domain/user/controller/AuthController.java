@@ -1,7 +1,9 @@
 package com.j9603h.urcalenbackend.domain.user.controller;
 
+import com.j9603h.urcalenbackend.domain.user.dto.request.LoginRequestDto;
 import com.j9603h.urcalenbackend.domain.user.dto.request.SignupRequestDto;
 import com.j9603h.urcalenbackend.domain.user.dto.response.SignupResponseDto;
+import com.j9603h.urcalenbackend.domain.user.dto.response.TokenResponseDto;
 import com.j9603h.urcalenbackend.domain.user.service.AuthService;
 import com.j9603h.urcalenbackend.global.response.ApiResponse;
 import jakarta.validation.Valid;
@@ -28,5 +30,14 @@ public class AuthController {
                 .body(ApiResponse.ok(
                         authService.signup(requestDto)
                 ));
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<ApiResponse<TokenResponseDto>> login(
+            @Valid @RequestBody LoginRequestDto requestDto
+    ) {
+        return ResponseEntity.ok(ApiResponse.ok(
+                authService.login(requestDto)
+        ));
     }
 }

@@ -16,8 +16,8 @@ import org.hibernate.validator.constraints.Length;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SignupRequestDto {
-    @NotBlank(message = "계정명이 입력되지 않았습니다.")
-    @Length(min = 4, max = 20, message = "계정명은 4자 이상, 20자 이하여야 합니다.")
+    @NotBlank(message = "아이디가 입력되지 않았습니다.")
+    @Length(min = 4, max = 20, message = "아이디는 4자 이상, 20자 이하여야 합니다.")
     private String username;
 
     @NotBlank(message = "비밀번호가 입력되지 않았습니다.")
