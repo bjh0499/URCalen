@@ -3,13 +3,10 @@ import React from "react";
 export default function CalendarMenu({
   clickX,
   clickY,
-  calendarX,
-  calendarY,
   calendarKey,
   setCalendarKeyList,
   setRightClickPosition,
   setStyleMenu,
-  setCalendarOption,
 }) {
   const handleMenuClick = (e) => {
     e.preventDefault();
@@ -37,14 +34,6 @@ export default function CalendarMenu({
     setRightClickPosition(() => ({}));
   };
 
-  const handleItemClickTemp = (e) => {
-    console.log(calendarX);
-    console.log(calendarY);
-
-    setRightClickPosition(() => ({}));
-  };
-
-  // TODO: 개발용 기능에 주의하고, 배포 시 이를 분리할 수단 요구
   return (
     <div
       className="menu-box bg-slate-100"
@@ -54,7 +43,6 @@ export default function CalendarMenu({
     >
       <div onClick={handleItemClick}>달력 삭제</div>
       <div onClick={handleItemClick2}>달력 스타일</div>
-      <div onClick={handleItemClickTemp}>달력 위치 정보</div>
     </div>
   );
 }
