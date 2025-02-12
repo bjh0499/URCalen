@@ -4,6 +4,8 @@ import NavDivButton from "./NavDivButton";
 
 export default function Nav({
   setMonthSelector,
+  setLoginMenu,
+  setSignUpMenu,
   calendarKeyList,
   setCalendarKeyList,
   calendarId,
@@ -201,24 +203,47 @@ export default function Nav({
     file.remove();
   };
 
-  const buttonPropsList = [];
-  buttonPropsList.push({ text: "◀◀", clickFunc: prevYear });
-  buttonPropsList.push({ text: "◀", clickFunc: prevMonth });
-  buttonPropsList.push({ text: "▶", clickFunc: nextMonth });
-  buttonPropsList.push({ text: "▶▶", clickFunc: nextYear });
-  buttonPropsList.push({ text: "+", clickFunc: addCalendar });
-  buttonPropsList.push({ text: "S", clickFunc: saveCalendar });
-  buttonPropsList.push({ text: "L", clickFunc: restoreCalendar });
+  const login = () => {
+    setLoginMenu(() => true);
+  };
+
+  const signIn = () => {
+    setSignUpMenu(() => true);
+  };
+
+  const calendarButtonPropsList = [];
+  calendarButtonPropsList.push({ text: "◀◀", clickFunc: prevYear });
+  calendarButtonPropsList.push({ text: "◀", clickFunc: prevMonth });
+  calendarButtonPropsList.push({ text: "▶", clickFunc: nextMonth });
+  calendarButtonPropsList.push({ text: "▶▶", clickFunc: nextYear });
+  calendarButtonPropsList.push({ text: "+", clickFunc: addCalendar });
+  calendarButtonPropsList.push({ text: "S", clickFunc: saveCalendar });
+  calendarButtonPropsList.push({ text: "L", clickFunc: restoreCalendar });
+
+  const userButtonPropsList = [];
+  userButtonPropsList.push({ text: "L", clickFunc: login });
+  userButtonPropsList.push({ text: "S", clickFunc: signIn });
 
   return (
-    <div className="flex items-center">
-      {buttonPropsList.map((buttonProps, idx) => (
-        <NavDivButton
-          key={idx}
-          text={buttonProps.text}
-          clickFunc={buttonProps.clickFunc}
-        />
-      ))}
+    <div className="flex justify-between">
+      <div className="flex items-center">
+        {calendarButtonPropsList.map((buttonProps, idx) => (
+          <NavDivButton
+            key={idx}
+            text={buttonProps.text}
+            clickFunc={buttonProps.clickFunc}
+          />
+        ))}
+      </div>
+      <div className="flex items-center">
+        {userButtonPropsList.map((buttonProps, idx) => (
+          <NavDivButton
+            key={idx}
+            text={buttonProps.text}
+            clickFunc={buttonProps.clickFunc}
+          />
+        ))}
+      </div>
     </div>
   );
 }
