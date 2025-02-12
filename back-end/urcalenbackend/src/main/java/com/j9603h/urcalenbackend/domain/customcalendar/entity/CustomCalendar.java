@@ -25,9 +25,8 @@ public class CustomCalendar extends BaseTimeEntity {
 
     private String imageData;
 
-    // TODO: 로그인 기능 구현 후, nullable = false로 변경 예정
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @Column(nullable = false)
