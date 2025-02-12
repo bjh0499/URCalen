@@ -37,4 +37,9 @@ public class CustomCalendarController {
     public ResponseEntity<ApiResponse<CustomCalendarListWithPageResponseDto>> getCustomCalendars(Pageable pageable) {
         return ResponseEntity.ok(ApiResponse.ok(customCalendarService.getCustomCalendars(pageable)));
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ApiResponse<CustomCalendarResponseDto>> getCustomCalendarById(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.ok(customCalendarService.getCustomCalendarById(id)));
+    }
 }
