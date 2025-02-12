@@ -3,6 +3,7 @@ package com.j9603h.urcalenbackend.domain.customcalendar.dto.request;
 import com.j9603h.urcalenbackend.domain.customcalendar.entity.CustomCalendar;
 import com.j9603h.urcalenbackend.domain.user.entity.User;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -23,13 +24,16 @@ public class CustomCalendarCreateRequestDto {
 
     private String imageData;
 
+    @NotNull(message = "공개 허가 여부가 비어 있습니다.")
+    private Boolean isPublic;
+
     public CustomCalendar toEntity(User user) {
         return CustomCalendar.builder()
                 .title(this.title)
                 .calendarData(this.calendarData)
                 .imageData(this.imageData)
                 .user(user)
-                .isPublic(false)
+                .isPublic(this.isPublic)
                 .build();
     }
 }
