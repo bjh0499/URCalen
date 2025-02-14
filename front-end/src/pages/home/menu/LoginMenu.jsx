@@ -1,9 +1,36 @@
-import React from "react";
+import React, { useState } from "react";
 
-export default function LoginMenu() {
+import authApi from "../../../api/authApi";
+
+export default function LoginMenu({ setLoginMenu }) {
+  const [formData, setFormData] = useState({
+    username: "",
+    password: "",
+  });
+
   const handleMenuClick = (e) => {
-    e.preventDefault();
     e.stopPropagation();
+  };
+
+  const handleFormInput = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await authApi.login(formData);
+      alert("로그인이 완료되었습니다.");
+      setLoginMenu(() => false);
+    } catch (err) {
+      alert("로그인 과정에서 오류가 발생했습니다.");
+      alert(err);
+    } finally {
+    }
   };
 
   return (
@@ -21,7 +48,33 @@ export default function LoginMenu() {
       }}
       onClick={handleMenuClick}
     >
-      Login Menu
+      <h2>로그인</h2>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label htmlFor="username">계정명: </label>
+          <input
+            id="username"
+            name="username"
+            required
+            placeholder="계정명"
+            value={formData.username}
+            onChange={handleFormInput}
+          />
+        </div>
+        <div>
+          <label htmlFor="password">비밀번호: </label>
+          <input
+            id="password"
+            name="password"
+            type="password"
+            required
+            placeholder="비밀번호"
+            value={formData.password}
+            onChange={handleFormInput}
+          />
+        </div>
+        <button type="submit">로그인</button>
+      </form>
     </div>
   );
 }

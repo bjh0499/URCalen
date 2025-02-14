@@ -106,8 +106,8 @@ export default function Home() {
       ) : (
         <></>
       )}
-      {loginMenu ? <LoginMenu /> : <></>}
-      {signUpMenu ? <SignUpMenu /> : <></>}
+      {loginMenu ? <LoginMenu setLoginMenu={setLoginMenu} /> : <></>}
+      {signUpMenu ? <SignUpMenu setSignUpMenu={setSignUpMenu} /> : <></>}
     </div>
   );
 }

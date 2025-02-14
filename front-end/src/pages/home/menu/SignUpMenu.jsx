@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 
-export default function SignUpMenu() {
+import authApi from "../../../api/authApi";
+
+export default function SignUpMenu({ setSignUpMenu }) {
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -20,14 +22,15 @@ export default function SignUpMenu() {
     }));
   };
 
-  // TODO: 실제 회원 가입 과정 구현 필요
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // await authApi.signup(formData);
+      await authApi.signup(formData);
       alert("회원 가입이 완료되었습니다.");
+      setSignUpMenu(() => false);
     } catch (err) {
       alert("회원 가입 과정에서 오류가 발생했습니다.");
+      alert(err);
     } finally {
     }
   };
