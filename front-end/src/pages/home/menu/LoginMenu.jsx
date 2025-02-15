@@ -1,12 +1,16 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 
 import authApi from "../../../api/authApi";
+import { login } from "../../../store/slices/authSlice";
 
 export default function LoginMenu({ setLoginMenu }) {
   const [formData, setFormData] = useState({
     username: "",
     password: "",
   });
+
+  const dispatch = useDispatch();
 
   const handleMenuClick = (e) => {
     e.stopPropagation();
@@ -23,7 +27,10 @@ export default function LoginMenu({ setLoginMenu }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await authApi.login(formData);
+      const response = await authApi.login(formData);
+      const { token } = response.data.data;
+      dispatch(login(token));
+
       alert("로그인이 완료되었습니다.");
       setLoginMenu(() => false);
     } catch (err) {
