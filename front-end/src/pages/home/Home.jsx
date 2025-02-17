@@ -9,6 +9,7 @@ import CalendarMenu from "./calendar/calendarTable/CalendarMenu";
 import StyleMenu from "./menu/StyleMenu.jsx";
 import LoginMenu from "./menu/LoginMenu.jsx";
 import SignUpMenu from "./menu/SignUpMenu.jsx";
+import SaveMenu from "./menu/SaveMenu.jsx";
 
 export default function Home() {
   // TODO: 임시로 공휴일 정보를 해당 함수에서 지정하지만, 실제 배포 시에는 서버에서 받을 방침
@@ -28,6 +29,7 @@ export default function Home() {
   const [styleMenu, setStyleMenu] = useState(null);
   const [loginMenu, setLoginMenu] = useState(false);
   const [signUpMenu, setSignUpMenu] = useState(false);
+  const [saveMenu, setSaveMenu] = useState(false);
 
   const [calendarOption, setCalendarOption] = useState({});
   const [calendarPosition, setCalendarPosition] = useState({});
@@ -49,6 +51,10 @@ export default function Home() {
     if (signUpMenu) {
       setSignUpMenu(() => false);
     }
+
+    if (saveMenu) {
+      setSaveMenu(() => false);
+    }
   };
 
   return (
@@ -57,7 +63,7 @@ export default function Home() {
         setMonthSelector={setMonthSelector}
         setLoginMenu={setLoginMenu}
         setSignUpMenu={setSignUpMenu}
-        calendarKeyList={calendarKeyList}
+        setSaveMenu={setSaveMenu}
         setCalendarKeyList={setCalendarKeyList}
         calendarId={calendarId}
         setCalendarId={setCalendarId}
@@ -108,6 +114,17 @@ export default function Home() {
       )}
       {loginMenu ? <LoginMenu setLoginMenu={setLoginMenu} /> : <></>}
       {signUpMenu ? <SignUpMenu setSignUpMenu={setSignUpMenu} /> : <></>}
+      {saveMenu ? (
+        <SaveMenu
+          setSaveMenu={setSaveMenu}
+          calendarKeyList={calendarKeyList}
+          calendarOption={calendarOption}
+          calendarPosition={calendarPosition}
+          calendarSize={calendarSize}
+        />
+      ) : (
+        <></>
+      )}
     </div>
   );
 }

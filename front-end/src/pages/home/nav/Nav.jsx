@@ -6,7 +6,7 @@ export default function Nav({
   setMonthSelector,
   setLoginMenu,
   setSignUpMenu,
-  calendarKeyList,
+  setSaveMenu,
   setCalendarKeyList,
   calendarId,
   setCalendarId,
@@ -77,25 +77,8 @@ export default function Nav({
     setCalendarKeyList((prev) => [...prev, calendarId]);
   };
 
-  // TODO: 선택에 따라 파일 직접 저장이 아닌 서버로 보내는 과정 구현 필요
   const saveCalendar = () => {
-    const saveCalendarData = [];
-    calendarKeyList.forEach((key) => {
-      const calendarDataObj = {};
-      calendarDataObj.calendarOption = calendarOption[key];
-      calendarDataObj.calendarPosition = calendarPosition[key];
-      calendarDataObj.calendarSize = calendarSize[key];
-      saveCalendarData.push(calendarDataObj);
-    });
-
-    // https://codesandbox.io/p/sandbox/export-js-object-to-json-download-file-react-4t2xb?file=%2Fsrc%2FApp.js%3A69%2C5-69%2C18
-    const link = document.createElement("a");
-    link.href = `data:text/json;chatset=utf-8,${encodeURIComponent(
-      JSON.stringify(saveCalendarData)
-    )}`;
-    link.download = "data.json";
-    link.click();
-    link.remove();
+    setSaveMenu(() => true);
   };
 
   const restoreCalendar = () => {
