@@ -1,5 +1,3 @@
-import React from "react";
-
 import NavDivButton from "./NavDivButton";
 
 export default function Nav({

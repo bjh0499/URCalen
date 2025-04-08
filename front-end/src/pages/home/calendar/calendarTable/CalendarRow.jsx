@@ -1,5 +1,3 @@
-import React from "react";
-
 import CalendarCell from "./CalendarCell";
 
 export default function CalendarRow({

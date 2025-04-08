@@ -1,5 +1,3 @@
-import React from "react";
-
 import CalendarRow from "./CalendarRow";
 import CalendarTopRow from "./CalendarTopRow";
 

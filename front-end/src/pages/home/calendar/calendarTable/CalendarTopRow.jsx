@@ -1,4 +1,3 @@
-import React from "react";
 import CalendarTopCell from "./CalendarTopCell";
 
 export default function CalendarTopRow({

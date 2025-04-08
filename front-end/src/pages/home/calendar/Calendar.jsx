@@ -1,4 +1,3 @@
-import React from "react";
 import { Resizable } from "react-resizable";
 import Draggable from "react-draggable";
 

@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function CalendarHeader({ monthSelector }) {
   return (
     <div className="h-1/5 w-full flex justify-center items-center">
