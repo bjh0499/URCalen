@@ -128,12 +128,6 @@ export default function Nav({
             return;
           }
 
-          setCalendarKeyList([]);
-          setCalendarId(calendarArray.length + 1);
-          setCalendarOption({});
-          setCalendarPosition({});
-          setCalendarSize({});
-
           const addOption = {};
           const addPosition = {};
           const addSize = {};
@@ -154,6 +148,12 @@ export default function Nav({
 
             newKeyList.push(i);
           }
+
+          setCalendarKeyList([]);
+          setCalendarId(calendarArray.length + 1);
+          setCalendarOption({});
+          setCalendarPosition({});
+          setCalendarSize({});
 
           setTimeout(() => {
             setCalendarOption(() => addOption);
