@@ -155,10 +155,12 @@ export default function Nav({
             newKeyList.push(i);
           }
 
-          setCalendarOption(() => addOption);
-          setCalendarPosition(() => addPosition);
-          setCalendarSize(() => addSize);
-          setCalendarKeyList(() => newKeyList);
+          setTimeout(() => {
+            setCalendarOption(() => addOption);
+            setCalendarPosition(() => addPosition);
+            setCalendarSize(() => addSize);
+            setCalendarKeyList(() => newKeyList);
+          }, 50);
         } catch (e) {
           alert("파일 형식이 올바르지 않거나 손상된 파일입니다.");
         }
