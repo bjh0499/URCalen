@@ -57,7 +57,7 @@ export default function Home() {
   };
 
   return (
-    <div className="w-screen h-screen" onClick={handleClick}>
+    <div className="w-full h-full" onClick={handleClick}>
       <Nav
         setMonthSelector={setMonthSelector}
         setLoginMenu={setLoginMenu}

@@ -5,10 +5,10 @@ import Footer from "../Footer";
 
 export default function RootLayout() {
   return (
-    <>
+    <div className="flex flex-col justify-center items-center h-full">
       <Header />
       <Outlet />
       <Footer />
-    </>
+    </div>
   );
 }
