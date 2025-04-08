@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import authApi from "../../api/authApi";
+import Modal from "../utils/Modal";
 
 export default function SignUpMenu({ setSignUpMenu }) {
   const [formData, setFormData] = useState({
@@ -9,10 +10,6 @@ export default function SignUpMenu({ setSignUpMenu }) {
     email: "",
     nickname: "",
   });
-
-  const handleMenuClick = (e) => {
-    e.stopPropagation();
-  };
 
   const handleFormInput = (e) => {
     const { name, value } = e.target;
@@ -36,20 +33,7 @@ export default function SignUpMenu({ setSignUpMenu }) {
   };
 
   return (
-    <div
-      className="style-menu-box bg-slate-100 z-100"
-      style={{
-        position: "fixed",
-        left: "50%",
-        top: "50%",
-        zIndex: "100",
-        height: "400px",
-        marginTop: "-200px",
-        width: "600px",
-        marginLeft: "-300px",
-      }}
-      onClick={handleMenuClick}
-    >
+    <Modal>
       <h2>회원 가입</h2>
       <form onSubmit={handleSubmit}>
         <div>
@@ -100,6 +84,6 @@ export default function SignUpMenu({ setSignUpMenu }) {
         </div>
         <button type="submit">회원 가입</button>
       </form>
-    </div>
+    </Modal>
   );
 }

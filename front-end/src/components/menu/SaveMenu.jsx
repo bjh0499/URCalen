@@ -2,6 +2,8 @@ import { useState } from "react";
 
 import customCalendarApi from "../../api/customCalendarApi";
 
+import Modal from "../utils/Modal";
+
 export default function SaveMenu({
   setSaveMenu,
   calendarKeyList,
@@ -12,10 +14,6 @@ export default function SaveMenu({
   const [formData, setFormData] = useState({
     isPublic: false,
   });
-
-  const handleMenuClick = (e) => {
-    e.stopPropagation();
-  };
 
   const handleFormInput = (e) => {
     setFormData(() => ({ isPublic: e.target.checked }));
@@ -77,20 +75,7 @@ export default function SaveMenu({
 
   // https://stackoverflow.com/questions/6334495/
   return (
-    <div
-      className="style-menu-box bg-slate-100 z-100"
-      style={{
-        position: "fixed",
-        left: "50%",
-        top: "50%",
-        zIndex: "100",
-        height: "400px",
-        marginTop: "-200px",
-        width: "600px",
-        marginLeft: "-300px",
-      }}
-      onClick={handleMenuClick}
-    >
+    <Modal>
       <div onClick={handleFileSave}>파일로 저장</div>
       <div onClick={handleServerSave}>서버에 저장</div>
       <form>
@@ -105,6 +90,6 @@ export default function SaveMenu({
           />
         </div>
       </form>
-    </div>
+    </Modal>
   );
 }

@@ -4,6 +4,8 @@ import { useDispatch } from "react-redux";
 import authApi from "../../api/authApi";
 import { login } from "../../store/slices/authSlice";
 
+import Modal from "../utils/Modal";
+
 export default function LoginMenu({ setLoginMenu }) {
   const [formData, setFormData] = useState({
     username: "",
@@ -11,10 +13,6 @@ export default function LoginMenu({ setLoginMenu }) {
   });
 
   const dispatch = useDispatch();
-
-  const handleMenuClick = (e) => {
-    e.stopPropagation();
-  };
 
   const handleFormInput = (e) => {
     const { name, value } = e.target;
@@ -41,20 +39,7 @@ export default function LoginMenu({ setLoginMenu }) {
   };
 
   return (
-    <div
-      className="style-menu-box bg-slate-100 z-100"
-      style={{
-        position: "fixed",
-        left: "50%",
-        top: "50%",
-        zIndex: "100",
-        height: "400px",
-        marginTop: "-200px",
-        width: "600px",
-        marginLeft: "-300px",
-      }}
-      onClick={handleMenuClick}
-    >
+    <Modal>
       <h2>로그인</h2>
       <form onSubmit={handleSubmit}>
         <div>
@@ -82,6 +67,6 @@ export default function LoginMenu({ setLoginMenu }) {
         </div>
         <button type="submit">로그인</button>
       </form>
-    </div>
+    </Modal>
   );
 }
