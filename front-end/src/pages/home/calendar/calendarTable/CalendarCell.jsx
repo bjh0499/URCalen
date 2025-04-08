@@ -5,6 +5,15 @@ export default function CalendarCell({
   sizeState,
   calendarOption,
 }) {
+  const usingTextColor = [
+    "text-red-300",
+    "text-red-600",
+    "text-blue-300",
+    "text-blue-600",
+    "text-stone-400",
+    "text-stone-800",
+  ];
+
   let giveClass = "w-full h-full flex justify-center items-center ";
   let isHoliday = false;
 
@@ -37,29 +46,19 @@ export default function CalendarCell({
     }
   }
 
-  /*
-    HACK: 문자열을 결합하는 구조를 통해 조건문을 축약하고자 하는 시도가 있었음.
-    그러나 이 경우 색상 적용이 제대로 동작하지 않아서 부득이하게 장황한 조건문을 그대로 두게 되었음.
-  */
+  let selectColor;
   if (dayObj.day === 0 || isHoliday) {
-    if (monthSelector.month === dayObj.month) {
-      giveClass += "text-red-600";
-    } else {
-      giveClass += "text-red-300";
-    }
+    selectColor = "red";
   } else if (dayObj.day === 6) {
-    if (monthSelector.month === dayObj.month) {
-      giveClass += "text-blue-600";
-    } else {
-      giveClass += "text-blue-300";
-    }
+    selectColor = "blue";
   } else {
-    if (monthSelector.month === dayObj.month) {
-      giveClass += "text-stone-800";
-    } else {
-      giveClass += "text-stone-300";
-    }
+    selectColor = "stone";
   }
+
+  giveClass += `text-${selectColor}-${
+    (dayObj.day === 0 || dayObj.day === 6 || isHoliday ? 300 : 400) <<
+    (monthSelector.month === dayObj.month)
+  }`;
 
   return <div className={giveClass}>{dayObj.date}</div>;
 }
