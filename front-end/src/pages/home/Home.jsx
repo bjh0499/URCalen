@@ -1,14 +1,14 @@
 import { useState } from "react";
 
-import Nav from "./nav/Nav";
-import Calendar from "./calendar/Calendar";
+import Nav from "../../components/nav/Nav";
+import Calendar from "../../components/calendar/Calendar";
 import loadHolidays from "../../utils/loadHolidays";
-import CalendarMenu from "./calendar/calendarTable/CalendarMenu";
+import CalendarMenu from "../../components/calendar/calendarTable/CalendarMenu";
 
-import StyleMenu from "./menu/StyleMenu.jsx";
-import LoginMenu from "./menu/LoginMenu.jsx";
-import SignUpMenu from "./menu/SignUpMenu.jsx";
-import SaveMenu from "./menu/SaveMenu.jsx";
+import StyleMenu from "../../components/menu/StyleMenu";
+import LoginMenu from "../../components/menu/LoginMenu";
+import SignUpMenu from "../../components/menu/SignUpMenu";
+import SaveMenu from "../../components/menu/SaveMenu";
 
 export default function Home() {
   // TODO: 임시로 공휴일 정보를 해당 함수에서 지정하지만, 실제 배포 시에는 서버에서 받을 방침

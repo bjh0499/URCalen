@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 
-import authApi from "../../../api/authApi";
-import { login } from "../../../store/slices/authSlice";
+import authApi from "../../api/authApi";
+import { login } from "../../store/slices/authSlice";
 
 export default function LoginMenu({ setLoginMenu }) {
   const [formData, setFormData] = useState({

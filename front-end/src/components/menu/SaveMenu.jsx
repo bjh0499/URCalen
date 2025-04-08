@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import customCalendarApi from "../../../api/customCalendarApi";
+import customCalendarApi from "../../api/customCalendarApi";
 
 export default function SaveMenu({
   setSaveMenu,
