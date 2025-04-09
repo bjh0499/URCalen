@@ -194,6 +194,17 @@ export default function Nav({
     setSignUpMenu(() => true);
   };
 
+  const tempFunc = () => {};
+
+  const calendarPageButtonPropsList1 = [];
+  for (let i = 0; i < 13; i++) {
+    calendarPageButtonPropsList1.push({ text: i, clickFunc: tempFunc });
+  }
+
+  const calendarPageButtonPropsList2 = [];
+  calendarPageButtonPropsList2.push({ text: "F", clickFunc: tempFunc });
+  calendarPageButtonPropsList2.push({ text: "R", clickFunc: tempFunc });
+
   const calendarButtonPropsList = [];
   calendarButtonPropsList.push({ text: "◀◀", clickFunc: prevYear });
   calendarButtonPropsList.push({ text: "◀", clickFunc: prevMonth });
@@ -208,24 +219,51 @@ export default function Nav({
   userButtonPropsList.push({ text: "S", clickFunc: signIn });
 
   return (
-    <div className="flex justify-between">
-      <div className="flex items-center">
-        {calendarButtonPropsList.map((buttonProps, idx) => (
-          <NavDivButton
-            key={idx}
-            text={buttonProps.text}
-            clickFunc={buttonProps.clickFunc}
-          />
-        ))}
+    <div className="flex-col-center w-full">
+      <div className="flex justify-between w-full">
+        <div>
+          <div className="flex items-center">
+            {calendarPageButtonPropsList1.map((buttonProps, idx) => (
+              <NavDivButton
+                key={idx}
+                text={buttonProps.text}
+                clickFunc={buttonProps.clickFunc}
+              />
+            ))}
+          </div>
+        </div>
+
+        <div>
+          <div className="flex items-center">
+            {calendarPageButtonPropsList2.map((buttonProps, idx) => (
+              <NavDivButton
+                key={idx}
+                text={buttonProps.text}
+                clickFunc={buttonProps.clickFunc}
+              />
+            ))}
+          </div>
+        </div>
       </div>
-      <div className="flex items-center">
-        {userButtonPropsList.map((buttonProps, idx) => (
-          <NavDivButton
-            key={idx}
-            text={buttonProps.text}
-            clickFunc={buttonProps.clickFunc}
-          />
-        ))}
+      <div className="flex justify-between w-full">
+        <div className="flex items-center">
+          {calendarButtonPropsList.map((buttonProps, idx) => (
+            <NavDivButton
+              key={idx}
+              text={buttonProps.text}
+              clickFunc={buttonProps.clickFunc}
+            />
+          ))}
+        </div>
+        <div className="flex items-center">
+          {userButtonPropsList.map((buttonProps, idx) => (
+            <NavDivButton
+              key={idx}
+              text={buttonProps.text}
+              clickFunc={buttonProps.clickFunc}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );
