@@ -2,6 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .flex-center {
+    @apply flex justify-center items-center;
+  }
+
+  .flex-col-center {
+    @apply flex flex-col justify-center items-center;
+  }
+}
+
 html,
 body {
   height: 100dvh;

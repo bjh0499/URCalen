@@ -14,7 +14,7 @@ export default function CalendarCell({
     "text-stone-800",
   ];
 
-  let giveClass = "w-full h-full flex justify-center items-center ";
+  let giveClass = "flex-center w-full h-full ";
   let isHoliday = false;
 
   if (sizeState.width < 324) {

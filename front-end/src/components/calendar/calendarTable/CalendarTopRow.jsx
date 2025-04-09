@@ -24,9 +24,5 @@ export default function CalendarTopRow({
     );
   });
 
-  return (
-    <div className="h-1/6 w-full flex jusfity-center items-center">
-      {calendarTopCells}
-    </div>
-  );
+  return <div className="flex-center h-1/6 w-full">{calendarTopCells}</div>;
 }

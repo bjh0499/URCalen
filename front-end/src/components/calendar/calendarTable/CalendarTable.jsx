@@ -39,7 +39,7 @@ export default function CalendarTable({
   }
 
   return (
-    <div className="h-4/5 w-full flex flex-col justify-center items-center">
+    <div className="flex-col-center h-4/5 w-full">
       <CalendarTopRow
         calendarKey={calendarKey}
         sizeState={sizeState}

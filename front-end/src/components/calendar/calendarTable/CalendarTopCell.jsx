@@ -4,7 +4,7 @@ export default function CalendarTopCell({
   sizeState,
   calendarOption,
 }) {
-  let giveClass = "w-full h-full flex justify-center items-center ";
+  let giveClass = "flex-center w-full h-full ";
 
   if (sizeState.width < 324) {
     giveClass += "text-xs ";
