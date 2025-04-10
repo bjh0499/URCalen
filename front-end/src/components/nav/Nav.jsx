@@ -1,4 +1,6 @@
-import NavDivButton from "./NavDivButton";
+import FrontChangeButton from "./FrontChangeButton";
+import MonthChangeButton from "./MonthChangeButton";
+import NormalNavDivButton from "./NormalNavDivButton";
 
 export default function Nav({
   setMonthSelector,
@@ -198,12 +200,12 @@ export default function Nav({
 
   const calendarPageButtonPropsList1 = [];
   for (let i = 0; i < 13; i++) {
-    calendarPageButtonPropsList1.push({ text: i, clickFunc: tempFunc });
+    calendarPageButtonPropsList1.push({ text: i, value: i });
   }
 
   const calendarPageButtonPropsList2 = [];
-  calendarPageButtonPropsList2.push({ text: "F", clickFunc: tempFunc });
-  calendarPageButtonPropsList2.push({ text: "R", clickFunc: tempFunc });
+  calendarPageButtonPropsList2.push({ text: "F", value: true });
+  calendarPageButtonPropsList2.push({ text: "R", value: false });
 
   const calendarButtonPropsList = [];
   calendarButtonPropsList.push({ text: "◀◀", clickFunc: prevYear });
@@ -224,10 +226,10 @@ export default function Nav({
         <div>
           <div className="flex items-center">
             {calendarPageButtonPropsList1.map((buttonProps, idx) => (
-              <NavDivButton
+              <MonthChangeButton
                 key={idx}
                 text={buttonProps.text}
-                clickFunc={buttonProps.clickFunc}
+                value={buttonProps.value}
               />
             ))}
           </div>
@@ -236,10 +238,10 @@ export default function Nav({
         <div>
           <div className="flex items-center">
             {calendarPageButtonPropsList2.map((buttonProps, idx) => (
-              <NavDivButton
+              <FrontChangeButton
                 key={idx}
                 text={buttonProps.text}
-                clickFunc={buttonProps.clickFunc}
+                value={buttonProps.value}
               />
             ))}
           </div>
@@ -248,7 +250,7 @@ export default function Nav({
       <div className="flex justify-between w-full">
         <div className="flex items-center">
           {calendarButtonPropsList.map((buttonProps, idx) => (
-            <NavDivButton
+            <NormalNavDivButton
               key={idx}
               text={buttonProps.text}
               clickFunc={buttonProps.clickFunc}
@@ -257,7 +259,7 @@ export default function Nav({
         </div>
         <div className="flex items-center">
           {userButtonPropsList.map((buttonProps, idx) => (
-            <NavDivButton
+            <NormalNavDivButton
               key={idx}
               text={buttonProps.text}
               clickFunc={buttonProps.clickFunc}

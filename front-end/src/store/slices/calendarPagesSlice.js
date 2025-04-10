@@ -138,7 +138,9 @@ const calendarPagesSlice = createSlice({
       } else if (action.payload.type === "server") {
       }
     },
-    copyCalendarPage: (state, action) => {},
+    copyCalendarPage: (state, action) => {
+      // TODO: srcIdx의 달력 정보를 그대로 복사한 object를 dstIdx에 대입
+    },
   },
 });
 

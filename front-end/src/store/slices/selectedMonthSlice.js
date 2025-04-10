@@ -21,8 +21,8 @@ const selectedMonthSlice = createSlice({
       }
     },
     setFront: (state, action) => {
-      newFront = action.payload.front;
-      if (newFront && typeof newFront === "boolean") {
+      const newFront = action.payload.front;
+      if (typeof newFront === "boolean") {
         state.front = newFront;
       }
     },
