@@ -10,13 +10,28 @@ const selectedMonthSlice = createSlice({
   initialState,
   reducers: {
     setMonth: (state, action) => {
-      state.month =
-        action.payload.month !== undefined ? action.payload.month : state.month;
-      state.front =
-        action.payload.front !== undefined ? action.payload.front : state.front;
+      const newMonth = action.payload.month;
+      if (
+        newMonth &&
+        typeof newMonth === "number" &&
+        newMonth >= 0 &&
+        newMonth <= 13
+      ) {
+        state.month = newMonth;
+      }
+    },
+    setFront: (state, action) => {
+      newFront = action.payload.front;
+      if (newFront && typeof newFront === "boolean") {
+        state.front = newFront;
+      }
+    },
+    resetMonth: (state, action) => {
+      state.month = 0;
+      state.front = true;
     },
   },
 });
 
-export const { setMonth } = selectedMonthSlice.actions;
+export const { setMonth, setFront, resetMonth } = selectedMonthSlice.actions;
 export default selectedMonthSlice.reducer;
