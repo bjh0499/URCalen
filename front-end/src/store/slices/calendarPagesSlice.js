@@ -1,5 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+import arrangeCalendarPages from "./utils/arrangeCalendarPages";
+import jsonToCalendarPages from "./utils/jsonToCalendarPages";
+
 const initialState = {
   calendarPages: [],
 };
@@ -20,6 +23,7 @@ const calendarPagesSlice = createSlice({
   reducers: {
     addCalendar: (state, action) => {
       const idx = action.payload.idx;
+      state.calendarPages[idx].calendarId++;
       const newCalendarId = state.calendarPages[idx].calendarId;
 
       state.calendarPages[idx].calendarOption[newCalendarId] = { lang: "KO" };
@@ -27,7 +31,6 @@ const calendarPagesSlice = createSlice({
       state.calendarPages[idx].calendarSize[newCalendarId] = { x: 320, y: 320 };
 
       state.calendarPages[idx].calendarKeyList.push(newCalendarId);
-      state.calendarPages[idx].calendarId++;
     },
     deleteCalendar: (state, action) => {
       const idx = action.payload.idx;
@@ -58,8 +61,84 @@ const calendarPagesSlice = createSlice({
         state.calendarPages[idx].calendarSize[updateCalendarId] = obj;
       }
     },
-    saveCalendarPages: (state, action) => {},
-    loadCalendarPages: (state, action) => {},
+    saveCalendarPages: (state, action) => {
+      const jsonData = JSON.stringify(
+        arrangeCalendarPages(state.calendarPages)
+      );
+      if (action.payload.type === "local") {
+        // https://codesandbox.io/p/sandbox/export-js-object-to-json-download-file-react-4t2xb?file=%2Fsrc%2FApp.js%3A69%2C5-69%2C18
+        const link = document.createElement("a");
+        link.href = `data:text/json;chatset=utf-8,${encodeURIComponent(
+          jsonData
+        )}`;
+        link.download = "data.json";
+        link.click();
+        link.remove();
+      } else if (action.payload.type === "server") {
+        const customCalendar = {};
+
+        // TODO: 달력 제목을 정하는 부분은 추후 추가
+        customCalendar.title = "달력 제목";
+        customCalendar.calendarPagesData = jsonData;
+        // TODO: 사진 업로드 부분은 추후 추가
+        customCalendar.imageData = "";
+        customCalendar.isPublic = formData.isPublic;
+
+        // TODO: Backend와 교신하는 부분은 추후 추가
+        /*
+        try {
+          const response = await customCalendarApi.createCustomCalendar(
+            customCalendar
+          );
+          alert("달력이 저장되었습니다.");
+        } catch (err) {
+          alert("달력 저장 과정에서 오류가 발생했습니다.");
+          alert(err);
+        }
+        */
+      }
+
+      // TODO: Modal 제어는 Slice가 아닌 Component에서 진행할 예정
+      // setSaveMenu(() => false);
+    },
+    loadCalendarPages: (state, action) => {
+      if (action.payload.type === "local") {
+        const restoreProcess = (e) => {
+          const file = e.target.files[0];
+          const reader = new FileReader();
+
+          reader.addEventListener("load", () => {
+            const newCalendarPages = jsonToCalendarPages(reader.result);
+            if (newCalendarPages !== null) {
+              state.calendarPages = [];
+
+              setTimeout(() => {
+                state.calendarPages = newCalendarPages;
+              }, 50);
+            }
+          });
+
+          if (!file) {
+            alert("파일이 선택되지 않았습니다.");
+          } else if (file.type === "application/json") {
+            reader.readAsText(file);
+          } else {
+            alert("파일 형식이 올바르지 않거나 손상된 파일입니다.");
+          }
+
+          // TODO: alert으로 뜨는 오류 메시지를 별도 오류 창으로 표현할 예정
+        };
+
+        const file = document.createElement("input");
+        file.type = "file";
+        file.accept = ".json,data:text/json;chatset=utf-8";
+        file.addEventListener("change", restoreProcess);
+        file.click();
+        file.remove();
+      } else if (action.payload.type === "server") {
+      }
+    },
+    copyCalendarPage: (state, action) => {},
   },
 });
 
