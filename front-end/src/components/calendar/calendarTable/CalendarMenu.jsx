@@ -2,7 +2,7 @@ export default function CalendarMenu({
   rightClickPosition,
   setCalendarKeyList,
   setRightClickPosition,
-  setStyleMenu,
+  setModalOption,
 }) {
   const handleMenuClick = (e) => {
     e.preventDefault();
@@ -15,7 +15,7 @@ export default function CalendarMenu({
 
   const handleItemClick = () => {
     setCalendarKeyList((prev) => {
-      const removeIndex = prev.indexOf(rightClickPosition.calendarKey);
+      const removeIndex = prev.indexOf(rightClickPosition.key);
       return [
         ...prev.slice(0, removeIndex),
         ...prev.slice(removeIndex + 1, prev.length),
@@ -26,7 +26,13 @@ export default function CalendarMenu({
   };
 
   const handleItemClick2 = () => {
-    setStyleMenu(() => ({ calendarKey: rightClickPosition.calendarKey }));
+    console.log(rightClickPosition.key);
+    setModalOption(() => ({
+      type: "style",
+      modalArg: {
+        calendarKey: rightClickPosition.key,
+      },
+    }));
     setRightClickPosition(() => ({}));
   };
 

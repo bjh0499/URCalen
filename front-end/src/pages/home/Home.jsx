@@ -14,55 +14,59 @@ export default function Home() {
   // TODO: 임시로 공휴일 정보를 해당 함수에서 지정하지만, 실제 배포 시에는 서버에서 받을 방침
   let holidays = loadHolidays();
 
+  // TODO: 달 선택에 따라 변경되는 구성으로 개조 중이므로, 아래 내용은 year를 제외하고 삭제 예정
   let today = new Date();
   const [monthSelector, setMonthSelector] = useState({
     year: today.getFullYear(),
     month: today.getMonth(),
   });
 
-  const [calendarKeyList, setCalendarKeyList] = useState([]);
-  const [calendarId, setCalendarId] = useState(0);
   const [rightClickPosition, setRightClickPosition] = useState({});
 
-  // TODO: 공통적으로 가운데에 팝업 형식으로 뜨는 아래 메뉴들을 한 Logic으로 처리할 수 있도록 통합하는 작업 필요
-  const [styleMenu, setStyleMenu] = useState(null);
-  const [loginMenu, setLoginMenu] = useState(false);
-  const [signUpMenu, setSignUpMenu] = useState(false);
-  const [saveMenu, setSaveMenu] = useState(false);
+  const [modalOption, setModalOption] = useState({});
 
+  const [calendarKeyList, setCalendarKeyList] = useState([]);
+  const [calendarId, setCalendarId] = useState(0);
   const [calendarOption, setCalendarOption] = useState({});
   const [calendarPosition, setCalendarPosition] = useState({});
   const [calendarSize, setCalendarSize] = useState({});
 
   const handleClick = () => {
-    if (rightClickPosition.clickX !== undefined) {
-      setRightClickPosition(() => ({}));
-    }
-
-    if (styleMenu) {
-      setStyleMenu(() => null);
-    }
-
-    if (loginMenu) {
-      setLoginMenu(() => false);
-    }
-
-    if (signUpMenu) {
-      setSignUpMenu(() => false);
-    }
-
-    if (saveMenu) {
-      setSaveMenu(() => false);
-    }
+    setRightClickPosition(() => ({}));
+    setModalOption(() => ({}));
   };
+
+  let modalContent = <></>;
+
+  if (modalOption.type === "style") {
+    modalContent = (
+      <StyleMenu
+        calendarKey={modalOption.modalArg.calendarKey}
+        calendarOption={calendarOption}
+        setCalendarOption={setCalendarOption}
+      />
+    );
+  } else if (modalOption.type === "login") {
+    modalContent = <LoginMenu setModalOption={setModalOption} />;
+  } else if (modalOption.type === "signup") {
+    modalContent = <SignUpMenu setModalOption={setModalOption} />;
+  } else if (modalOption.type === "save") {
+    modalContent = (
+      <SaveMenu
+        setModalOption={setModalOption}
+        calendarKeyList={calendarKeyList}
+        calendarOption={calendarOption}
+        calendarPosition={calendarPosition}
+        calendarSize={calendarSize}
+      />
+    );
+  }
 
   return (
     <div className="w-full h-full" onClick={handleClick}>
       <Nav
         setMonthSelector={setMonthSelector}
-        setLoginMenu={setLoginMenu}
-        setSignUpMenu={setSignUpMenu}
-        setSaveMenu={setSaveMenu}
+        setModalOption={setModalOption}
         setCalendarKeyList={setCalendarKeyList}
         calendarId={calendarId}
         setCalendarId={setCalendarId}
@@ -92,33 +96,12 @@ export default function Home() {
           rightClickPosition={rightClickPosition}
           setCalendarKeyList={setCalendarKeyList}
           setRightClickPosition={setRightClickPosition}
-          setStyleMenu={setStyleMenu}
+          setModalOption={setModalOption}
         />
       ) : (
         <></>
       )}
-      {styleMenu ? (
-        <StyleMenu
-          calendarKey={styleMenu.calendarKey}
-          calendarOption={calendarOption}
-          setCalendarOption={setCalendarOption}
-        />
-      ) : (
-        <></>
-      )}
-      {loginMenu ? <LoginMenu setLoginMenu={setLoginMenu} /> : <></>}
-      {signUpMenu ? <SignUpMenu setSignUpMenu={setSignUpMenu} /> : <></>}
-      {saveMenu ? (
-        <SaveMenu
-          setSaveMenu={setSaveMenu}
-          calendarKeyList={calendarKeyList}
-          calendarOption={calendarOption}
-          calendarPosition={calendarPosition}
-          calendarSize={calendarSize}
-        />
-      ) : (
-        <></>
-      )}
+      {modalContent}
     </div>
   );
 }

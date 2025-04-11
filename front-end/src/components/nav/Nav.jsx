@@ -4,9 +4,7 @@ import NormalNavDivButton from "./NormalNavDivButton";
 
 export default function Nav({
   setMonthSelector,
-  setLoginMenu,
-  setSignUpMenu,
-  setSaveMenu,
+  setModalOption,
   setCalendarKeyList,
   calendarId,
   setCalendarId,
@@ -77,8 +75,9 @@ export default function Nav({
     setCalendarKeyList((prev) => [...prev, calendarId]);
   };
 
-  const saveCalendar = () => {
-    setSaveMenu(() => true);
+  const saveCalendar = (e) => {
+    e.stopPropagation();
+    setModalOption(() => ({ type: "save" }));
   };
 
   const restoreCalendar = () => {
@@ -188,15 +187,15 @@ export default function Nav({
     file.remove();
   };
 
-  const login = () => {
-    setLoginMenu(() => true);
+  const login = (e) => {
+    e.stopPropagation();
+    setModalOption(() => ({ type: "login" }));
   };
 
-  const signIn = () => {
-    setSignUpMenu(() => true);
+  const signUp = (e) => {
+    e.stopPropagation();
+    setModalOption(() => ({ type: "signup" }));
   };
-
-  const tempFunc = () => {};
 
   const calendarPageButtonPropsList1 = [];
   for (let i = 0; i < 13; i++) {
@@ -218,7 +217,7 @@ export default function Nav({
 
   const userButtonPropsList = [];
   userButtonPropsList.push({ text: "L", clickFunc: login });
-  userButtonPropsList.push({ text: "S", clickFunc: signIn });
+  userButtonPropsList.push({ text: "S", clickFunc: signUp });
 
   return (
     <div className="flex-col-center w-full">

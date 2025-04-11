@@ -5,7 +5,7 @@ import customCalendarApi from "../../api/customCalendarApi";
 import Modal from "../utils/Modal";
 
 export default function SaveMenu({
-  setSaveMenu,
+  setModalOption,
   calendarKeyList,
   calendarOption,
   calendarPosition,
@@ -38,7 +38,7 @@ export default function SaveMenu({
     link.click();
     link.remove();
 
-    setSaveMenu(() => false);
+    setModalOption(() => ({}));
   };
 
   const handleServerSave = async () => {
@@ -70,7 +70,7 @@ export default function SaveMenu({
       alert(err);
     }
 
-    setSaveMenu(() => false);
+    setModalOption(() => ({}));
   };
 
   // https://stackoverflow.com/questions/6334495/
