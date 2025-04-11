@@ -26,7 +26,6 @@ export default function CalendarMenu({
   };
 
   const handleItemClick2 = () => {
-    console.log(rightClickPosition.key);
     setModalOption(() => ({
       type: "style",
       modalArg: {

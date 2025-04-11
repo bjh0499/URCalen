@@ -1,3 +1,7 @@
+import { useDispatch, useSelector } from "react-redux";
+
+import { addCalendar } from "../../store/slices/calendarPagesSlice";
+
 import FrontChangeButton from "./FrontChangeButton";
 import MonthChangeButton from "./MonthChangeButton";
 import NormalNavDivButton from "./NormalNavDivButton";
@@ -15,6 +19,10 @@ export default function Nav({
   calendarSize,
   setCalendarSize,
 }) {
+  const dispatch = useDispatch();
+  const selectedMonth = useSelector((state) => state.selectedMonth.month);
+  const isFront = useSelector((state) => state.selectedMonth.front);
+
   const prevYear = () => {
     setMonthSelector((prev) => {
       return {
@@ -48,39 +56,22 @@ export default function Nav({
     });
   };
 
-  const addCalendar = () => {
-    setCalendarId((prev) => prev + 1);
-
-    const addOption = JSON.parse(JSON.stringify(calendarOption));
-    addOption[calendarId] = {
-      lang: "KO",
+  const handleAddCalendar = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const inputObj = {
+      idx: (selectedMonth << 1) + !isFront,
     };
 
-    const addPosition = JSON.parse(JSON.stringify(calendarPosition));
-    addPosition[calendarId] = {
-      x: 0,
-      y: 0,
-    };
-
-    const addSize = JSON.parse(JSON.stringify(calendarSize));
-    addSize[calendarId] = {
-      width: 320,
-      height: 320,
-    };
-
-    setCalendarOption(() => addOption);
-    setCalendarPosition(() => addPosition);
-    setCalendarSize(() => addSize);
-
-    setCalendarKeyList((prev) => [...prev, calendarId]);
+    dispatch(addCalendar(inputObj));
   };
 
-  const saveCalendar = (e) => {
+  const handleSaveCalendar = (e) => {
     e.stopPropagation();
     setModalOption(() => ({ type: "save" }));
   };
 
-  const restoreCalendar = () => {
+  const handleRestoreCalendar = () => {
     const restoreProcess = (e) => {
       const file = e.target.files[0];
       const reader = new FileReader();
@@ -211,9 +202,9 @@ export default function Nav({
   calendarButtonPropsList.push({ text: "◀", clickFunc: prevMonth });
   calendarButtonPropsList.push({ text: "▶", clickFunc: nextMonth });
   calendarButtonPropsList.push({ text: "▶▶", clickFunc: nextYear });
-  calendarButtonPropsList.push({ text: "+", clickFunc: addCalendar });
-  calendarButtonPropsList.push({ text: "S", clickFunc: saveCalendar });
-  calendarButtonPropsList.push({ text: "L", clickFunc: restoreCalendar });
+  calendarButtonPropsList.push({ text: "+", clickFunc: handleAddCalendar });
+  calendarButtonPropsList.push({ text: "S", clickFunc: handleSaveCalendar });
+  calendarButtonPropsList.push({ text: "L", clickFunc: handleRestoreCalendar });
 
   const userButtonPropsList = [];
   userButtonPropsList.push({ text: "L", clickFunc: login });
