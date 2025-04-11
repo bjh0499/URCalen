@@ -89,15 +89,10 @@ export default function Home() {
       ))}
       {rightClickPosition.clickX !== undefined ? (
         <CalendarMenu
-          clickX={rightClickPosition.clickX}
-          clickY={rightClickPosition.clickY}
-          calendarX={rightClickPosition.calendarX}
-          calendarY={rightClickPosition.calendarY}
-          calendarKey={rightClickPosition.key}
+          rightClickPosition={rightClickPosition}
           setCalendarKeyList={setCalendarKeyList}
           setRightClickPosition={setRightClickPosition}
           setStyleMenu={setStyleMenu}
-          setCalendarOption={setCalendarOption}
         />
       ) : (
         <></>

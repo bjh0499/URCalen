@@ -1,7 +1,5 @@
 export default function CalendarMenu({
-  clickX,
-  clickY,
-  calendarKey,
+  rightClickPosition,
   setCalendarKeyList,
   setRightClickPosition,
   setStyleMenu,
@@ -17,7 +15,7 @@ export default function CalendarMenu({
 
   const handleItemClick = () => {
     setCalendarKeyList((prev) => {
-      const removeIndex = prev.indexOf(calendarKey);
+      const removeIndex = prev.indexOf(rightClickPosition.calendarKey);
       return [
         ...prev.slice(0, removeIndex),
         ...prev.slice(removeIndex + 1, prev.length),
@@ -28,14 +26,18 @@ export default function CalendarMenu({
   };
 
   const handleItemClick2 = () => {
-    setStyleMenu(() => ({ calendarKey: calendarKey }));
+    setStyleMenu(() => ({ calendarKey: rightClickPosition.calendarKey }));
     setRightClickPosition(() => ({}));
   };
 
   return (
     <div
       className="menu-box bg-slate-100"
-      style={{ position: "absolute", left: `${clickX}px`, top: `${clickY}px` }}
+      style={{
+        position: "absolute",
+        left: `${rightClickPosition.clickX}px`,
+        top: `${rightClickPosition.clickY}px`,
+      }}
       onClick={handleMenuClick}
       onContextMenu={handleMenuRightClick}
     >
