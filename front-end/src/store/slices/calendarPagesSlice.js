@@ -28,7 +28,7 @@ const calendarPagesSlice = createSlice({
 
       state.calendarPages[idx].calendarOption[newCalendarId] = { lang: "KO" };
       state.calendarPages[idx].calendarPosition[newCalendarId] = { x: 0, y: 0 };
-      state.calendarPages[idx].calendarSize[newCalendarId] = { x: 320, y: 320 };
+      state.calendarPages[idx].calendarSize[newCalendarId] = { width: 320, height: 320 };
 
       state.calendarPages[idx].calendarKeyList.push(newCalendarId);
     },
@@ -47,7 +47,8 @@ const calendarPagesSlice = createSlice({
         ...prev.slice(removeIndex + 1, prev.length),
       ];
     },
-    changeCalendar: (state, action) => {
+    updateCalendar: (state, action) => {
+      console.log(action.payload);
       const idx = action.payload.idx;
       const updateCalendarId = action.payload.calendarKey;
       const type = action.payload.type;

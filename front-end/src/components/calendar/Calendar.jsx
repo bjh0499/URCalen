@@ -1,10 +1,12 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { Resizable } from "react-resizable";
 import Draggable from "react-draggable";
 
 import CalendarHeader from "./calendarHeader/CalendarHeader";
 import CalendarTable from "./calendarTable/CalendarTable";
+
+import updateCalendar from "../../store/slices/calendarPagesSlice";
 
 export default function Calendar({
   calendarKey,
@@ -17,6 +19,8 @@ export default function Calendar({
   calendarSize,
   setCalendarSize,
 }) {
+  const dispatch = useDispatch();
+
   const selectedMonth = useSelector((state) => state.selectedMonth.month);
   const isFront = useSelector((state) => state.selectedMonth.front);
   const calendarPageIdx = (selectedMonth << 1) + !isFront;
@@ -27,13 +31,19 @@ export default function Calendar({
   const positionState = calendarPage.calendarPosition[calendarKey];
 
   const handleOnResize = (e, { node, size, handle }) => {
-    const modifiedSize = JSON.parse(JSON.stringify(calendarSize));
-    modifiedSize[calendarKey] = {
+    const sizeObj = {
       width: size.width,
       height: size.height,
     };
 
-    setCalendarSize(() => modifiedSize);
+    const updateCalendarObj = {
+      idx: calendarPageIdx,
+      calendarKey: calendarKey,
+      type: "calendarSize",
+      obj: sizeObj,
+    };
+
+    dispatch(updateCalendar(updateCalendarObj));
   };
 
   const handleRightClick = (e) => {
