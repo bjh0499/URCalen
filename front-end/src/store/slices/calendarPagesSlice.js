@@ -48,7 +48,7 @@ const calendarPagesSlice = createSlice({
       ];
     },
     updateCalendar: (state, action) => {
-      console.log(action.payload);
+      console.log(action);
       const idx = action.payload.idx;
       const updateCalendarId = action.payload.calendarKey;
       const type = action.payload.type;

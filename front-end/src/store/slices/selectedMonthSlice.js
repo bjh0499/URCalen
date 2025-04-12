@@ -11,12 +11,7 @@ const selectedMonthSlice = createSlice({
   reducers: {
     setMonth: (state, action) => {
       const newMonth = action.payload.month;
-      if (
-        newMonth &&
-        typeof newMonth === "number" &&
-        newMonth >= 0 &&
-        newMonth <= 13
-      ) {
+      if (typeof newMonth === "number" && newMonth >= 0 && newMonth <= 13) {
         state.month = newMonth;
       }
     },
