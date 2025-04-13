@@ -6,7 +6,7 @@ import Draggable from "react-draggable";
 import CalendarHeader from "./calendarHeader/CalendarHeader";
 import CalendarTable from "./calendarTable/CalendarTable";
 
-import updateCalendar from "../../store/slices/calendarPagesSlice";
+import { updateCalendar } from "../../store/slices/calendarPagesSlice";
 
 export default function Calendar({
   calendarKey,
