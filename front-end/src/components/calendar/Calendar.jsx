@@ -83,13 +83,19 @@ export default function Calendar({
   };
 
   const handleDragStop = (e, data) => {
-    const modifiedPosition = JSON.parse(JSON.stringify(calendarPosition));
-    modifiedPosition[calendarKey] = {
+    const positionObj = {
       x: data.x,
       y: data.y,
     };
 
-    setCalendarPosition(() => modifiedPosition);
+    const updateCalendarObj = {
+      idx: calendarPageIdx,
+      calendarKey: calendarKey,
+      type: "calendarPosition",
+      obj: positionObj,
+    };
+
+    dispatch(updateCalendar(updateCalendarObj));
   };
 
   return (
