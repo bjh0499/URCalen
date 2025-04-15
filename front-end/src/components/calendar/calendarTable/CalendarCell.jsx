@@ -14,6 +14,7 @@ export default function CalendarCell({
   const calendarPage = useSelector(
     (state) => state.calendarPages.calendarPages[calendarPageIdx]
   );
+  const calendarThisOption = calendarPage.calendarOption[calendarKey];
 
   const usingTextColor = [
     "text-red-300",

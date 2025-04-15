@@ -19,7 +19,6 @@ export default function Calendar({
   calendarSize,
   setCalendarSize,
 }) {
-  console.log(calendarKey);
   const dispatch = useDispatch();
 
   const selectedMonth = useSelector((state) => state.selectedMonth.month);

@@ -23,13 +23,13 @@ export default function StyleMenu({
     e.stopPropagation();
     // 과거 브라우저 호환을 위해, Object.assign, structuredClone method 대신 JSON을 통한 복사 구현
 
+    const calendarThisOption = calendarPage.calendarOption[calendarKey];
     let langValue;
 
-    if (calendarPage[calendarKey].calendarOption.lang === undefined) {
+    if (calendarThisOption.lang === undefined) {
       langValue = "EN";
     } else {
-      langValue =
-        calendarPage[calendarKey].calendarOption.lang === "KO" ? "EN" : "KO";
+      langValue = calendarThisOption.lang === "KO" ? "EN" : "KO";
     }
 
     const optionObj = {

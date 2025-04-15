@@ -13,7 +13,7 @@ export default function CalendarTopCell({
   const calendarPage = useSelector(
     (state) => state.calendarPages.calendarPages[calendarPageIdx]
   );
-  const calendarThisOption = calendarPage[calendarKey].calendarOption;
+  const calendarThisOption = calendarPage.calendarOption[calendarKey];
 
   let giveClass = "flex-center w-full h-full ";
 
