@@ -1,23 +1,49 @@
+import { useDispatch, useSelector } from "react-redux";
+
 import Modal from "../utils/Modal";
+
+import { updateCalendar } from "../../store/slices/calendarPagesSlice";
 
 export default function StyleMenu({
   calendarKey,
   calendarOption,
   setCalendarOption,
 }) {
+  const dispatch = useDispatch();
+
+  const selectedMonth = useSelector((state) => state.selectedMonth.month);
+  const isFront = useSelector((state) => state.selectedMonth.front);
+  const calendarPageIdx = (selectedMonth << 1) + !isFront;
+  const calendarPage = useSelector(
+    (state) => state.calendarPages.calendarPages[calendarPageIdx]
+  );
+
   const handleItemClick = (e) => {
     e.preventDefault();
     e.stopPropagation();
     // 과거 브라우저 호환을 위해, Object.assign, structuredClone method 대신 JSON을 통한 복사 구현
-    const changeOption = JSON.parse(JSON.stringify(calendarOption));
-    let changeThisOption = changeOption[calendarKey];
-    if (changeThisOption === undefined) {
-      changeThisOption = { lang: "EN" };
+
+    let langValue;
+
+    if (calendarPage[calendarKey].calendarOption.lang === undefined) {
+      langValue = "EN";
     } else {
-      changeThisOption.lang = changeThisOption.lang === "KO" ? "EN" : "KO";
+      langValue =
+        calendarPage[calendarKey].calendarOption.lang === "KO" ? "EN" : "KO";
     }
-    changeOption[calendarKey] = changeThisOption;
-    setCalendarOption(() => changeOption);
+
+    const optionObj = {
+      lang: langValue,
+    };
+
+    const updateCalendarObj = {
+      idx: calendarPageIdx,
+      calendarKey: calendarKey,
+      type: "calendarOption",
+      obj: optionObj,
+    };
+
+    dispatch(updateCalendar(updateCalendarObj));
   };
 
   // https://stackoverflow.com/questions/6334495/

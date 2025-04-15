@@ -1,6 +1,7 @@
 import CalendarCell from "./CalendarCell";
 
 export default function CalendarRow({
+  calendarKey,
   dayList,
   monthSelector,
   holidays,
@@ -12,6 +13,7 @@ export default function CalendarRow({
     calendarCells.push(
       <CalendarCell
         key={i}
+        calendarKey={calendarKey}
         dayObj={dayObj}
         monthSelector={monthSelector}
         holidays={holidays}

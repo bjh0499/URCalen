@@ -1,10 +1,20 @@
+import { useSelector } from "react-redux";
+
 export default function CalendarCell({
+  calendarKey,
   dayObj,
   monthSelector,
   holidays,
   sizeState,
   calendarOption,
 }) {
+  const selectedMonth = useSelector((state) => state.selectedMonth.month);
+  const isFront = useSelector((state) => state.selectedMonth.front);
+  const calendarPageIdx = (selectedMonth << 1) + !isFront;
+  const calendarPage = useSelector(
+    (state) => state.calendarPages.calendarPages[calendarPageIdx]
+  );
+
   const usingTextColor = [
     "text-red-300",
     "text-red-600",
