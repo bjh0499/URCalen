@@ -1,8 +1,11 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 
 import customCalendarApi from "../../api/customCalendarApi";
 
 import Modal from "../utils/Modal";
+
+import { saveCalendarPages } from "../../store/slices/calendarPagesSlice";
 
 export default function SaveMenu({
   setModalOption,
@@ -11,6 +14,8 @@ export default function SaveMenu({
   calendarPosition,
   calendarSize,
 }) {
+  const dispatch = useDispatch();
+
   const [formData, setFormData] = useState({
     isPublic: false,
   });
@@ -20,24 +25,7 @@ export default function SaveMenu({
   };
 
   const handleFileSave = () => {
-    const calendarDataList = [];
-    calendarKeyList.forEach((key) => {
-      const calendarDataObj = {};
-      calendarDataObj.calendarOption = calendarOption[key];
-      calendarDataObj.calendarPosition = calendarPosition[key];
-      calendarDataObj.calendarSize = calendarSize[key];
-      calendarDataList.push(calendarDataObj);
-    });
-
-    // https://codesandbox.io/p/sandbox/export-js-object-to-json-download-file-react-4t2xb?file=%2Fsrc%2FApp.js%3A69%2C5-69%2C18
-    const link = document.createElement("a");
-    link.href = `data:text/json;chatset=utf-8,${encodeURIComponent(
-      JSON.stringify(calendarDataList)
-    )}`;
-    link.download = "data.json";
-    link.click();
-    link.remove();
-
+    dispatch(saveCalendarPages({ type: "local" }));
     setModalOption(() => ({}));
   };
 

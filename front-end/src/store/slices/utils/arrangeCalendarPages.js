@@ -4,9 +4,10 @@ export default function arrangeCalendarPages(calendarPages) {
     const calendarPageDataList = [];
     calendarPages[i].calendarKeyList.forEach((key) => {
       const calendarPageDataObj = {};
-      calendarPageDataObj.calendarOption = calendarOption[key];
-      calendarPageDataObj.calendarPosition = calendarPosition[key];
-      calendarPageDataObj.calendarSize = calendarSize[key];
+      calendarPageDataObj.calendarOption = calendarPages[i].calendarOption[key];
+      calendarPageDataObj.calendarPosition =
+        calendarPages[i].calendarPosition[key];
+      calendarPageDataObj.calendarSize = calendarPages[i].calendarSize[key];
       calendarPageDataList.push(calendarPageDataObj);
     });
 
