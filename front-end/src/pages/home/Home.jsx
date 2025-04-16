@@ -98,16 +98,11 @@ export default function Home() {
           holidays={holidays}
           calendarOption={calendarOption}
           setRightClickPosition={setRightClickPosition}
-          calendarPosition={calendarPosition}
-          setCalendarPosition={setCalendarPosition}
-          calendarSize={calendarSize}
-          setCalendarSize={setCalendarSize}
         />
       ))}
       {rightClickPosition.clickX !== undefined ? (
         <CalendarMenu
           rightClickPosition={rightClickPosition}
-          setCalendarKeyList={setCalendarKeyList}
           setRightClickPosition={setRightClickPosition}
           setModalOption={setModalOption}
         />

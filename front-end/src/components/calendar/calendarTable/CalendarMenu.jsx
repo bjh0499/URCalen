@@ -4,7 +4,6 @@ import { deleteCalendar } from "../../../store/slices/calendarPagesSlice";
 
 export default function CalendarMenu({
   rightClickPosition,
-  setCalendarKeyList,
   setRightClickPosition,
   setModalOption,
 }) {

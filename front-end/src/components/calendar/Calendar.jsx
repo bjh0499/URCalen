@@ -14,10 +14,6 @@ export default function Calendar({
   holidays,
   calendarOption,
   setRightClickPosition,
-  calendarPosition,
-  setCalendarPosition,
-  calendarSize,
-  setCalendarSize,
 }) {
   const dispatch = useDispatch();
 

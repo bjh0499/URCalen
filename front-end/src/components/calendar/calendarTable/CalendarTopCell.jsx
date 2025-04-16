@@ -1,12 +1,6 @@
 import { useSelector } from "react-redux";
 
-export default function CalendarTopCell({
-  idx,
-  calendarKey,
-  day,
-  sizeState,
-  calendarOption,
-}) {
+export default function CalendarTopCell({ idx, calendarKey, day, sizeState }) {
   const selectedMonth = useSelector((state) => state.selectedMonth.month);
   const isFront = useSelector((state) => state.selectedMonth.front);
   const calendarPageIdx = (selectedMonth << 1) + !isFront;

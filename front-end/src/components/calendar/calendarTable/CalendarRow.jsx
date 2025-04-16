@@ -6,7 +6,6 @@ export default function CalendarRow({
   monthSelector,
   holidays,
   sizeState,
-  calendarOption,
 }) {
   let calendarCells = [];
   dayList.forEach((dayObj, i) => {
@@ -18,7 +17,6 @@ export default function CalendarRow({
         monthSelector={monthSelector}
         holidays={holidays}
         sizeState={sizeState}
-        calendarOption={calendarOption}
       />
     );
   });

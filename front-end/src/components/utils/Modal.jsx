@@ -3,6 +3,7 @@ export default function Modal({ children }) {
     e.stopPropagation();
   };
 
+  // https://stackoverflow.com/questions/6334495/
   return (
     <div
       className="style-menu-box bg-slate-100 z-100"

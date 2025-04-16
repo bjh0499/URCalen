@@ -6,7 +6,6 @@ export default function CalendarCell({
   monthSelector,
   holidays,
   sizeState,
-  calendarOption,
 }) {
   const selectedMonth = useSelector((state) => state.selectedMonth.month);
   const isFront = useSelector((state) => state.selectedMonth.front);

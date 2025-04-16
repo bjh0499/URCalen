@@ -73,7 +73,6 @@ export default function SaveMenu({
     setModalOption(() => ({}));
   };
 
-  // https://stackoverflow.com/questions/6334495/
   return (
     <Modal>
       <div onClick={handleFileSave}>파일로 저장</div>

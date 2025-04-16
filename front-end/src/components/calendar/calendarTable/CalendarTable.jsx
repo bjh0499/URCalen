@@ -6,7 +6,6 @@ export default function CalendarTable({
   monthSelector,
   holidays,
   sizeState,
-  calendarOption,
 }) {
   let inputDay = new Date(monthSelector.year, monthSelector.month, 1);
   while (inputDay.getDay() > 0) {
@@ -33,18 +32,13 @@ export default function CalendarTable({
         monthSelector={monthSelector}
         holidays={holidays}
         sizeState={sizeState}
-        calendarOption={calendarOption}
       />
     );
   }
 
   return (
     <div className="flex-col-center h-4/5 w-full">
-      <CalendarTopRow
-        calendarKey={calendarKey}
-        sizeState={sizeState}
-        calendarOption={calendarOption}
-      />
+      <CalendarTopRow calendarKey={calendarKey} sizeState={sizeState} />
       {calendarRows}
     </div>
   );
