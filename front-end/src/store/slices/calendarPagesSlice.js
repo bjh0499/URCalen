@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 import arrangeCalendarPages from "./utils/arrangeCalendarPages";
-import jsonToCalendarPages from "./utils/jsonToCalendarPages";
 
 const initialState = {
   calendarPages: [],
@@ -101,44 +100,12 @@ const calendarPagesSlice = createSlice({
         }
         */
       }
-
-      // TODO: Modal 제어는 Slice가 아닌 Component에서 진행할 예정
-      // setSaveMenu(() => false);
     },
     loadCalendarPages: (state, action) => {
       if (action.payload.type === "local") {
-        const restoreProcess = (e) => {
-          const file = e.target.files[0];
-          const reader = new FileReader();
-
-          reader.addEventListener("load", () => {
-            const newCalendarPages = jsonToCalendarPages(reader.result);
-            if (newCalendarPages !== null) {
-              state.calendarPages = [];
-
-              setTimeout(() => {
-                state.calendarPages = newCalendarPages;
-              }, 50);
-            }
-          });
-
-          if (!file) {
-            alert("파일이 선택되지 않았습니다.");
-          } else if (file.type === "application/json") {
-            reader.readAsText(file);
-          } else {
-            alert("파일 형식이 올바르지 않거나 손상된 파일입니다.");
-          }
-
-          // TODO: alert으로 뜨는 오류 메시지를 별도 오류 창으로 표현할 예정
-        };
-
-        const file = document.createElement("input");
-        file.type = "file";
-        file.accept = ".json,data:text/json;chatset=utf-8";
-        file.addEventListener("change", restoreProcess);
-        file.click();
-        file.remove();
+        if (action.payload.data !== null) {
+          state.calendarPages = action.payload.data;
+        }
       } else if (action.payload.type === "server") {
       }
     },

@@ -1,24 +1,17 @@
 import { useDispatch, useSelector } from "react-redux";
 
-import { addCalendar } from "../../store/slices/calendarPagesSlice";
+import {
+  addCalendar,
+  loadCalendarPages,
+} from "../../store/slices/calendarPagesSlice";
 
 import FrontChangeButton from "./FrontChangeButton";
 import MonthChangeButton from "./MonthChangeButton";
 import NormalNavDivButton from "./NormalNavDivButton";
 
-export default function Nav({
-  setMonthSelector,
-  setModalOption,
-  setCalendarKeyList,
-  calendarId,
-  setCalendarId,
-  calendarOption,
-  setCalendarOption,
-  calendarPosition,
-  setCalendarPosition,
-  calendarSize,
-  setCalendarSize,
-}) {
+import jsonToCalendarPages from "./utils/jsonToCalendarPages";
+
+export default function Nav({ setMonthSelector, setModalOption }) {
   const dispatch = useDispatch();
   const selectedMonth = useSelector((state) => state.selectedMonth.month);
   const isFront = useSelector((state) => state.selectedMonth.front);
@@ -72,95 +65,22 @@ export default function Nav({
   };
 
   const handleRestoreCalendar = () => {
+    // 해당 과정을 state에서 진행 시, illegal operation attempted on a revoked proxy 라는 오류가 발생하므로 이곳에서 실행
     const restoreProcess = (e) => {
       const file = e.target.files[0];
       const reader = new FileReader();
 
       reader.addEventListener("load", () => {
-        try {
-          const calendarArray = JSON.parse(reader.result);
-          if (
-            Object.prototype.toString.call(calendarArray) !== "[object Array]"
-          ) {
-            alert("파일 형식이 올바르지 않거나 손상된 파일입니다.");
-            return;
-          }
-
-          let invalid = false;
-
-          for (let i = 0; i < calendarArray.length; i++) {
-            const c = calendarArray[i];
-            if (!c.calendarOption || !c.calendarPosition || !c.calendarSize) {
-              invalid = true;
-              break;
-            }
-
-            // TODO: ENUM 등 형식을 고려해서 외부에서 불러오는 방식을 고려 중
-            let cp = c.calendarOption;
-            if (!cp.lang || !["KO", "EN"].includes(cp.lang)) {
-              invalid = true;
-              break;
-            }
-
-            cp = c.calendarPosition;
-            if (!cp.x || !cp.y) {
-              invalid = true;
-              break;
-            }
-
-            cp = c.calendarSize;
-            if (!cp.width || !cp.height || cp.width < 320 || cp.height < 320) {
-              invalid = true;
-              break;
-            }
-          }
-
-          if (invalid) {
-            alert("파일 형식이 올바르지 않거나 손상된 파일입니다.");
-            return;
-          }
-
-          const addOption = {};
-          const addPosition = {};
-          const addSize = {};
-          const newKeyList = [];
-
-          for (let i = 1; i <= calendarArray.length; i++) {
-            addOption[i] = JSON.parse(
-              JSON.stringify(calendarArray[i - 1].calendarOption)
-            );
-
-            addPosition[i] = JSON.parse(
-              JSON.stringify(calendarArray[i - 1].calendarPosition)
-            );
-
-            addSize[i] = JSON.parse(
-              JSON.stringify(calendarArray[i - 1].calendarSize)
-            );
-
-            newKeyList.push(i);
-          }
-
-          setCalendarKeyList([]);
-          setCalendarId(calendarArray.length + 1);
-          setCalendarOption({});
-          setCalendarPosition({});
-          setCalendarSize({});
-
-          setTimeout(() => {
-            setCalendarOption(() => addOption);
-            setCalendarPosition(() => addPosition);
-            setCalendarSize(() => addSize);
-            setCalendarKeyList(() => newKeyList);
-          }, 50);
-        } catch (e) {
-          alert("파일 형식이 올바르지 않거나 손상된 파일입니다.");
+        const newCalendarPages = jsonToCalendarPages(reader.result);
+        if (newCalendarPages !== null) {
+          dispatch(
+            loadCalendarPages({ type: "local", data: newCalendarPages })
+          );
         }
       });
 
       if (!file) {
         alert("파일이 선택되지 않았습니다.");
-        return;
       } else if (file.type === "application/json") {
         reader.readAsText(file);
       } else {

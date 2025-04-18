@@ -26,12 +26,6 @@ export default function Home() {
 
   const [modalOption, setModalOption] = useState({});
 
-  const [calendarKeyList, setCalendarKeyList] = useState([]);
-  const [calendarId, setCalendarId] = useState(0);
-  const [calendarOption, setCalendarOption] = useState({});
-  const [calendarPosition, setCalendarPosition] = useState({});
-  const [calendarSize, setCalendarSize] = useState({});
-
   const handleClick = () => {
     if (rightClickPosition.clickX !== undefined) {
       setRightClickPosition(() => ({}));
@@ -45,27 +39,13 @@ export default function Home() {
   let modalContent = <></>;
 
   if (modalOption.type === "style") {
-    modalContent = (
-      <StyleMenu
-        calendarKey={modalOption.modalArg.calendarKey}
-        calendarOption={calendarOption}
-        setCalendarOption={setCalendarOption}
-      />
-    );
+    modalContent = <StyleMenu calendarKey={modalOption.modalArg.calendarKey} />;
   } else if (modalOption.type === "login") {
     modalContent = <LoginMenu setModalOption={setModalOption} />;
   } else if (modalOption.type === "signup") {
     modalContent = <SignUpMenu setModalOption={setModalOption} />;
   } else if (modalOption.type === "save") {
-    modalContent = (
-      <SaveMenu
-        setModalOption={setModalOption}
-        calendarKeyList={calendarKeyList}
-        calendarOption={calendarOption}
-        calendarPosition={calendarPosition}
-        calendarSize={calendarSize}
-      />
-    );
+    modalContent = <SaveMenu setModalOption={setModalOption} />;
   }
 
   const selectedMonth = useSelector((state) => state.selectedMonth.month);
@@ -80,15 +60,6 @@ export default function Home() {
       <Nav
         setMonthSelector={setMonthSelector}
         setModalOption={setModalOption}
-        setCalendarKeyList={setCalendarKeyList}
-        calendarId={calendarId}
-        setCalendarId={setCalendarId}
-        calendarOption={calendarOption}
-        setCalendarOption={setCalendarOption}
-        calendarPosition={calendarPosition}
-        setCalendarPosition={setCalendarPosition}
-        calendarSize={calendarSize}
-        setCalendarSize={setCalendarSize}
       />
       {calendarPage.calendarKeyList.map((key) => (
         <Calendar

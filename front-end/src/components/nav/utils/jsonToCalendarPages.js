@@ -25,7 +25,7 @@ export default function jsonToCalendarPages(jsonData) {
         }
 
         cp = c.calendarPosition;
-        if (!cp.x || !cp.y) {
+        if (Number.parseInt(cp.x) === NaN || Number.parseInt(cp.y) === NaN) {
           throw new Error("파일 형식이 올바르지 않거나 손상된 파일입니다.");
         }
 
@@ -57,7 +57,7 @@ export default function jsonToCalendarPages(jsonData) {
         loadedCalendarPage.calendarKeyList.push(i);
       }
 
-      loadedCalendarPage.calendarId = calendarArray.length + 1;
+      loadedCalendarPage.calendarId = calendarArray.length;
 
       newCalendarPages.push(loadedCalendarPage);
     }
