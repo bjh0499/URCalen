@@ -30,34 +30,7 @@ export default function SaveMenu({
   };
 
   const handleServerSave = async () => {
-    const calendarDataList = [];
-    calendarKeyList.forEach((key) => {
-      const calendarDataObj = {};
-      calendarDataObj.calendarOption = calendarOption[key];
-      calendarDataObj.calendarPosition = calendarPosition[key];
-      calendarDataObj.calendarSize = calendarSize[key];
-      calendarDataList.push(calendarDataObj);
-    });
-
-    const customCalendar = {};
-
-    // TODO: 달력 제목을 정하는 부분은 추후 추가
-    customCalendar.title = "달력 제목";
-    customCalendar.calendarData = JSON.stringify(calendarDataList);
-    // TODO: 사진 업로드 부분은 추후 추가
-    customCalendar.imageData = "";
-    customCalendar.isPublic = formData.isPublic;
-
-    try {
-      const response = await customCalendarApi.createCustomCalendar(
-        customCalendar
-      );
-      alert("달력이 저장되었습니다.");
-    } catch (err) {
-      alert("달력 저장 과정에서 오류가 발생했습니다.");
-      alert(err);
-    }
-
+    dispatch(saveCalendarPages({ type: "server" }));
     setModalOption(() => ({}));
   };
 
