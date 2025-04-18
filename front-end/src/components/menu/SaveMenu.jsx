@@ -1,19 +1,11 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 
-import customCalendarApi from "../../api/customCalendarApi";
-
 import Modal from "../utils/Modal";
 
 import { saveCalendarPages } from "../../store/slices/calendarPagesSlice";
 
-export default function SaveMenu({
-  setModalOption,
-  calendarKeyList,
-  calendarOption,
-  calendarPosition,
-  calendarSize,
-}) {
+export default function SaveMenu({ setModalOption }) {
   const dispatch = useDispatch();
 
   const [formData, setFormData] = useState({
