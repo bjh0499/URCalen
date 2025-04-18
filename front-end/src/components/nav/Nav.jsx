@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   addCalendar,
   loadCalendarPages,
+  resetCalendarPages,
 } from "../../store/slices/calendarPagesSlice";
 
 import FrontChangeButton from "./FrontChangeButton";
@@ -73,9 +74,12 @@ export default function Nav({ setMonthSelector, setModalOption }) {
       reader.addEventListener("load", () => {
         const newCalendarPages = jsonToCalendarPages(reader.result);
         if (newCalendarPages !== null) {
-          dispatch(
-            loadCalendarPages({ type: "local", data: newCalendarPages })
-          );
+          dispatch(resetCalendarPages());
+          setTimeout(() => {
+            dispatch(
+              loadCalendarPages({ type: "local", data: newCalendarPages })
+            );
+          }, 50);
         }
       });
 

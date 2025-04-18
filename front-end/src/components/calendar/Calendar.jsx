@@ -12,7 +12,6 @@ export default function Calendar({
   calendarKey,
   monthSelector,
   holidays,
-  calendarOption,
   setRightClickPosition,
 }) {
   const dispatch = useDispatch();
@@ -121,7 +120,6 @@ export default function Calendar({
             monthSelector={monthSelector}
             holidays={holidays}
             sizeState={sizeState}
-            calendarOption={calendarOption}
           />
         </div>
       </Resizable>

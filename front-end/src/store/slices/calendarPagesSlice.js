@@ -103,10 +103,23 @@ const calendarPagesSlice = createSlice({
     },
     loadCalendarPages: (state, action) => {
       if (action.payload.type === "local") {
+        state.calendarPages = [];
         if (action.payload.data !== null) {
           state.calendarPages = action.payload.data;
         }
       } else if (action.payload.type === "server") {
+      }
+    },
+    // 원격에서 달력 정보를 불러올 때, 이를 외부적으로 시간 차를 두어 실행시켜야 기존 정보가 유지되는 문제를 해결할 수 있음
+    resetCalendarPages: (state, action) => {
+      for (let i = 0; i < 28; i++) {
+        const blankCalendarPageObj = {};
+        blankCalendarPageObj.calendarId = 0;
+        blankCalendarPageObj.calendarKeyList = [];
+        blankCalendarPageObj.calendarOption = {};
+        blankCalendarPageObj.calendarPosition = {};
+        blankCalendarPageObj.calendarSize = {};
+        state.calendarPages[i] = blankCalendarPageObj;
       }
     },
     copyCalendarPage: (state, action) => {
@@ -121,5 +134,6 @@ export const {
   updateCalendar,
   saveCalendarPages,
   loadCalendarPages,
+  resetCalendarPages,
 } = calendarPagesSlice.actions;
 export default calendarPagesSlice.reducer;
