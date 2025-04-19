@@ -67,7 +67,6 @@ export default function Home() {
           calendarKey={key}
           monthSelector={monthSelector}
           holidays={holidays}
-          calendarOption={calendarOption}
           setRightClickPosition={setRightClickPosition}
         />
       ))}
