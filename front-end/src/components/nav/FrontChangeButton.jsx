@@ -1,12 +1,17 @@
 import { useDispatch } from "react-redux";
 
 import { setFront } from "../../store/slices/selectedMonthSlice";
+import { setIsChanged } from "../../store/slices/selectedMonthSlice";
 
 export default function FrontChangeButton({ text, value }) {
   const dispatch = useDispatch();
 
   const handleClick = () => {
+    dispatch(setIsChanged({ isChanged: true }));
     dispatch(setFront({ front: value }));
+    setTimeout(() => {
+      dispatch(setIsChanged({ isChanged: false }));
+    }, 20);
   };
 
   return (
