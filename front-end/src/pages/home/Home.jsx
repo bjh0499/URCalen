@@ -54,6 +54,7 @@ export default function Home() {
   const calendarPage = useSelector(
     (state) => state.calendarPages.calendarPages[calendarPageIdx]
   );
+  const isChanged = useSelector((state) => state.selectedMonth.isChanged);
 
   return (
     <div className="w-full h-full" onClick={handleClick}>
@@ -61,15 +62,16 @@ export default function Home() {
         setMonthSelector={setMonthSelector}
         setModalOption={setModalOption}
       />
-      {calendarPage.calendarKeyList.map((key) => (
-        <Calendar
-          key={key}
-          calendarKey={key}
-          monthSelector={monthSelector}
-          holidays={holidays}
-          setRightClickPosition={setRightClickPosition}
-        />
-      ))}
+      {!isChanged &&
+        calendarPage.calendarKeyList.map((key) => (
+          <Calendar
+            key={key}
+            calendarKey={key}
+            monthSelector={monthSelector}
+            holidays={holidays}
+            setRightClickPosition={setRightClickPosition}
+          />
+        ))}
       {rightClickPosition.clickX !== undefined ? (
         <CalendarMenu
           rightClickPosition={rightClickPosition}

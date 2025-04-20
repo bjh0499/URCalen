@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   month: 0,
   front: true,
+  isChanged: false,
 };
 
 const selectedMonthSlice = createSlice({
@@ -21,6 +22,12 @@ const selectedMonthSlice = createSlice({
         state.front = newFront;
       }
     },
+    setIsChanged: (state, action) => {
+      const newIsChanged = action.payload.isChanged;
+      if (typeof newIsChanged === "boolean") {
+        state.isChanged = newIsChanged;
+      }
+    },
     resetMonth: (state, action) => {
       state.month = 0;
       state.front = true;
@@ -28,5 +35,6 @@ const selectedMonthSlice = createSlice({
   },
 });
 
-export const { setMonth, setFront, resetMonth } = selectedMonthSlice.actions;
+export const { setMonth, setFront, resetMonth, setIsChanged } =
+  selectedMonthSlice.actions;
 export default selectedMonthSlice.reducer;

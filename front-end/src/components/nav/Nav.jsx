@@ -79,7 +79,7 @@ export default function Nav({ setMonthSelector, setModalOption }) {
             dispatch(
               loadCalendarPages({ type: "local", data: newCalendarPages })
             );
-          }, 50);
+          }, 10);
         }
       });
 
