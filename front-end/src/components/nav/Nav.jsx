@@ -6,7 +6,6 @@ import {
   resetCalendarPages,
 } from "../../store/slices/calendarPagesSlice";
 
-import FrontChangeButton from "./FrontChangeButton";
 import MonthChangeButton from "./MonthChangeButton";
 import NormalNavDivButton from "./NormalNavDivButton";
 
@@ -114,12 +113,12 @@ export default function Nav({ setMonthSelector, setModalOption }) {
 
   const calendarPageButtonPropsList1 = [];
   for (let i = 0; i < 13; i++) {
-    calendarPageButtonPropsList1.push({ text: i, value: i });
+    calendarPageButtonPropsList1.push({ text: i, type: "month", value: i });
   }
 
   const calendarPageButtonPropsList2 = [];
-  calendarPageButtonPropsList2.push({ text: "F", value: true });
-  calendarPageButtonPropsList2.push({ text: "R", value: false });
+  calendarPageButtonPropsList2.push({ text: "F", type: "front", value: true });
+  calendarPageButtonPropsList2.push({ text: "R", type: "front", value: false });
 
   const calendarButtonPropsList = [];
   calendarButtonPropsList.push({ text: "◀◀", clickFunc: prevYear });
@@ -143,6 +142,7 @@ export default function Nav({ setMonthSelector, setModalOption }) {
               <MonthChangeButton
                 key={idx}
                 text={buttonProps.text}
+                type={buttonProps.type}
                 value={buttonProps.value}
               />
             ))}
@@ -152,9 +152,10 @@ export default function Nav({ setMonthSelector, setModalOption }) {
         <div>
           <div className="flex items-center">
             {calendarPageButtonPropsList2.map((buttonProps, idx) => (
-              <FrontChangeButton
+              <MonthChangeButton
                 key={idx}
                 text={buttonProps.text}
+                type={buttonProps.type}
                 value={buttonProps.value}
               />
             ))}
