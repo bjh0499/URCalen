@@ -10,6 +10,7 @@ import StyleMenu from "../../components/menu/StyleMenu";
 import LoginMenu from "../../components/menu/LoginMenu";
 import SignUpMenu from "../../components/menu/SignUpMenu";
 import SaveMenu from "../../components/menu/SaveMenu";
+import GlobalOptionMenu from "../../components/menu/GlobalOptionMenu";
 
 export default function Home() {
   // TODO: 임시로 공휴일 정보를 해당 함수에서 지정하지만, 실제 배포 시에는 서버에서 받을 방침
@@ -46,6 +47,8 @@ export default function Home() {
     modalContent = <SignUpMenu setModalOption={setModalOption} />;
   } else if (modalOption.type === "save") {
     modalContent = <SaveMenu setModalOption={setModalOption} />;
+  } else if (modalOption.type === "globalOption") {
+    modalContent = <GlobalOptionMenu setModalOption={setModalOption} />;
   }
 
   const selectedMonth = useSelector((state) => state.selectedMonth.month);

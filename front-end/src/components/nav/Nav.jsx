@@ -49,6 +49,11 @@ export default function Nav({ setMonthSelector, setModalOption }) {
     });
   };
 
+  const handleGlobalOption = (e) => {
+    e.stopPropagation();
+    setModalOption(() => ({ type: "globalOption" }));
+  };
+
   const handleAddCalendar = (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -126,6 +131,7 @@ export default function Nav({ setMonthSelector, setModalOption }) {
   calendarButtonPropsList.push({ text: "▶", clickFunc: nextMonth });
   calendarButtonPropsList.push({ text: "▶▶", clickFunc: nextYear });
   calendarButtonPropsList.push({ text: "+", clickFunc: handleAddCalendar });
+  calendarButtonPropsList.push({ text: "O", clickFunc: handleGlobalOption });
   calendarButtonPropsList.push({ text: "S", clickFunc: handleSaveCalendar });
   calendarButtonPropsList.push({ text: "L", clickFunc: handleRestoreCalendar });
 

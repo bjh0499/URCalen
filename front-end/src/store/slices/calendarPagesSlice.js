@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import arrangeCalendarPages from "./utils/arrangeCalendarPages";
 
 const initialState = {
+  calendarTitle: "",
   calendarPages: [],
 };
 
@@ -20,6 +21,9 @@ const calendarPagesSlice = createSlice({
   name: "calendarPages",
   initialState,
   reducers: {
+    setCalendarTitle: (state, action) => {
+      state.calendarTitle = action.payload.calendarTitle;
+    },
     addCalendar: (state, action) => {
       const idx = action.payload.idx;
       const newCalendarId = state.calendarPages[idx].calendarId;
@@ -129,6 +133,7 @@ const calendarPagesSlice = createSlice({
 });
 
 export const {
+  setCalendarTitle,
   addCalendar,
   deleteCalendar,
   updateCalendar,
