@@ -7,7 +7,7 @@ import { setCalendarTitle } from "../../store/slices/calendarPagesSlice";
 
 export default function GlobalOptionMenu({ setModalOption }) {
   const [formData, setFormData] = useState({
-    calendarTitle: "",
+    calendarTitle: useSelector((state) => state.calendarPages.calendarTitle),
   });
 
   const dispatch = useDispatch();
@@ -36,9 +36,6 @@ export default function GlobalOptionMenu({ setModalOption }) {
             name="calendarTitle"
             required
             placeholder="달력 이름"
-            defaultValue={useSelector(
-              (state) => state.calendarPages.calendarTitle
-            )}
             value={formData.calendarTitle}
             onChange={handleFormInput}
           />

@@ -69,9 +69,7 @@ const calendarPagesSlice = createSlice({
       }
     },
     saveCalendarPages: (state, action) => {
-      const jsonData = JSON.stringify(
-        arrangeCalendarPages(state.calendarPages)
-      );
+      const jsonData = JSON.stringify(arrangeCalendarPages(state));
       if (action.payload.type === "local") {
         // https://codesandbox.io/p/sandbox/export-js-object-to-json-download-file-react-4t2xb?file=%2Fsrc%2FApp.js%3A69%2C5-69%2C18
         const link = document.createElement("a");

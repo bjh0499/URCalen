@@ -1,5 +1,9 @@
-export default function arrangeCalendarPages(calendarPages) {
-  const calendarPagesDataList = [];
+export default function arrangeCalendarPages(state) {
+  const calendarData = {
+    calendarTitle: state.calendarTitle,
+    calendarPages: [],
+  };
+  const calendarPages = state.calendarPages;
   for (let i = 0; i < 28; i++) {
     const calendarPageDataList = [];
     calendarPages[i].calendarKeyList.forEach((key) => {
@@ -11,8 +15,8 @@ export default function arrangeCalendarPages(calendarPages) {
       calendarPageDataList.push(calendarPageDataObj);
     });
 
-    calendarPagesDataList.push(calendarPageDataList);
+    calendarData.calendarPages.push(calendarPageDataList);
   }
 
-  return calendarPagesDataList;
+  return calendarData;
 }
