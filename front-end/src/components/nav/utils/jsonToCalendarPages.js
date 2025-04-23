@@ -1,17 +1,25 @@
+import typeCheck from "./typeCheck";
+
 export default function jsonToCalendarPages(jsonData) {
-  const newCalendarPages = [];
+  const newCalendarData = {};
+  newCalendarData.calendarTitle = "";
+  newCalendarData.calendarPages = [];
 
   try {
-    const calendarPagesArray = JSON.parse(jsonData);
+    const loadedCalendarData = JSON.parse(jsonData);
     if (
-      Object.prototype.toString.call(calendarPagesArray) !== "[object Array]" ||
-      calendarPagesArray.length !== 28
+      !typeCheck(loadedCalendarData, "[object Object]") ||
+      !typeCheck(loadedCalendarData.calendarTitle, "[object String]") ||
+      !typeCheck(loadedCalendarData.calendarPages, "[object Array]") ||
+      loadedCalendarData.calendarPages.length !== 28
     ) {
       throw new Error("파일 형식이 올바르지 않거나 손상된 파일입니다.");
     }
 
+    newCalendarData.calendarTitle = loadedCalendarData.calendarTitle;
+
     for (let i = 0; i < 28; i++) {
-      const calendarArray = calendarPagesArray[i];
+      const calendarArray = loadedCalendarData.calendarPages[i];
       for (let j = 0; j < calendarArray.length; j++) {
         const c = calendarArray[j];
         if (!c.calendarOption || !c.calendarPosition || !c.calendarSize) {
@@ -59,12 +67,12 @@ export default function jsonToCalendarPages(jsonData) {
 
       loadedCalendarPage.calendarId = calendarArray.length;
 
-      newCalendarPages.push(loadedCalendarPage);
+      newCalendarData.calendarPages.push(loadedCalendarPage);
     }
   } catch (e) {
     alert(e.message);
     return null;
   }
 
-  return newCalendarPages;
+  return newCalendarData;
 }

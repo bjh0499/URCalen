@@ -76,12 +76,12 @@ export default function Nav({ setMonthSelector, setModalOption }) {
       const reader = new FileReader();
 
       reader.addEventListener("load", () => {
-        const newCalendarPages = jsonToCalendarPages(reader.result);
-        if (newCalendarPages !== null) {
+        const loadCalendarData = jsonToCalendarPages(reader.result);
+        if (loadCalendarData !== null) {
           dispatch(resetCalendarPages());
           setTimeout(() => {
             dispatch(
-              loadCalendarPages({ type: "local", data: newCalendarPages })
+              loadCalendarPages({ type: "local", data: loadCalendarData })
             );
           }, 10);
         }

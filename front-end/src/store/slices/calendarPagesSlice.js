@@ -105,9 +105,11 @@ const calendarPagesSlice = createSlice({
     },
     loadCalendarPages: (state, action) => {
       if (action.payload.type === "local") {
+        state.calendarTitle = "";
         state.calendarPages = [];
         if (action.payload.data !== null) {
-          state.calendarPages = action.payload.data;
+          state.calendarTitle = action.payload.data.calendarTitle;
+          state.calendarPages = action.payload.data.calendarPages;
         }
       } else if (action.payload.type === "server") {
       }
