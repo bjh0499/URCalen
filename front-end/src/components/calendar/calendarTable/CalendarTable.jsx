@@ -12,7 +12,8 @@ export default function CalendarTable({ calendarKey, holidays, sizeState }) {
   }
 
   let calendarRows = [];
-  for (let i = 0; i < 5; i++) {
+  let i = 0;
+  do {
     let dayList = [];
     for (let j = 0; j < 7; j++) {
       dayList.push({
@@ -32,7 +33,12 @@ export default function CalendarTable({ calendarKey, holidays, sizeState }) {
         sizeState={sizeState}
       />
     );
-  }
+
+    i++;
+  } while (
+    inputDay.getFullYear() < selectedYear ||
+    inputDay.getMonth() < selectedMonth
+  );
 
   return (
     <div className="flex-col-center h-4/5 w-full">
