@@ -3,11 +3,10 @@ import { useSelector } from "react-redux";
 export default function CalendarCell({
   calendarKey,
   dayObj,
-  monthSelector,
   holidays,
   sizeState,
 }) {
-  const selectedMonth = useSelector((state) => state.selectedMonth.month);
+  let selectedMonth = useSelector((state) => state.selectedMonth.month);
   const isFront = useSelector((state) => state.selectedMonth.front);
   const calendarPageIdx = (selectedMonth << 1) + !isFront;
   const calendarPage = useSelector(
@@ -65,9 +64,11 @@ export default function CalendarCell({
     selectColor = "stone";
   }
 
+  selectedMonth = (selectedMonth + 11) % 12;
+
   giveClass += `text-${selectColor}-${
     (dayObj.day === 0 || dayObj.day === 6 || isHoliday ? 300 : 400) <<
-    (monthSelector.month === dayObj.month)
+    (selectedMonth === dayObj.month)
   }`;
 
   return <div className={giveClass}>{dayObj.date}</div>;

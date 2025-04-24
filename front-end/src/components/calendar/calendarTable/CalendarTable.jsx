@@ -1,13 +1,12 @@
+import { useSelector } from "react-redux";
+
 import CalendarRow from "./CalendarRow";
 import CalendarTopRow from "./CalendarTopRow";
 
-export default function CalendarTable({
-  calendarKey,
-  monthSelector,
-  holidays,
-  sizeState,
-}) {
-  let inputDay = new Date(monthSelector.year, monthSelector.month, 1);
+export default function CalendarTable({ calendarKey, holidays, sizeState }) {
+  const selectedYear = useSelector((state) => state.selectedMonth.year);
+  const selectedMonth = useSelector((state) => state.selectedMonth.month);
+  let inputDay = new Date(selectedYear, selectedMonth - 1, 1);
   while (inputDay.getDay() > 0) {
     inputDay = new Date(inputDay.valueOf() - 86400000);
   }
@@ -29,7 +28,6 @@ export default function CalendarTable({
         key={i}
         calendarKey={calendarKey}
         dayList={dayList}
-        monthSelector={monthSelector}
         holidays={holidays}
         sizeState={sizeState}
       />

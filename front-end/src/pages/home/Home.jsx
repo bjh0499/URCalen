@@ -16,13 +16,6 @@ export default function Home() {
   // TODO: 임시로 공휴일 정보를 해당 함수에서 지정하지만, 실제 배포 시에는 서버에서 받을 방침
   const holidays = loadHolidays();
 
-  // TODO: 달 선택에 따라 변경되는 구성으로 개조 중이므로, 아래 내용은 year를 제외하고 삭제 예정
-  const today = new Date();
-  const [monthSelector, setMonthSelector] = useState({
-    year: today.getFullYear(),
-    month: today.getMonth(),
-  });
-
   const [rightClickPosition, setRightClickPosition] = useState({});
 
   const [modalOption, setModalOption] = useState({});
@@ -61,16 +54,12 @@ export default function Home() {
 
   return (
     <div className="w-full h-full" onClick={handleClick}>
-      <Nav
-        setMonthSelector={setMonthSelector}
-        setModalOption={setModalOption}
-      />
+      <Nav setModalOption={setModalOption} />
       {!isChanged &&
         calendarPage.calendarKeyList.map((key) => (
           <Calendar
             key={key}
             calendarKey={key}
-            monthSelector={monthSelector}
             holidays={holidays}
             setRightClickPosition={setRightClickPosition}
           />

@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
+  year: new Date().getFullYear(),
   month: 0,
   front: true,
   isChanged: false,
@@ -10,6 +11,12 @@ const selectedMonthSlice = createSlice({
   name: "selectedMonth",
   initialState,
   reducers: {
+    plusYear: (state, action) => {
+      state.year = state.year + 1;
+    },
+    minusYear: (state, action) => {
+      state.year = state.year - 1;
+    },
     setMonth: (state, action) => {
       const type = action.payload.type;
       if (type === "month") {
@@ -37,6 +44,6 @@ const selectedMonthSlice = createSlice({
   },
 });
 
-export const { setMonth, resetMonth, setIsChanged } =
+export const { plusYear, minusYear, setMonth, resetMonth, setIsChanged } =
   selectedMonthSlice.actions;
 export default selectedMonthSlice.reducer;

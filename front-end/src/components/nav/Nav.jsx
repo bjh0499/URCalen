@@ -5,48 +5,24 @@ import {
   loadCalendarPages,
   resetCalendarPages,
 } from "../../store/slices/calendarPagesSlice";
+import { plusYear, minusYear } from "../../store/slices/selectedMonthSlice";
 
 import MonthChangeButton from "./MonthChangeButton";
 import NormalNavDivButton from "./NormalNavDivButton";
 
 import jsonToCalendarPages from "./utils/jsonToCalendarPages";
 
-export default function Nav({ setMonthSelector, setModalOption }) {
+export default function Nav({ setModalOption }) {
   const dispatch = useDispatch();
   const selectedMonth = useSelector((state) => state.selectedMonth.month);
   const isFront = useSelector((state) => state.selectedMonth.front);
 
   const prevYear = () => {
-    setMonthSelector((prev) => {
-      return {
-        year: prev.year - 1,
-        month: prev.month,
-      };
-    });
+    dispatch(minusYear());
   };
-  const prevMonth = () => {
-    setMonthSelector((prev) => {
-      return {
-        year: prev.year - (prev.month === 0),
-        month: (prev.month + 11) % 12,
-      };
-    });
-  };
-  const nextMonth = () => {
-    setMonthSelector((prev) => {
-      return {
-        year: prev.year + (prev.month === 11),
-        month: (prev.month + 1) % 12,
-      };
-    });
-  };
+
   const nextYear = () => {
-    setMonthSelector((prev) => {
-      return {
-        year: prev.year + 1,
-        month: prev.month,
-      };
-    });
+    dispatch(plusYear());
   };
 
   const handleGlobalOption = (e) => {
@@ -126,10 +102,8 @@ export default function Nav({ setMonthSelector, setModalOption }) {
   calendarPageButtonPropsList2.push({ text: "R", type: "front", value: false });
 
   const calendarButtonPropsList = [];
-  calendarButtonPropsList.push({ text: "◀◀", clickFunc: prevYear });
-  calendarButtonPropsList.push({ text: "◀", clickFunc: prevMonth });
-  calendarButtonPropsList.push({ text: "▶", clickFunc: nextMonth });
-  calendarButtonPropsList.push({ text: "▶▶", clickFunc: nextYear });
+  calendarButtonPropsList.push({ text: "◀", clickFunc: prevYear });
+  calendarButtonPropsList.push({ text: "▶", clickFunc: nextYear });
   calendarButtonPropsList.push({ text: "+", clickFunc: handleAddCalendar });
   calendarButtonPropsList.push({ text: "O", clickFunc: handleGlobalOption });
   calendarButtonPropsList.push({ text: "S", clickFunc: handleSaveCalendar });

@@ -10,7 +10,6 @@ import { updateCalendar } from "../../store/slices/calendarPagesSlice";
 
 export default function Calendar({
   calendarKey,
-  monthSelector,
   holidays,
   setRightClickPosition,
 }) {
@@ -114,10 +113,9 @@ export default function Calendar({
           }}
           onContextMenu={handleRightClick}
         >
-          <CalendarHeader monthSelector={monthSelector} />
+          <CalendarHeader />
           <CalendarTable
             calendarKey={calendarKey}
-            monthSelector={monthSelector}
             holidays={holidays}
             sizeState={sizeState}
           />

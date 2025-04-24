@@ -3,7 +3,6 @@ import CalendarCell from "./CalendarCell";
 export default function CalendarRow({
   calendarKey,
   dayList,
-  monthSelector,
   holidays,
   sizeState,
 }) {
@@ -14,7 +13,6 @@ export default function CalendarRow({
         key={i}
         calendarKey={calendarKey}
         dayObj={dayObj}
-        monthSelector={monthSelector}
         holidays={holidays}
         sizeState={sizeState}
       />
