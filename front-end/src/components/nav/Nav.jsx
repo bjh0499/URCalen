@@ -30,6 +30,11 @@ export default function Nav({ setModalOption }) {
     setModalOption(() => ({ type: "globalOption" }));
   };
 
+  const handleCopyCalendar = (e) => {
+    e.stopPropagation();
+    setModalOption(() => ({ type: "copyCalendar" }));
+  };
+
   const handleAddCalendar = (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -106,6 +111,7 @@ export default function Nav({ setModalOption }) {
   calendarButtonPropsList.push({ text: "▶", clickFunc: nextYear });
   calendarButtonPropsList.push({ text: "+", clickFunc: handleAddCalendar });
   calendarButtonPropsList.push({ text: "O", clickFunc: handleGlobalOption });
+  calendarButtonPropsList.push({ text: "C", clickFunc: handleCopyCalendar });
   calendarButtonPropsList.push({ text: "S", clickFunc: handleSaveCalendar });
   calendarButtonPropsList.push({ text: "L", clickFunc: handleRestoreCalendar });
 
