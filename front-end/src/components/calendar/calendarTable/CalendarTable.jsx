@@ -4,12 +4,20 @@ import CalendarRow from "./CalendarRow";
 import CalendarTopRow from "./CalendarTopRow";
 
 export default function CalendarTable({ calendarKey, holidays, sizeState }) {
-  const selectedYear = useSelector((state) => state.selectedMonth.year);
-  const selectedMonth = useSelector((state) => state.selectedMonth.month);
+  let selectedYear = useSelector((state) => state.selectedMonth.year);
+  let selectedMonth = useSelector((state) => state.selectedMonth.month);
   let inputDay = new Date(selectedYear, selectedMonth - 1, 1);
   while (inputDay.getDay() > 0) {
     inputDay = new Date(inputDay.valueOf() - 86400000);
   }
+
+  if (!selectedMonth) {
+    selectedYear--;
+  } else if (selectedMonth === 13) {
+    selectedYear++;
+  }
+
+  selectedMonth = (selectedMonth + 11) % 12;
 
   let calendarRows = [];
   let i = 0;
@@ -36,8 +44,15 @@ export default function CalendarTable({ calendarKey, holidays, sizeState }) {
 
     i++;
   } while (
-    inputDay.getFullYear() < selectedYear ||
-    inputDay.getMonth() < selectedMonth
+    inputDay.getFullYear() === selectedYear &&
+    inputDay.getMonth() === selectedMonth
+  );
+
+  console.log(
+    inputDay.getFullYear(),
+    selectedYear,
+    inputDay.getMonth(),
+    selectedMonth
   );
 
   return (
