@@ -127,6 +127,12 @@ const calendarPagesSlice = createSlice({
       }
     },
     copyCalendarPage: (state, action) => {
+      const srcIdx = (action.payload.srcMonth << 1) + !action.payload.srcFront;
+      const dstIdx = (action.payload.dstMonth << 1) + !action.payload.dstFront;
+      const copiedCalendarPage = JSON.parse(
+        JSON.stringify(state.calendarPages[srcIdx])
+      );
+      state.calendarPages[dstIdx] = copiedCalendarPage;
       // TODO: srcIdx의 달력 정보를 그대로 복사한 object를 dstIdx에 대입
     },
   },
@@ -140,5 +146,6 @@ export const {
   saveCalendarPages,
   loadCalendarPages,
   resetCalendarPages,
+  copyCalendarPage,
 } = calendarPagesSlice.actions;
 export default calendarPagesSlice.reducer;

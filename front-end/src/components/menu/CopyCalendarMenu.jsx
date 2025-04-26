@@ -3,11 +3,35 @@ import { useSelector, useDispatch } from "react-redux";
 
 import Modal from "../utils/Modal";
 
+import { copyCalendarPage } from "../../store/slices/calendarPagesSlice";
+
 export default function CopyCalendarMenu({ setModalOption }) {
+  const dispatch = useDispatch();
+
+  const [dstMonth, setDstMonth] = useState(0);
+  const [dstFront, setDstFront] = useState(true);
+
+  const srcMonth = useSelector((state) => state.selectedMonth.month);
+  const srcFront = useSelector((state) => state.selectedMonth.front);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log();
+    const inputData = {
+      dstMonth: dstMonth,
+      dstFront: dstFront,
+      srcMonth: srcMonth,
+      srcFront: srcFront,
+    };
+    dispatch(copyCalendarPage(inputData));
     setModalOption(() => ({}));
+  };
+
+  const handleChangeMonth = (e) => {
+    setDstMonth(() => e.target.value);
+  };
+
+  const handleChangeFront = (e) => {
+    setDstFront(() => e.target.value === "true");
   };
 
   const optionList = [];
@@ -23,16 +47,36 @@ export default function CopyCalendarMenu({ setModalOption }) {
     <Modal>
       <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="destPage">덮어쓸 페이지: </label>
-          <select name="destPage">{optionList}</select>
+          <label htmlFor="inputMonth">덮어쓸 페이지: </label>
+          <select
+            name="inputMonth"
+            value={dstMonth}
+            onChange={handleChangeMonth}
+          >
+            {optionList}
+          </select>
         </div>
         <div>
           <label>덮어쓸 면: </label>
           <label>
-            <input type="radio" name="destLayer" value={true} />앞
+            <input
+              type="radio"
+              name="inputFront"
+              value={true}
+              checked={dstFront === true}
+              onChange={handleChangeFront}
+            />
+            앞
           </label>
           <label>
-            <input type="radio" name="destLayer" value={false} />뒤
+            <input
+              type="radio"
+              name="inputFront"
+              value={false}
+              checked={dstFront === false}
+              onChange={handleChangeFront}
+            />
+            뒤
           </label>
         </div>
         <button type="submit">확인</button>
