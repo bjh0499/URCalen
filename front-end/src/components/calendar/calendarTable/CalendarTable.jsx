@@ -48,13 +48,6 @@ export default function CalendarTable({ calendarKey, holidays, sizeState }) {
     inputDay.getMonth() === selectedMonth
   );
 
-  console.log(
-    inputDay.getFullYear(),
-    selectedYear,
-    inputDay.getMonth(),
-    selectedMonth
-  );
-
   return (
     <div className="flex-col-center h-4/5 w-full">
       <CalendarTopRow calendarKey={calendarKey} sizeState={sizeState} />
