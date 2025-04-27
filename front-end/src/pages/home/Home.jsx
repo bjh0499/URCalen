@@ -1,9 +1,6 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
 
 import Nav from "../../components/nav/Nav";
-import Calendar from "../../components/calendar/Calendar";
-import loadHolidays from "../../utils/loadHolidays";
 import CalendarMenu from "../../components/calendar/calendarTable/CalendarMenu";
 
 import StyleMenu from "../../components/menu/StyleMenu";
@@ -12,11 +9,9 @@ import SignUpMenu from "../../components/menu/SignUpMenu";
 import SaveMenu from "../../components/menu/SaveMenu";
 import GlobalOptionMenu from "../../components/menu/GlobalOptionMenu";
 import CopyCalendarMenu from "../../components/menu/CopyCalendarMenu";
+import CalendarArea from "../../components/calendar/CalendarArea";
 
 export default function Home() {
-  // TODO: 임시로 공휴일 정보를 해당 함수에서 지정하지만, 실제 배포 시에는 서버에서 받을 방침
-  const holidays = loadHolidays();
-
   const [rightClickPosition, setRightClickPosition] = useState({});
 
   const [modalOption, setModalOption] = useState({});
@@ -47,26 +42,10 @@ export default function Home() {
     modalContent = <CopyCalendarMenu setModalOption={setModalOption} />;
   }
 
-  const selectedMonth = useSelector((state) => state.selectedMonth.month);
-  const isFront = useSelector((state) => state.selectedMonth.front);
-  const calendarPageIdx = (selectedMonth << 1) + !isFront;
-  const calendarPage = useSelector(
-    (state) => state.calendarPages.calendarPages[calendarPageIdx]
-  );
-  const isChanged = useSelector((state) => state.selectedMonth.isChanged);
-
   return (
     <div className="w-full h-full" onClick={handleClick}>
       <Nav setModalOption={setModalOption} />
-      {!isChanged &&
-        calendarPage.calendarKeyList.map((key) => (
-          <Calendar
-            key={key}
-            calendarKey={key}
-            holidays={holidays}
-            setRightClickPosition={setRightClickPosition}
-          />
-        ))}
+      <CalendarArea setRightClickPosition={setRightClickPosition} />
       {rightClickPosition.clickX !== undefined ? (
         <CalendarMenu
           rightClickPosition={rightClickPosition}
