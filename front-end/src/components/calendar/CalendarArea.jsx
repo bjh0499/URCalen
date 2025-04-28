@@ -17,16 +17,18 @@ export default function CalendarArea({ setRightClickPosition }) {
   const isChanged = useSelector((state) => state.selectedMonth.isChanged);
 
   return (
-    <div>
-      {!isChanged &&
-        calendarPage.calendarKeyList.map((key) => (
-          <Calendar
-            key={key}
-            calendarKey={key}
-            holidays={holidays}
-            setRightClickPosition={setRightClickPosition}
-          />
-        ))}
+    <div className="flex grow w-full h-full">
+      <div className="flex m-auto" style={{ height: "750px", width: "1060px" }}>
+        {!isChanged &&
+          calendarPage.calendarKeyList.map((key) => (
+            <Calendar
+              key={key}
+              calendarKey={key}
+              holidays={holidays}
+              setRightClickPosition={setRightClickPosition}
+            />
+          ))}
+      </div>
     </div>
   );
 }

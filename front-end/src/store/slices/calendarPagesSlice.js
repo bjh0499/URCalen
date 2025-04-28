@@ -133,7 +133,6 @@ const calendarPagesSlice = createSlice({
         JSON.stringify(state.calendarPages[srcIdx])
       );
       state.calendarPages[dstIdx] = copiedCalendarPage;
-      // TODO: srcIdx의 달력 정보를 그대로 복사한 object를 dstIdx에 대입
     },
   },
 });

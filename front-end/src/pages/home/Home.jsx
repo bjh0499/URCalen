@@ -43,7 +43,7 @@ export default function Home() {
   }
 
   return (
-    <div className="w-full h-full" onClick={handleClick}>
+    <div className="grow flex-col-center w-full" onClick={handleClick}>
       <Nav setModalOption={setModalOption} />
       <CalendarArea setRightClickPosition={setRightClickPosition} />
       {rightClickPosition.clickX !== undefined ? (

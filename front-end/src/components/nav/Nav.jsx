@@ -120,8 +120,8 @@ export default function Nav({ setModalOption }) {
   userButtonPropsList.push({ text: "S", clickFunc: signUp });
 
   return (
-    <div className="flex-col-center w-full">
-      <div className="flex justify-between w-full">
+    <div className="flex-col-center w-full h-fit">
+      <div className="flex justify-between w-full h-fit">
         <div>
           <div className="flex items-center">
             {calendarPageButtonPropsList1.map((buttonProps, idx) => (
