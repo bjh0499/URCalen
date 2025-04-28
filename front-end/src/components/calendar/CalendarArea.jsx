@@ -17,7 +17,7 @@ export default function CalendarArea({ setRightClickPosition }) {
   const isChanged = useSelector((state) => state.selectedMonth.isChanged);
 
   return (
-    <div className="flex grow w-full h-full">
+    <div className="flex-center grow w-full">
       <div className="flex m-auto" style={{ height: "750px", width: "1060px" }}>
         {!isChanged &&
           calendarPage.calendarKeyList.map((key) => (

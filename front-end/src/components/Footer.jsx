@@ -1,3 +1,3 @@
 export default function Footer() {
-  return <div className="w-full h-full text-center">Footer</div>;
+  return <div className="grow-0 h-fit text-center">Footer</div>;
 }
