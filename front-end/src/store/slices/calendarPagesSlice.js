@@ -16,6 +16,7 @@ for (let i = 0; i < 28; i++) {
     calendarSize: {},
     imageId: 0,
     imageKeyList: [],
+    imageData: {},
     imagePosition: {},
     imageSize: {},
   };
@@ -74,7 +75,19 @@ const calendarPagesSlice = createSlice({
       }
     },
     addImage: (state, action) => {
-      // TODO: 이미지 추가
+      const idx = action.payload.idx;
+      const newImageId = state.calendarPages[idx].imageId;
+
+      state.calendarPages[idx].imageData[newImageId] = action.payload.img;
+      state.calendarPages[idx].imagePosition[newImageId] = { x: 0, y: 0 };
+      state.calendarPages[idx].imageSize[newImageId] = {
+        width: 320,
+        height: 320,
+      };
+
+      state.calendarPages[idx].imageKeyList.push(newImageId);
+
+      state.calendarPages[idx].imageId++;
     },
     deleteImage: (state, action) => {
       // TODO: 이미지 삭제

@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import {
   addCalendar,
+  addImage,
   loadCalendarPages,
   resetCalendarPages,
 } from "../../store/slices/calendarPagesSlice";
@@ -53,7 +54,7 @@ export default function Nav({ setModalOption }) {
       const reader = new FileReader();
 
       reader.addEventListener("load", () => {
-        console.log(reader.result);
+        dispatch(addImage({ img: reader.result }));
       });
 
       if (!file) {
