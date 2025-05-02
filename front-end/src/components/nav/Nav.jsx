@@ -45,6 +45,36 @@ export default function Nav({ setModalOption }) {
     dispatch(addCalendar(inputObj));
   };
 
+  const handleAddImage = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const addImageProcess = (e) => {
+      const file = e.target.files[0];
+      const reader = new FileReader();
+
+      reader.addEventListener("load", () => {
+        console.log(reader.result);
+      });
+
+      if (!file) {
+        alert("이미지가 선택되지 않았습니다.");
+      } else if (
+        ["image/jpeg", "image/png", "image/webp"].includes(file.type)
+      ) {
+        reader.readAsText(file);
+      } else {
+        alert("이미지 형식이 올바르지 않거나 손상된 파일입니다.");
+      }
+    };
+
+    const file = document.createElement("input");
+    file.type = "file";
+    file.accept = ".png,.jpg,.jpeg,.webp";
+    file.addEventListener("change", addImageProcess);
+    file.click();
+    file.remove();
+  };
+
   const handleSaveCalendar = (e) => {
     e.stopPropagation();
     setModalOption(() => ({ type: "save" }));
@@ -110,6 +140,7 @@ export default function Nav({ setModalOption }) {
   calendarButtonPropsList.push({ text: "◀", clickFunc: prevYear });
   calendarButtonPropsList.push({ text: "▶", clickFunc: nextYear });
   calendarButtonPropsList.push({ text: "+", clickFunc: handleAddCalendar });
+  calendarButtonPropsList.push({ text: "I", clickFunc: handleAddImage });
   calendarButtonPropsList.push({ text: "O", clickFunc: handleGlobalOption });
   calendarButtonPropsList.push({ text: "C", clickFunc: handleCopyCalendar });
   calendarButtonPropsList.push({ text: "S", clickFunc: handleSaveCalendar });
