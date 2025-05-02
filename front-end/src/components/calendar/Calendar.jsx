@@ -40,6 +40,32 @@ export default function Calendar({
     dispatch(updateCalendar(updateCalendarObj));
   };
 
+  const handleOnResizeStop = (e, { node, size, handle }) => {
+    const positionObj = {
+      x: positionState.x,
+      y: positionState.y,
+    };
+
+    if (positionObj.x + size.width > 1060) {
+      positionObj.x = 1060 - size.width;
+    }
+
+    if (positionObj.y + size.height > 750) {
+      positionObj.y = 750 - size.height;
+    }
+
+    const updateCalendarObj = {
+      idx: calendarPageIdx,
+      calendarKey: calendarKey,
+      type: "calendarPosition",
+      obj: positionObj,
+    };
+
+    setTimeout(() => {
+      dispatch(updateCalendar(updateCalendarObj));
+    }, 10);
+  };
+
   const handleRightClick = (e) => {
     e.preventDefault();
 
@@ -94,8 +120,9 @@ export default function Calendar({
 
   return (
     <Draggable
+      bounds="parent"
       cancel={".react-resizable-handle"}
-      defaultPosition={{ x: positionState.x, y: positionState.y }}
+      position={{ x: positionState.x, y: positionState.y }}
       onStop={handleDragStop}
     >
       <Resizable
@@ -103,7 +130,9 @@ export default function Calendar({
         width={sizeState.width}
         height={sizeState.height}
         minConstraints={[320, 320]}
+        maxConstraints={[1060, 750]}
         onResize={handleOnResize}
+        onResizeStop={handleOnResizeStop}
       >
         <div
           className="w-full h-full"

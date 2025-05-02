@@ -18,7 +18,10 @@ export default function CalendarArea({ setRightClickPosition }) {
 
   return (
     <div className="flex-center grow w-full">
-      <div className="flex m-auto" style={{ height: "750px", width: "1060px" }}>
+      <div
+        className="relative flex m-auto"
+        style={{ height: "750px", width: "1060px" }}
+      >
         {!isChanged &&
           calendarPage.calendarKeyList.map((key) => (
             <Calendar
