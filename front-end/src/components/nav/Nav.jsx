@@ -111,7 +111,7 @@ export default function Nav({ setModalOption }) {
 
     const file = document.createElement("input");
     file.type = "file";
-    file.accept = ".json,data:text/json;chatset=utf-8";
+    file.accept = ".json,data:text/json;charset=utf-8";
     file.addEventListener("change", restoreProcess);
     file.click();
     file.remove();
