@@ -8,12 +8,17 @@ const initialState = {
 };
 
 for (let i = 0; i < 28; i++) {
-  const calendarPageObj = {};
-  calendarPageObj.calendarId = 0;
-  calendarPageObj.calendarKeyList = [];
-  calendarPageObj.calendarOption = {};
-  calendarPageObj.calendarPosition = {};
-  calendarPageObj.calendarSize = {};
+  const calendarPageObj = {
+    calendarId: 0,
+    calendarKeyList: [],
+    calendarOption: {},
+    calendarPosition: {},
+    calendarSize: {},
+    imageId: 0,
+    imageKeyList: [],
+    imagePosition: {},
+    imageSize: {},
+  };
   initialState.calendarPages.push(calendarPageObj);
 }
 
@@ -68,6 +73,15 @@ const calendarPagesSlice = createSlice({
         state.calendarPages[idx].calendarSize[updateCalendarId] = obj;
       }
     },
+    addImage: (state, action) => {
+      // TODO: 이미지 추가
+    },
+    deleteImage: (state, action) => {
+      // TODO: 이미지 삭제
+    },
+    updateImage: (state, action) => {
+      // TODO: 이미지 위치, 크기 변경
+    },
     saveCalendarPages: (state, action) => {
       const jsonData = JSON.stringify(arrangeCalendarPages(state));
       if (action.payload.type === "local") {
@@ -117,12 +131,17 @@ const calendarPagesSlice = createSlice({
     // 원격에서 달력 정보를 불러올 때, 이를 외부적으로 시간 차를 두어 실행시켜야 기존 정보가 유지되는 문제를 해결할 수 있음
     resetCalendarPages: (state, action) => {
       for (let i = 0; i < 28; i++) {
-        const blankCalendarPageObj = {};
-        blankCalendarPageObj.calendarId = 0;
-        blankCalendarPageObj.calendarKeyList = [];
-        blankCalendarPageObj.calendarOption = {};
-        blankCalendarPageObj.calendarPosition = {};
-        blankCalendarPageObj.calendarSize = {};
+        const blankCalendarPageObj = {
+          calendarId: 0,
+          calendarKeyList: [],
+          calendarOption: {},
+          calendarPosition: {},
+          calendarSize: {},
+          imageId: 0,
+          imageKeyList: [],
+          imagePosition: {},
+          imageSize: {},
+        };
         state.calendarPages[i] = blankCalendarPageObj;
       }
     },
@@ -142,6 +161,9 @@ export const {
   addCalendar,
   deleteCalendar,
   updateCalendar,
+  addImage,
+  deleteImage,
+  updateImage,
   saveCalendarPages,
   loadCalendarPages,
   resetCalendarPages,

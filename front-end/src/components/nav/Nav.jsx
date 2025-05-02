@@ -61,7 +61,7 @@ export default function Nav({ setModalOption }) {
       } else if (
         ["image/jpeg", "image/png", "image/webp"].includes(file.type)
       ) {
-        reader.readAsText(file);
+        reader.readAsDataURL(file);
       } else {
         alert("이미지 형식이 올바르지 않거나 손상된 파일입니다.");
       }
