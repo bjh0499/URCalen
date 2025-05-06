@@ -17,6 +17,7 @@ export default function Nav({ setModalOption }) {
   const dispatch = useDispatch();
   const selectedMonth = useSelector((state) => state.selectedMonth.month);
   const isFront = useSelector((state) => state.selectedMonth.front);
+  const idx = (selectedMonth << 1) + !isFront;
 
   const prevYear = () => {
     dispatch(minusYear());
@@ -40,7 +41,7 @@ export default function Nav({ setModalOption }) {
     e.preventDefault();
     e.stopPropagation();
     const inputObj = {
-      idx: (selectedMonth << 1) + !isFront,
+      idx: idx,
     };
 
     dispatch(addCalendar(inputObj));
@@ -54,7 +55,7 @@ export default function Nav({ setModalOption }) {
       const reader = new FileReader();
 
       reader.addEventListener("load", () => {
-        dispatch(addImage({ img: reader.result }));
+        dispatch(addImage({ idx: idx, img: reader.result }));
       });
 
       if (!file) {
