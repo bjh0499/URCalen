@@ -94,6 +94,16 @@ const calendarPagesSlice = createSlice({
     },
     updateImage: (state, action) => {
       // TODO: 이미지 위치, 크기 변경
+      const idx = action.payload.idx;
+      const updateImageId = action.payload.imageId;
+      const type = action.payload.type;
+      const obj = action.payload.obj;
+
+      if (type === "imagePosition") {
+        state.calendarPages[idx].imagePosition[updateImageId] = obj;
+      } else if (type === "imageSize") {
+        state.calendarPages[idx].imageSize[updateImageId] = obj;
+      }
     },
     saveCalendarPages: (state, action) => {
       const jsonData = JSON.stringify(arrangeCalendarPages(state));
