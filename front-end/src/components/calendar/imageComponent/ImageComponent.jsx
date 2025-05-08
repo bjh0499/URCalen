@@ -37,8 +37,8 @@ export default function ImageComponent({ imageId, setRightClickPosition }) {
 
   const handleOnResizeStop = (e, { node, size, handle }) => {
     const positionObj = {
-      x: positionState.x,
-      y: positionState.y,
+      x: imagePosition.x,
+      y: imagePosition.y,
     };
 
     if (positionObj.x + size.width > 1060) {
