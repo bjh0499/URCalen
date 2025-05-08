@@ -75,19 +75,20 @@ export default function ImageComponent({ imageId, setRightClickPosition }) {
     do {
       const styleTransform = element.style.transform;
 
-      if (styleTransform === "translate(0px)") {
-        clickObj.imageX = 0;
+      const parts1 = /^translate\((-?\d{1,})px\)$/.exec(styleTransform);
+      if (parts1) {
+        clickObj.imageX = parseInt(parts1[1], 10);
         clickObj.imageY = 0;
         setRightClickPosition(() => clickObj);
         return;
       } else {
-        const parts = /^translate\((-?\d{1,})px, (-?\d{1,})px\)$/.exec(
+        const parts2 = /^translate\((-?\d{1,})px, (-?\d{1,})px\)$/.exec(
           styleTransform
         );
 
-        if (parts) {
-          clickObj.imageX = parseInt(parts[1], 10);
-          clickObj.imageY = parseInt(parts[2], 10);
+        if (parts2) {
+          clickObj.imageX = parseInt(parts2[1], 10);
+          clickObj.imageY = parseInt(parts2[2], 10);
           setRightClickPosition(() => clickObj);
           return;
         } else {

@@ -80,19 +80,20 @@ export default function Calendar({
     do {
       const styleTransform = element.style.transform;
 
-      if (styleTransform === "translate(0px)") {
-        clickObj.calendarX = 0;
+      const parts1 = /^translate\((-?\d{1,})px\)$/.exec(styleTransform);
+      if (parts1) {
+        clickObj.calendarX = parseInt(parts1[1], 10);
         clickObj.calendarY = 0;
         setRightClickPosition(() => clickObj);
         return;
       } else {
-        const parts = /^translate\((-?\d{1,})px, (-?\d{1,})px\)$/.exec(
+        const parts2 = /^translate\((-?\d{1,})px, (-?\d{1,})px\)$/.exec(
           styleTransform
         );
 
-        if (parts) {
-          clickObj.calendarX = parseInt(parts[1], 10);
-          clickObj.calendarY = parseInt(parts[2], 10);
+        if (parts2) {
+          clickObj.calendarX = parseInt(parts2[1], 10);
+          clickObj.calendarY = parseInt(parts2[2], 10);
           setRightClickPosition(() => clickObj);
           return;
         } else {
