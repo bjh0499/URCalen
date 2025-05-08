@@ -137,7 +137,7 @@ export default function ImageComponent({ imageId, setRightClickPosition }) {
           }}
           onContextMenu={handleRightClick}
         >
-          <img className="w-full h-full" src={imageData} />
+          <img className="w-full h-full" src={imageData} draggable={false} />
         </div>
       </Resizable>
     </Draggable>
