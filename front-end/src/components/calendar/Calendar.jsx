@@ -71,6 +71,7 @@ export default function Calendar({
 
     const clickObj = {
       key: calendarKey,
+      type: "calendar",
       clickX: e.clientX,
       clickY: e.clientY,
     };

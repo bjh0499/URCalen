@@ -1,7 +1,8 @@
 import { useState } from "react";
 
 import Nav from "../../components/nav/Nav";
-import CalendarMenu from "../../components/calendar/calendarTable/CalendarMenu";
+import CalendarRightClickMenu from "../../components/calendar/calendarTable/CalendarRightClickMenu";
+import ImageRightClickMenu from "../../components/calendar/imageComponent/ImageRightClickMenu";
 
 import StyleMenu from "../../components/menu/StyleMenu";
 import LoginMenu from "../../components/menu/LoginMenu";
@@ -47,11 +48,20 @@ export default function Home() {
       <Nav setModalOption={setModalOption} />
       <CalendarArea setRightClickPosition={setRightClickPosition} />
       {rightClickPosition.clickX !== undefined ? (
-        <CalendarMenu
-          rightClickPosition={rightClickPosition}
-          setRightClickPosition={setRightClickPosition}
-          setModalOption={setModalOption}
-        />
+        rightClickPosition.type === "calendar" ? (
+          <CalendarRightClickMenu
+            rightClickPosition={rightClickPosition}
+            setRightClickPosition={setRightClickPosition}
+            setModalOption={setModalOption}
+          />
+        ) : rightClickPosition.type === "image" ? (
+          <ImageRightClickMenu
+            rightClickPosition={rightClickPosition}
+            setRightClickPosition={setRightClickPosition}
+          />
+        ) : (
+          <></>
+        )
       ) : (
         <></>
       )}

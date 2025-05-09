@@ -66,6 +66,7 @@ export default function ImageComponent({ imageId, setRightClickPosition }) {
 
     const clickObj = {
       key: imageId,
+      type: "image",
       clickX: e.clientX,
       clickY: e.clientY,
     };

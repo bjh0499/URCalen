@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { deleteCalendar } from "../../../store/slices/calendarPagesSlice";
 
-export default function CalendarMenu({
+export default function CalendarRightClickMenu({
   rightClickPosition,
   setRightClickPosition,
   setModalOption,
