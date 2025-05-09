@@ -90,10 +90,21 @@ const calendarPagesSlice = createSlice({
       state.calendarPages[idx].imageId++;
     },
     deleteImage: (state, action) => {
-      // TODO: 이미지 삭제
+      const idx = action.payload.idx;
+      const deleteImageId = action.payload.imageId;
+
+      state.calendarPages[idx].imageData[deleteImageId] = undefined;
+      state.calendarPages[idx].imagePosition[deleteImageId] = undefined;
+      state.calendarPages[idx].imageSize[deleteImageId] = undefined;
+
+      const prev = state.calendarPages[idx].imageKeyList;
+      const removeIndex = prev.indexOf(deleteImageId);
+      state.calendarPages[idx].imageKeyList = [
+        ...prev.slice(0, removeIndex),
+        ...prev.slice(removeIndex + 1, prev.length),
+      ];
     },
     updateImage: (state, action) => {
-      // TODO: 이미지 위치, 크기 변경
       const idx = action.payload.idx;
       const updateImageId = action.payload.imageId;
       const type = action.payload.type;
