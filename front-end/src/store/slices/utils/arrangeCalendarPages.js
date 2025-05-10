@@ -5,17 +5,29 @@ export default function arrangeCalendarPages(state) {
   };
   const calendarPages = state.calendarPages;
   for (let i = 0; i < 28; i++) {
-    const calendarPageDataList = [];
+    const calendarPageObj = {
+      calendarPageDataList: [],
+      calendarPageImageList: [],
+    };
+
     calendarPages[i].calendarKeyList.forEach((key) => {
       const calendarPageDataObj = {};
       calendarPageDataObj.calendarOption = calendarPages[i].calendarOption[key];
       calendarPageDataObj.calendarPosition =
         calendarPages[i].calendarPosition[key];
       calendarPageDataObj.calendarSize = calendarPages[i].calendarSize[key];
-      calendarPageDataList.push(calendarPageDataObj);
+      calendarPageObj.calendarPageDataList.push(calendarPageDataObj);
     });
 
-    calendarData.calendarPages.push(calendarPageDataList);
+    calendarPages[i].imageKeyList.forEach((key) => {
+      const calendarPageImageObj = {};
+      calendarPageImageObj.imageData = calendarPages[i].imageData[key];
+      calendarPageImageObj.imagePosition = calendarPages[i].imagePosition[key];
+      calendarPageImageObj.imageSize = calendarPages[i].imageSize[key];
+      calendarPageObj.calendarPageImageList.push(calendarPageImageObj);
+    });
+
+    calendarData.calendarPages.push(calendarPageObj);
   }
 
   return calendarData;
