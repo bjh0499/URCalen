@@ -17,7 +17,6 @@ export default function CalendarArea({ setRightClickPosition }) {
   );
   const isChanged = useSelector((state) => state.selectedMonth.isChanged);
 
-  // TODO: 이미지 출력 관련 반복문 작성 예정
   return (
     <div className="flex-center grow w-full">
       <div

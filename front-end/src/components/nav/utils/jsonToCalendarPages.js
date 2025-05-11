@@ -19,7 +19,22 @@ export default function jsonToCalendarPages(jsonData) {
     newCalendarData.calendarTitle = loadedCalendarData.calendarTitle;
 
     for (let i = 0; i < 28; i++) {
-      const calendarArray = loadedCalendarData.calendarPages[i];
+      if (
+        !typeCheck(loadedCalendarData.calendarPages[i], "[object Object]") ||
+        !typeCheck(
+          loadedCalendarData.calendarPages[i].calendarPageDataList,
+          "[object Array]"
+        ) ||
+        !typeCheck(
+          loadedCalendarData.calendarPages[i].calendarPageImageList,
+          "[object Array]"
+        )
+      ) {
+        throw new Error("파일 형식이 올바르지 않거나 손상된 파일입니다.");
+      }
+
+      const calendarArray =
+        loadedCalendarData.calendarPages[i].calendarPageDataList;
       for (let j = 0; j < calendarArray.length; j++) {
         const c = calendarArray[j];
         if (!c.calendarOption || !c.calendarPosition || !c.calendarSize) {
@@ -43,11 +58,34 @@ export default function jsonToCalendarPages(jsonData) {
         }
       }
 
+      const imageArray =
+        loadedCalendarData.calendarPages[i].calendarPageImageList;
+      for (let j = 0; j < imageArray.length; j++) {
+        const img = imageArray[j];
+        if (!img.imageData || !img.imagePosition || !img.imageSize) {
+          throw new Error("파일 형식이 올바르지 않거나 손상된 파일입니다.");
+        }
+
+        let ip = img.imagePosition;
+        if (Number.parseInt(ip.x) === NaN || Number.parseInt(ip.y) === NaN) {
+          throw new Error("파일 형식이 올바르지 않거나 손상된 파일입니다.");
+        }
+
+        ip = img.imageSize;
+        if (!ip.width || !ip.height || ip.width < 320 || ip.height < 320) {
+          throw new Error("파일 형식이 올바르지 않거나 손상된 파일입니다.");
+        }
+      }
+
       const loadedCalendarPage = {};
       loadedCalendarPage.calendarKeyList = [];
       loadedCalendarPage.calendarOption = {};
       loadedCalendarPage.calendarPosition = {};
       loadedCalendarPage.calendarSize = {};
+      loadedCalendarPage.imageKeyList = [];
+      loadedCalendarPage.imageData = {};
+      loadedCalendarPage.imagePosition = {};
+      loadedCalendarPage.imageSize = {};
 
       for (let i = 1; i <= calendarArray.length; i++) {
         loadedCalendarPage.calendarOption[i] = JSON.parse(
@@ -65,7 +103,24 @@ export default function jsonToCalendarPages(jsonData) {
         loadedCalendarPage.calendarKeyList.push(i);
       }
 
+      for (let i = 1; i <= imageArray.length; i++) {
+        loadedCalendarPage.imageData[i] = JSON.parse(
+          JSON.stringify(imageArray[i - 1].imageData)
+        );
+
+        loadedCalendarPage.imagePosition[i] = JSON.parse(
+          JSON.stringify(imageArray[i - 1].imagePosition)
+        );
+
+        loadedCalendarPage.imageSize[i] = JSON.parse(
+          JSON.stringify(imageArray[i - 1].imageSize)
+        );
+
+        loadedCalendarPage.imageKeyList.push(i);
+      }
+
       loadedCalendarPage.calendarId = calendarArray.length;
+      loadedCalendarPage.imageId = imageArray.length;
 
       newCalendarData.calendarPages.push(loadedCalendarPage);
     }
