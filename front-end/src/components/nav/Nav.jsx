@@ -130,27 +130,53 @@ export default function Nav({ setModalOption }) {
   };
 
   const calendarPageButtonPropsList1 = [];
-  for (let i = 0; i < 13; i++) {
-    calendarPageButtonPropsList1.push({ text: i, type: "month", value: i });
+  for (let i = 0; i < 14; i++) {
+    calendarPageButtonPropsList1.push({
+      text: i ? (i === 13 ? "끝" : i + "월") : "시작",
+      type: "month",
+      value: i,
+    });
   }
 
   const calendarPageButtonPropsList2 = [];
-  calendarPageButtonPropsList2.push({ text: "F", type: "front", value: true });
-  calendarPageButtonPropsList2.push({ text: "R", type: "front", value: false });
+  calendarPageButtonPropsList2.push({ text: "앞", type: "front", value: true });
+  calendarPageButtonPropsList2.push({
+    text: "뒤",
+    type: "front",
+    value: false,
+  });
 
   const calendarButtonPropsList = [];
-  calendarButtonPropsList.push({ text: "◀", clickFunc: prevYear });
-  calendarButtonPropsList.push({ text: "▶", clickFunc: nextYear });
-  calendarButtonPropsList.push({ text: "+", clickFunc: handleAddCalendar });
-  calendarButtonPropsList.push({ text: "I", clickFunc: handleAddImage });
-  calendarButtonPropsList.push({ text: "O", clickFunc: handleGlobalOption });
-  calendarButtonPropsList.push({ text: "C", clickFunc: handleCopyCalendar });
-  calendarButtonPropsList.push({ text: "S", clickFunc: handleSaveCalendar });
-  calendarButtonPropsList.push({ text: "L", clickFunc: handleRestoreCalendar });
+  calendarButtonPropsList.push({ text: "작년", clickFunc: prevYear });
+  calendarButtonPropsList.push({ text: "내년", clickFunc: nextYear });
+  calendarButtonPropsList.push({
+    text: "달력 추가",
+    clickFunc: handleAddCalendar,
+  });
+  calendarButtonPropsList.push({
+    text: "이미지 추가",
+    clickFunc: handleAddImage,
+  });
+  calendarButtonPropsList.push({
+    text: "달력 옵션",
+    clickFunc: handleGlobalOption,
+  });
+  calendarButtonPropsList.push({
+    text: "달력 복사",
+    clickFunc: handleCopyCalendar,
+  });
+  calendarButtonPropsList.push({
+    text: "달력 저장",
+    clickFunc: handleSaveCalendar,
+  });
+  calendarButtonPropsList.push({
+    text: "달력 불러오기",
+    clickFunc: handleRestoreCalendar,
+  });
 
   const userButtonPropsList = [];
-  userButtonPropsList.push({ text: "L", clickFunc: login });
-  userButtonPropsList.push({ text: "S", clickFunc: signUp });
+  userButtonPropsList.push({ text: "로그인", clickFunc: login });
+  userButtonPropsList.push({ text: "가입", clickFunc: signUp });
 
   return (
     <div className="flex-col-center w-full h-fit">
