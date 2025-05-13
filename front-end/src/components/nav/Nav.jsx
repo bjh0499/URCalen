@@ -134,15 +134,22 @@ export default function Nav({ setModalOption }) {
     calendarPageButtonPropsList1.push({
       text: i ? (i === 13 ? "끝" : i + "월") : "시작",
       type: "month",
+      isActive: selectedMonth === i,
       value: i,
     });
   }
 
   const calendarPageButtonPropsList2 = [];
-  calendarPageButtonPropsList2.push({ text: "앞", type: "front", value: true });
+  calendarPageButtonPropsList2.push({
+    text: "앞",
+    type: "front",
+    isActive: isFront,
+    value: true,
+  });
   calendarPageButtonPropsList2.push({
     text: "뒤",
     type: "front",
+    isActive: !isFront,
     value: false,
   });
 
@@ -188,6 +195,7 @@ export default function Nav({ setModalOption }) {
                 key={idx}
                 text={buttonProps.text}
                 type={buttonProps.type}
+                isActive={buttonProps.isActive}
                 value={buttonProps.value}
               />
             ))}
@@ -201,6 +209,7 @@ export default function Nav({ setModalOption }) {
                 key={idx}
                 text={buttonProps.text}
                 type={buttonProps.type}
+                isActive={buttonProps.isActive}
                 value={buttonProps.value}
               />
             ))}

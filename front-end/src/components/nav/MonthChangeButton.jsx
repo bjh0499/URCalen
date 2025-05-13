@@ -3,8 +3,10 @@ import { useDispatch } from "react-redux";
 import { setMonth } from "../../store/slices/selectedMonthSlice";
 import { setIsChanged } from "../../store/slices/selectedMonthSlice";
 
-export default function MonthChangeButton({ text, type, value }) {
+export default function MonthChangeButton({ text, type, isActive, value }) {
   const dispatch = useDispatch();
+
+  console.log(isActive);
 
   const handleClick = () => {
     dispatch(setIsChanged({ isChanged: true }));
@@ -16,7 +18,9 @@ export default function MonthChangeButton({ text, type, value }) {
 
   return (
     <div
-      className="flex-center h-8 w-fit p-1 m-1 bg-slate-300 rounded text-2xl cursor-pointer"
+      className={`flex-center h-8 w-fit p-1 m-1 rounded text-2xl cursor-pointer ${
+        isActive ? "bg-slate-600" : "bg-slate-300"
+      }`}
       onClick={handleClick}
     >
       {text}
