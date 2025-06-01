@@ -1,8 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
-import authReduce from "./slices/authSlice";
+import authReducer from "./slices/authSlice";
+import calendarPagesReducer from "./slices/calendarPagesSlice";
+import selectedMonthReducer from "./slices/selectedMonthSlice";
 const store = configureStore({
   reducer: {
-    auth: authReduce,
+    auth: authReducer,
+    calendarPages: calendarPagesReducer,
+    selectedMonth: selectedMonthReducer,
   },
 });
 

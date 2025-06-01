@@ -1,11 +1,16 @@
+import { useSelector } from "react-redux";
+
 import CalendarTopCell from "./CalendarTopCell";
 
-export default function CalendarTopRow({
-  calendarKey,
-  sizeState,
-  calendarOption,
-}) {
-  const calendarThisOption = calendarOption[calendarKey];
+export default function CalendarTopRow({ calendarKey, sizeState }) {
+  const selectedMonth = useSelector((state) => state.selectedMonth.month);
+  const isFront = useSelector((state) => state.selectedMonth.front);
+  const calendarPageIdx = (selectedMonth << 1) + !isFront;
+  const calendarPage = useSelector(
+    (state) => state.calendarPages.calendarPages[calendarPageIdx]
+  );
+
+  const calendarThisOption = calendarPage.calendarOption[calendarKey];
   const dayArr =
     calendarThisOption && calendarThisOption.lang === "EN"
       ? ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
@@ -17,9 +22,9 @@ export default function CalendarTopRow({
       <CalendarTopCell
         key={i}
         idx={i}
+        calendarKey={calendarKey}
         day={day}
         sizeState={sizeState}
-        calendarOption={calendarOption}
       />
     );
   });

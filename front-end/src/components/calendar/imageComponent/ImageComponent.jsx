@@ -3,16 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { Resizable } from "react-resizable";
 import Draggable from "react-draggable";
 
-import CalendarHeader from "./calendarHeader/CalendarHeader";
-import CalendarTable from "./calendarTable/CalendarTable";
+import { updateImage } from "../../../store/slices/calendarPagesSlice";
 
-import { updateCalendar } from "../../store/slices/calendarPagesSlice";
-
-export default function Calendar({
-  calendarKey,
-  holidays,
-  setRightClickPosition,
-}) {
+export default function ImageComponent({ imageId, setRightClickPosition }) {
   const dispatch = useDispatch();
 
   const selectedMonth = useSelector((state) => state.selectedMonth.month);
@@ -21,8 +14,10 @@ export default function Calendar({
   const calendarPage = useSelector(
     (state) => state.calendarPages.calendarPages[calendarPageIdx]
   );
-  const sizeState = calendarPage.calendarSize[calendarKey];
-  const positionState = calendarPage.calendarPosition[calendarKey];
+
+  const imageData = calendarPage.imageData[imageId];
+  const imagePosition = calendarPage.imagePosition[imageId];
+  const imageSize = calendarPage.imageSize[imageId];
 
   const handleOnResize = (e, { node, size, handle }) => {
     const sizeObj = {
@@ -30,20 +25,20 @@ export default function Calendar({
       height: size.height,
     };
 
-    const updateCalendarObj = {
+    const updateImageObj = {
       idx: calendarPageIdx,
-      calendarKey: calendarKey,
-      type: "calendarSize",
+      imageId: imageId,
+      type: "imageSize",
       obj: sizeObj,
     };
 
-    dispatch(updateCalendar(updateCalendarObj));
+    dispatch(updateImage(updateImageObj));
   };
 
   const handleOnResizeStop = (e, { node, size, handle }) => {
     const positionObj = {
-      x: positionState.x,
-      y: positionState.y,
+      x: imagePosition.x,
+      y: imagePosition.y,
     };
 
     if (positionObj.x + size.width > 1060) {
@@ -54,15 +49,15 @@ export default function Calendar({
       positionObj.y = 750 - size.height;
     }
 
-    const updateCalendarObj = {
+    const updateImageObj = {
       idx: calendarPageIdx,
-      calendarKey: calendarKey,
-      type: "calendarPosition",
+      imageId: imageId,
+      type: "imagePosition",
       obj: positionObj,
     };
 
     setTimeout(() => {
-      dispatch(updateCalendar(updateCalendarObj));
+      dispatch(updateImage(updateImageObj));
     }, 10);
   };
 
@@ -70,8 +65,8 @@ export default function Calendar({
     e.preventDefault();
 
     const clickObj = {
-      key: calendarKey,
-      type: "calendar",
+      key: imageId,
+      type: "image",
       clickX: e.clientX,
       clickY: e.clientY,
     };
@@ -83,8 +78,8 @@ export default function Calendar({
 
       const parts1 = /^translate\((-?\d{1,})px\)$/.exec(styleTransform);
       if (parts1) {
-        clickObj.calendarX = parseInt(parts1[1], 10);
-        clickObj.calendarY = 0;
+        clickObj.imageX = parseInt(parts1[1], 10);
+        clickObj.imageY = 0;
         setRightClickPosition(() => clickObj);
         return;
       } else {
@@ -93,8 +88,8 @@ export default function Calendar({
         );
 
         if (parts2) {
-          clickObj.calendarX = parseInt(parts2[1], 10);
-          clickObj.calendarY = parseInt(parts2[2], 10);
+          clickObj.imageX = parseInt(parts2[1], 10);
+          clickObj.imageY = parseInt(parts2[2], 10);
           setRightClickPosition(() => clickObj);
           return;
         } else {
@@ -110,27 +105,27 @@ export default function Calendar({
       y: data.y,
     };
 
-    const updateCalendarObj = {
+    const updateImageObj = {
       idx: calendarPageIdx,
-      calendarKey: calendarKey,
-      type: "calendarPosition",
+      imageId: imageId,
+      type: "imagePosition",
       obj: positionObj,
     };
 
-    dispatch(updateCalendar(updateCalendarObj));
+    dispatch(updateImage(updateImageObj));
   };
 
   return (
     <Draggable
       bounds="parent"
       cancel={".react-resizable-handle"}
-      position={{ x: positionState.x, y: positionState.y }}
+      position={{ x: imagePosition.x, y: imagePosition.y }}
       onStop={handleDragStop}
     >
       <Resizable
         className="hover-handles"
-        width={sizeState.width}
-        height={sizeState.height}
+        width={imageSize.width}
+        height={imageSize.height}
         minConstraints={[320, 320]}
         maxConstraints={[1060, 750]}
         onResize={handleOnResize}
@@ -139,17 +134,12 @@ export default function Calendar({
         <div
           className="w-full h-full"
           style={{
-            width: sizeState.width + "px",
-            height: sizeState.height + "px",
+            width: imageSize.width + "px",
+            height: imageSize.height + "px",
           }}
           onContextMenu={handleRightClick}
         >
-          <CalendarHeader />
-          <CalendarTable
-            calendarKey={calendarKey}
-            holidays={holidays}
-            sizeState={sizeState}
-          />
+          <img className="w-full h-full" src={imageData} draggable={false} />
         </div>
       </Resizable>
     </Draggable>

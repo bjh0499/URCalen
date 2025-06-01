@@ -1,129 +1,71 @@
 import { useState } from "react";
 
 import Nav from "../../components/nav/Nav";
-import Calendar from "../../components/calendar/Calendar";
-import loadHolidays from "../../utils/loadHolidays";
-import CalendarMenu from "../../components/calendar/calendarTable/CalendarMenu";
+import CalendarRightClickMenu from "../../components/calendar/calendarTable/CalendarRightClickMenu";
+import ImageRightClickMenu from "../../components/calendar/imageComponent/ImageRightClickMenu";
 
 import StyleMenu from "../../components/menu/StyleMenu";
 import LoginMenu from "../../components/menu/LoginMenu";
 import SignUpMenu from "../../components/menu/SignUpMenu";
 import SaveMenu from "../../components/menu/SaveMenu";
+import GlobalOptionMenu from "../../components/menu/GlobalOptionMenu";
+import CopyCalendarMenu from "../../components/menu/CopyCalendarMenu";
+import CalendarArea from "../../components/calendar/CalendarArea";
 
 export default function Home() {
-  // TODO: 임시로 공휴일 정보를 해당 함수에서 지정하지만, 실제 배포 시에는 서버에서 받을 방침
-  let holidays = loadHolidays();
-
-  let today = new Date();
-  const [monthSelector, setMonthSelector] = useState({
-    year: today.getFullYear(),
-    month: today.getMonth(),
-  });
-
-  const [calendarKeyList, setCalendarKeyList] = useState([]);
-  const [calendarId, setCalendarId] = useState(0);
   const [rightClickPosition, setRightClickPosition] = useState({});
 
-  // TODO: 공통적으로 가운데에 팝업 형식으로 뜨는 아래 메뉴들을 한 Logic으로 처리할 수 있도록 통합하는 작업 필요
-  const [styleMenu, setStyleMenu] = useState(null);
-  const [loginMenu, setLoginMenu] = useState(false);
-  const [signUpMenu, setSignUpMenu] = useState(false);
-  const [saveMenu, setSaveMenu] = useState(false);
-
-  const [calendarOption, setCalendarOption] = useState({});
-  const [calendarPosition, setCalendarPosition] = useState({});
-  const [calendarSize, setCalendarSize] = useState({});
+  const [modalOption, setModalOption] = useState({});
 
   const handleClick = () => {
     if (rightClickPosition.clickX !== undefined) {
       setRightClickPosition(() => ({}));
     }
 
-    if (styleMenu) {
-      setStyleMenu(() => null);
-    }
-
-    if (loginMenu) {
-      setLoginMenu(() => false);
-    }
-
-    if (signUpMenu) {
-      setSignUpMenu(() => false);
-    }
-
-    if (saveMenu) {
-      setSaveMenu(() => false);
+    if (modalOption.type !== undefined) {
+      setModalOption(() => ({}));
     }
   };
 
+  let modalContent = <></>;
+
+  if (modalOption.type === "style") {
+    modalContent = <StyleMenu calendarKey={modalOption.modalArg.calendarKey} />;
+  } else if (modalOption.type === "login") {
+    modalContent = <LoginMenu setModalOption={setModalOption} />;
+  } else if (modalOption.type === "signup") {
+    modalContent = <SignUpMenu setModalOption={setModalOption} />;
+  } else if (modalOption.type === "save") {
+    modalContent = <SaveMenu setModalOption={setModalOption} />;
+  } else if (modalOption.type === "globalOption") {
+    modalContent = <GlobalOptionMenu setModalOption={setModalOption} />;
+  } else if (modalOption.type === "copyCalendar") {
+    modalContent = <CopyCalendarMenu setModalOption={setModalOption} />;
+  }
+
   return (
-    <div className="w-full h-full" onClick={handleClick}>
-      <Nav
-        setMonthSelector={setMonthSelector}
-        setLoginMenu={setLoginMenu}
-        setSignUpMenu={setSignUpMenu}
-        setSaveMenu={setSaveMenu}
-        setCalendarKeyList={setCalendarKeyList}
-        calendarId={calendarId}
-        setCalendarId={setCalendarId}
-        calendarOption={calendarOption}
-        setCalendarOption={setCalendarOption}
-        calendarPosition={calendarPosition}
-        setCalendarPosition={setCalendarPosition}
-        calendarSize={calendarSize}
-        setCalendarSize={setCalendarSize}
-      />
-      {calendarKeyList.map((key) => (
-        <Calendar
-          key={key}
-          calendarKey={key}
-          monthSelector={monthSelector}
-          holidays={holidays}
-          calendarOption={calendarOption}
-          setRightClickPosition={setRightClickPosition}
-          calendarPosition={calendarPosition}
-          setCalendarPosition={setCalendarPosition}
-          calendarSize={calendarSize}
-          setCalendarSize={setCalendarSize}
-        />
-      ))}
+    <div className="grow flex-col-center w-full" onClick={handleClick}>
+      <Nav setModalOption={setModalOption} />
+      <CalendarArea setRightClickPosition={setRightClickPosition} />
       {rightClickPosition.clickX !== undefined ? (
-        <CalendarMenu
-          clickX={rightClickPosition.clickX}
-          clickY={rightClickPosition.clickY}
-          calendarX={rightClickPosition.calendarX}
-          calendarY={rightClickPosition.calendarY}
-          calendarKey={rightClickPosition.key}
-          setCalendarKeyList={setCalendarKeyList}
-          setRightClickPosition={setRightClickPosition}
-          setStyleMenu={setStyleMenu}
-          setCalendarOption={setCalendarOption}
-        />
+        rightClickPosition.type === "calendar" ? (
+          <CalendarRightClickMenu
+            rightClickPosition={rightClickPosition}
+            setRightClickPosition={setRightClickPosition}
+            setModalOption={setModalOption}
+          />
+        ) : rightClickPosition.type === "image" ? (
+          <ImageRightClickMenu
+            rightClickPosition={rightClickPosition}
+            setRightClickPosition={setRightClickPosition}
+          />
+        ) : (
+          <></>
+        )
       ) : (
         <></>
       )}
-      {styleMenu ? (
-        <StyleMenu
-          calendarKey={styleMenu.calendarKey}
-          calendarOption={calendarOption}
-          setCalendarOption={setCalendarOption}
-        />
-      ) : (
-        <></>
-      )}
-      {loginMenu ? <LoginMenu setLoginMenu={setLoginMenu} /> : <></>}
-      {signUpMenu ? <SignUpMenu setSignUpMenu={setSignUpMenu} /> : <></>}
-      {saveMenu ? (
-        <SaveMenu
-          setSaveMenu={setSaveMenu}
-          calendarKeyList={calendarKeyList}
-          calendarOption={calendarOption}
-          calendarPosition={calendarPosition}
-          calendarSize={calendarSize}
-        />
-      ) : (
-        <></>
-      )}
+      {modalContent}
     </div>
   );
 }

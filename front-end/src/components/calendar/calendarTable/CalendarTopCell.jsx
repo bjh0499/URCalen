@@ -1,9 +1,14 @@
-export default function CalendarTopCell({
-  idx,
-  day,
-  sizeState,
-  calendarOption,
-}) {
+import { useSelector } from "react-redux";
+
+export default function CalendarTopCell({ idx, calendarKey, day, sizeState }) {
+  const selectedMonth = useSelector((state) => state.selectedMonth.month);
+  const isFront = useSelector((state) => state.selectedMonth.front);
+  const calendarPageIdx = (selectedMonth << 1) + !isFront;
+  const calendarPage = useSelector(
+    (state) => state.calendarPages.calendarPages[calendarPageIdx]
+  );
+  const calendarThisOption = calendarPage.calendarOption[calendarKey];
+
   let giveClass = "flex-center w-full h-full ";
 
   if (sizeState.width < 324) {

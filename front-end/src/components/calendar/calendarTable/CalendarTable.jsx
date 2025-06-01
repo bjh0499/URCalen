@@ -1,20 +1,27 @@
+import { useSelector } from "react-redux";
+
 import CalendarRow from "./CalendarRow";
 import CalendarTopRow from "./CalendarTopRow";
 
-export default function CalendarTable({
-  calendarKey,
-  monthSelector,
-  holidays,
-  sizeState,
-  calendarOption,
-}) {
-  let inputDay = new Date(monthSelector.year, monthSelector.month, 1);
+export default function CalendarTable({ calendarKey, holidays, sizeState }) {
+  let selectedYear = useSelector((state) => state.selectedMonth.year);
+  let selectedMonth = useSelector((state) => state.selectedMonth.month);
+  let inputDay = new Date(selectedYear, selectedMonth - 1, 1);
   while (inputDay.getDay() > 0) {
     inputDay = new Date(inputDay.valueOf() - 86400000);
   }
 
+  if (!selectedMonth) {
+    selectedYear--;
+  } else if (selectedMonth === 13) {
+    selectedYear++;
+  }
+
+  selectedMonth = (selectedMonth + 11) % 12;
+
   let calendarRows = [];
-  for (let i = 0; i < 5; i++) {
+  let i = 0;
+  do {
     let dayList = [];
     for (let j = 0; j < 7; j++) {
       dayList.push({
@@ -30,21 +37,20 @@ export default function CalendarTable({
         key={i}
         calendarKey={calendarKey}
         dayList={dayList}
-        monthSelector={monthSelector}
         holidays={holidays}
         sizeState={sizeState}
-        calendarOption={calendarOption}
       />
     );
-  }
+
+    i++;
+  } while (
+    inputDay.getFullYear() === selectedYear &&
+    inputDay.getMonth() === selectedMonth
+  );
 
   return (
     <div className="flex-col-center h-4/5 w-full">
-      <CalendarTopRow
-        calendarKey={calendarKey}
-        sizeState={sizeState}
-        calendarOption={calendarOption}
-      />
+      <CalendarTopRow calendarKey={calendarKey} sizeState={sizeState} />
       {calendarRows}
     </div>
   );

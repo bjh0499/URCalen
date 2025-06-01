@@ -3,7 +3,7 @@ import { useState } from "react";
 import authApi from "../../api/authApi";
 import Modal from "../utils/Modal";
 
-export default function SignUpMenu({ setSignUpMenu }) {
+export default function SignUpMenu({ setModalOption }) {
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -24,7 +24,7 @@ export default function SignUpMenu({ setSignUpMenu }) {
     try {
       await authApi.signup(formData);
       alert("회원 가입이 완료되었습니다.");
-      setSignUpMenu(() => false);
+      setModalOption(() => ({}));
     } catch (err) {
       alert("회원 가입 과정에서 오류가 발생했습니다.");
       alert(err);

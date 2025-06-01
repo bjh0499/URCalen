@@ -6,7 +6,7 @@ import { login } from "../../store/slices/authSlice";
 
 import Modal from "../utils/Modal";
 
-export default function LoginMenu({ setLoginMenu }) {
+export default function LoginMenu({ setModalOption }) {
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -30,7 +30,7 @@ export default function LoginMenu({ setLoginMenu }) {
       dispatch(login(token));
 
       alert("로그인이 완료되었습니다.");
-      setLoginMenu(() => false);
+      setModalOption(() => ({}));
     } catch (err) {
       alert("로그인 과정에서 오류가 발생했습니다.");
       alert(err);
