@@ -3,3 +3,5 @@ type CalendarPagesSliceState = {
   calendarTitle: string | null;
   calendarPages: Array<string>;
 };
+
+export default CalendarPagesSliceState;
