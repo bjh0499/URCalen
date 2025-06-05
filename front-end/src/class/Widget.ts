@@ -2,7 +2,7 @@
 
 type Widget = {
   widgetType: string;
-  data: string;
+  data: string | null;
   option: object;
   position: object;
   size: object;
