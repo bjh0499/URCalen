@@ -1,4 +1,4 @@
-import Widget from "./Widget";
+import type Widget from "./Widget";
 
 type CalendarPage = {
   lastWidgetId: number;

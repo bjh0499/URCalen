@@ -1,4 +1,4 @@
-import User from "./User";
+import type User from "./User";
 
 type AuthSliceState = {
   token: string | null;

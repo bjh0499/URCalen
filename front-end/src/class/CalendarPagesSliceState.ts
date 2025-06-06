@@ -1,4 +1,4 @@
-import CalendarPage from "./CalendarPage";
+import type CalendarPage from "./CalendarPage";
 
 type CalendarPagesSliceState = {
   calendarTitle: string | null;
