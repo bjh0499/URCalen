@@ -10,9 +10,6 @@ const initialState: SelectedMonthSliceState = {
   isChanged: false,
 };
 
-// TODO: setMonth를 setMonth와 setFront로 분리함
-// resetMonth를 resetMonthAndFront로 명확하게 이름을 변경
-// setMonth, setFront, setIsChanged의 구조가 변경되었으므로, 이에 대한 적용 필수
 const selectedMonthSlice = createSlice({
   name: "selectedMonth",
   initialState,

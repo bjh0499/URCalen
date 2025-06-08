@@ -1,18 +1,23 @@
 import { useDispatch } from "react-redux";
 
-import { setMonth } from "../../store/slices/selectedMonthSlice";
-import { setIsChanged } from "../../store/slices/selectedMonthSlice";
+import {
+  setMonth,
+  setValue,
+  setIsChanged,
+} from "../../store/slices/selectedMonthSlice";
 
 export default function MonthChangeButton({ text, type, isActive, value }) {
   const dispatch = useDispatch();
 
-  console.log(isActive);
-
   const handleClick = () => {
-    dispatch(setIsChanged({ isChanged: true }));
-    dispatch(setMonth({ type: type, value: value }));
+    dispatch(setIsChanged(true));
+    if (type === "month") {
+      dispatch(setMonth(value));
+    } else if (type === "front") {
+      dispatch(setValue(value));
+    }
     setTimeout(() => {
-      dispatch(setIsChanged({ isChanged: false }));
+      dispatch(setIsChanged(false));
     }, 20);
   };
 
