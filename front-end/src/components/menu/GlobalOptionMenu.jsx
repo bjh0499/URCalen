@@ -22,7 +22,7 @@ export default function GlobalOptionMenu({ setModalOption }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(setCalendarTitle({ calendarTitle: formData.calendarTitle }));
+    dispatch(setCalendarTitle(formData.calendarTitle));
     setModalOption(() => ({}));
   };
 

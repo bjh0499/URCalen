@@ -40,11 +40,7 @@ export default function Nav({ setModalOption }) {
   const handleAddCalendar = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    const inputObj = {
-      idx: idx,
-    };
-
-    dispatch(addCalendar(inputObj));
+    dispatch(addCalendar(idx));
   };
 
   const handleAddImage = (e) => {

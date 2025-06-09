@@ -1,24 +1,23 @@
 import { createSlice } from "@reduxjs/toolkit";
+import type { PayloadAction } from "@reduxjs/toolkit";
 
 import arrangeCalendarPages from "./utils/arrangeCalendarPages";
+import type CalendarPagesSliceState from "../../class/CalendarPagesSliceState";
+import type CalendarPage from "../../class/CalendarPage";
+import type DeleteCalendarInput from "../../class/DeleteCalendarInput";
+import UpdateCalendarInput from "../../class/UpdateCalendarInput";
+import AddImageInput from "../../class/AddImageInput";
 
-const initialState = {
+const initialState: CalendarPagesSliceState = {
   calendarTitle: "",
   calendarPages: [],
 };
 
 for (let i = 0; i < 28; i++) {
-  const calendarPageObj = {
-    calendarId: 0,
-    calendarKeyList: [],
-    calendarOption: {},
-    calendarPosition: {},
-    calendarSize: {},
-    imageId: 0,
-    imageKeyList: [],
-    imageData: {},
-    imagePosition: {},
-    imageSize: {},
+  const calendarPageObj: CalendarPage = {
+    lastWidgetId: 0,
+    widgetKeyList: [],
+    widgetList: [],
   };
   initialState.calendarPages.push(calendarPageObj);
 }
@@ -27,67 +26,87 @@ const calendarPagesSlice = createSlice({
   name: "calendarPages",
   initialState,
   reducers: {
-    setCalendarTitle: (state, action) => {
-      state.calendarTitle = action.payload.calendarTitle;
+    setCalendarTitle: (state, action: PayloadAction<string>) => {
+      state.calendarTitle = action.payload;
     },
-    addCalendar: (state, action) => {
-      const idx = action.payload.idx;
-      const newCalendarId = state.calendarPages[idx].calendarId;
-
-      state.calendarPages[idx].calendarOption[newCalendarId] = { lang: "KO" };
-      state.calendarPages[idx].calendarPosition[newCalendarId] = { x: 0, y: 0 };
-      state.calendarPages[idx].calendarSize[newCalendarId] = {
-        width: 320,
-        height: 320,
+    addCalendar: (state, action: PayloadAction<number>) => {
+      const idx = action.payload;
+      const newCalendarId = state.calendarPages[idx].lastWidgetId;
+      state.calendarPages[idx].widgetList[newCalendarId] = {
+        widgetType: "calendar",
+        data: null,
+        option: {
+          lang: "KO",
+        },
+        position: {
+          x: 0,
+          y: 0,
+          z: 0,
+        },
+        size: {
+          width: 320,
+          height: 320,
+        },
       };
 
-      state.calendarPages[idx].calendarKeyList.push(newCalendarId);
+      state.calendarPages[idx].widgetKeyList.push(newCalendarId);
 
-      state.calendarPages[idx].calendarId++;
+      state.calendarPages[idx].lastWidgetId++;
     },
-    deleteCalendar: (state, action) => {
+    deleteCalendar: (state, action: PayloadAction<DeleteCalendarInput>) => {
       const idx = action.payload.idx;
-      const deleteCalendarId = action.payload.calendarKey;
+      const deleteCalendarKey = action.payload.deleteCalendarKey;
 
-      state.calendarPages[idx].calendarOption[deleteCalendarId] = undefined;
-      state.calendarPages[idx].calendarPosition[deleteCalendarId] = undefined;
-      state.calendarPages[idx].calendarSize[deleteCalendarId] = undefined;
-
-      const prev = state.calendarPages[idx].calendarKeyList;
-      const removeIndex = prev.indexOf(deleteCalendarId);
-      state.calendarPages[idx].calendarKeyList = [
+      const prev = state.calendarPages[idx].widgetKeyList;
+      const removeIndex = prev.indexOf(deleteCalendarKey);
+      state.calendarPages[idx].widgetKeyList = [
         ...prev.slice(0, removeIndex),
         ...prev.slice(removeIndex + 1, prev.length),
       ];
-    },
-    updateCalendar: (state, action) => {
-      const idx = action.payload.idx;
-      const updateCalendarId = action.payload.calendarKey;
-      const type = action.payload.type;
-      const obj = action.payload.obj;
 
-      if (type === "calendarOption") {
-        state.calendarPages[idx].calendarOption[updateCalendarId] = obj;
-      } else if (type === "calendarPosition") {
-        state.calendarPages[idx].calendarPosition[updateCalendarId] = obj;
-      } else if (type === "calendarSize") {
-        state.calendarPages[idx].calendarSize[updateCalendarId] = obj;
+      state.calendarPages[idx].widgetList[deleteCalendarKey] = null;
+    },
+    updateCalendar: (state, action: PayloadAction<UpdateCalendarInput>) => {
+      const idx = action.payload.idx;
+      const updateCalendarId = action.payload.updateCalendarKey;
+      const existingCalendar =
+        state.calendarPages[idx].widgetList[updateCalendarId];
+
+      if (existingCalendar) {
+        const type = action.payload.type;
+        const newValue = action.payload.newValue;
+
+        // TODO: Union 타입을 분리하는 방안 필요
+        if (type === "option") {
+          existingCalendar.option = newValue;
+        } else if (type === "position") {
+          existingCalendar.position = newValue;
+        } else if (type === "size") {
+          existingCalendar.size = newValue;
+        }
       }
     },
-    addImage: (state, action) => {
+    addImage: (state, action: PayloadAction<AddImageInput>) => {
       const idx = action.payload.idx;
-      const newImageId = state.calendarPages[idx].imageId;
-
-      state.calendarPages[idx].imageData[newImageId] = action.payload.img;
-      state.calendarPages[idx].imagePosition[newImageId] = { x: 0, y: 0 };
-      state.calendarPages[idx].imageSize[newImageId] = {
-        width: 320,
-        height: 320,
+      const newImageId = state.calendarPages[idx].lastWidgetId;
+      state.calendarPages[idx].widgetList[newImageId] = {
+        widgetType: "image",
+        data: action.payload.img,
+        option: {},
+        position: {
+          x: 0,
+          y: 0,
+          z: 0,
+        },
+        size: {
+          width: 320,
+          height: 320,
+        },
       };
 
-      state.calendarPages[idx].imageKeyList.push(newImageId);
+      state.calendarPages[idx].widgetKeyList.push(newImageId);
 
-      state.calendarPages[idx].imageId++;
+      state.calendarPages[idx].lastWidgetId++;
     },
     deleteImage: (state, action) => {
       const idx = action.payload.idx;
