@@ -7,6 +7,10 @@ import type CalendarPage from "../../class/CalendarPage";
 import type DeleteCalendarInput from "../../class/DeleteCalendarInput";
 import UpdateCalendarInput from "../../class/UpdateCalendarInput";
 import AddImageInput from "../../class/AddImageInput";
+import DeleteImageInput from "../../class/DeleteImageInput";
+import UpdateImageInput from "../../class/UpdateImageInput";
+import LoadCalendarPagesInput from "../../class/LoadCalendarPagesInput";
+import CopyCalendarPageInput from "../../class/CopyCalendarPageInput";
 
 const initialState: CalendarPagesSliceState = {
   calendarTitle: "",
@@ -14,12 +18,11 @@ const initialState: CalendarPagesSliceState = {
 };
 
 for (let i = 0; i < 28; i++) {
-  const calendarPageObj: CalendarPage = {
+  initialState.calendarPages.push({
     lastWidgetId: 0,
     widgetKeyList: [],
     widgetList: [],
-  };
-  initialState.calendarPages.push(calendarPageObj);
+  });
 }
 
 const calendarPagesSlice = createSlice({
@@ -108,36 +111,42 @@ const calendarPagesSlice = createSlice({
 
       state.calendarPages[idx].lastWidgetId++;
     },
-    deleteImage: (state, action) => {
+    deleteImage: (state, action: PayloadAction<DeleteImageInput>) => {
       const idx = action.payload.idx;
-      const deleteImageId = action.payload.imageId;
+      const deleteImageKey = action.payload.deleteImageKey;
 
-      state.calendarPages[idx].imageData[deleteImageId] = undefined;
-      state.calendarPages[idx].imagePosition[deleteImageId] = undefined;
-      state.calendarPages[idx].imageSize[deleteImageId] = undefined;
-
-      const prev = state.calendarPages[idx].imageKeyList;
-      const removeIndex = prev.indexOf(deleteImageId);
-      state.calendarPages[idx].imageKeyList = [
+      const prev = state.calendarPages[idx].widgetKeyList;
+      const removeIndex = prev.indexOf(deleteImageKey);
+      state.calendarPages[idx].widgetKeyList = [
         ...prev.slice(0, removeIndex),
         ...prev.slice(removeIndex + 1, prev.length),
       ];
-    },
-    updateImage: (state, action) => {
-      const idx = action.payload.idx;
-      const updateImageId = action.payload.imageId;
-      const type = action.payload.type;
-      const obj = action.payload.obj;
 
-      if (type === "imagePosition") {
-        state.calendarPages[idx].imagePosition[updateImageId] = obj;
-      } else if (type === "imageSize") {
-        state.calendarPages[idx].imageSize[updateImageId] = obj;
+      state.calendarPages[idx].widgetList[deleteImageKey] = null;
+    },
+    updateImage: (state, action: PayloadAction<UpdateImageInput>) => {
+      const idx = action.payload.idx;
+      const updateImageKey = action.payload.updateImageKey;
+      const existingImage = state.calendarPages[idx].widgetList[updateImageKey];
+
+      if (existingImage) {
+        const type = action.payload.type;
+        const newValue = action.payload.newValue;
+
+        // TODO: Union 타입을 분리하는 방안 필요
+        if (type === "option") {
+          existingImage.option = newValue;
+        } else if (type === "position") {
+          existingImage.position = newValue;
+        } else if (type === "size") {
+          existingImage.size = newValue;
+        }
       }
     },
-    saveCalendarPages: (state, action) => {
+    saveCalendarPages: (state, action: PayloadAction<string>) => {
+      // TODO: 구조 변경에 따라, 파일화 과정 역시 변화 필요
       const jsonData = JSON.stringify(arrangeCalendarPages(state));
-      if (action.payload.type === "local") {
+      if (action.payload === "local") {
         // https://codesandbox.io/p/sandbox/export-js-object-to-json-download-file-react-4t2xb?file=%2Fsrc%2FApp.js%3A69%2C5-69%2C18
         const link = document.createElement("a");
         link.href = `data:text/json;chatset=utf-8,${encodeURIComponent(
@@ -146,7 +155,8 @@ const calendarPagesSlice = createSlice({
         link.download = "data.json";
         link.click();
         link.remove();
-      } else if (action.payload.type === "server") {
+      } else if (action.payload === "server") {
+        /*
         const customCalendar = {};
 
         // TODO: 달력 제목을 정하는 부분은 추후 추가
@@ -157,7 +167,6 @@ const calendarPagesSlice = createSlice({
         customCalendar.isPublic = formData.isPublic;
 
         // TODO: Backend와 교신하는 부분은 추후 추가
-        /*
         try {
           const response = await customCalendarApi.createCustomCalendar(
             customCalendar
@@ -170,7 +179,10 @@ const calendarPagesSlice = createSlice({
         */
       }
     },
-    loadCalendarPages: (state, action) => {
+    loadCalendarPages: (
+      state,
+      action: PayloadAction<LoadCalendarPagesInput>
+    ) => {
       if (action.payload.type === "local") {
         state.calendarTitle = "";
         state.calendarPages = [];
@@ -182,25 +194,20 @@ const calendarPagesSlice = createSlice({
       }
     },
     // 원격에서 달력 정보를 불러올 때, 이를 외부적으로 시간 차를 두어 실행시켜야 기존 정보가 유지되는 문제를 해결할 수 있음
-    resetCalendarPages: (state, action) => {
+    resetCalendarPages: (state) => {
       for (let i = 0; i < 28; i++) {
-        const blankCalendarPageObj = {
-          calendarId: 0,
-          calendarKeyList: [],
-          calendarOption: {},
-          calendarPosition: {},
-          calendarSize: {},
-          imageId: 0,
-          imageKeyList: [],
-          imagePosition: {},
-          imageSize: {},
+        state.calendarPages[i] = {
+          lastWidgetId: 0,
+          widgetKeyList: [],
+          widgetList: [],
         };
-        state.calendarPages[i] = blankCalendarPageObj;
       }
     },
-    copyCalendarPage: (state, action) => {
-      const srcIdx = (action.payload.srcMonth << 1) + !action.payload.srcFront;
-      const dstIdx = (action.payload.dstMonth << 1) + !action.payload.dstFront;
+    copyCalendarPage: (state, action: PayloadAction<CopyCalendarPageInput>) => {
+      const srcIdx =
+        (action.payload.srcMonth << 1) + (action.payload.srcFront ? 0 : 1);
+      const dstIdx =
+        (action.payload.dstMonth << 1) + (action.payload.dstFront ? 0 : 1);
       const copiedCalendarPage = JSON.parse(
         JSON.stringify(state.calendarPages[srcIdx])
       );
