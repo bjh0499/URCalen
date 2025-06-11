@@ -1,16 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
-import arrangeCalendarPages from "./utils/arrangeCalendarPages";
 import type CalendarPagesSliceState from "../../class/CalendarPagesSliceState";
-import type CalendarPage from "../../class/CalendarPage";
 import type DeleteCalendarInput from "../../class/DeleteCalendarInput";
-import UpdateCalendarInput from "../../class/UpdateCalendarInput";
-import AddImageInput from "../../class/AddImageInput";
-import DeleteImageInput from "../../class/DeleteImageInput";
-import UpdateImageInput from "../../class/UpdateImageInput";
-import LoadCalendarPagesInput from "../../class/LoadCalendarPagesInput";
-import CopyCalendarPageInput from "../../class/CopyCalendarPageInput";
+import type UpdateCalendarInput from "../../class/UpdateCalendarInput";
+import type AddImageInput from "../../class/AddImageInput";
+import type DeleteImageInput from "../../class/DeleteImageInput";
+import type UpdateImageInput from "../../class/UpdateImageInput";
+import type LoadCalendarPagesInput from "../../class/LoadCalendarPagesInput";
+import type CopyCalendarPageInput from "../../class/CopyCalendarPageInput";
+
+import arrangeCalendarPages from "./utils/arrangeCalendarPages";
 
 const initialState: CalendarPagesSliceState = {
   calendarTitle: "",
