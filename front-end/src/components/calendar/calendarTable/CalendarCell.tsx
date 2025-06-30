@@ -1,5 +1,5 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../../../store/hooks";
 
 export default function CalendarCell({
   calendarKey,
@@ -7,13 +7,13 @@ export default function CalendarCell({
   holidays,
   sizeState,
 }) {
-  let selectedMonth = useSelector((state) => state.selectedMonth.month);
-  const isFront = useSelector((state) => state.selectedMonth.front);
-  const calendarPageIdx = (selectedMonth << 1) + !isFront;
-  const calendarPage = useSelector(
+  let selectedMonth = useAppSelector((state) => state.selectedMonth.month);
+  const isFront = useAppSelector((state) => state.selectedMonth.front);
+  const calendarPageIdx = (selectedMonth << 1) + (isFront ? 1 : 0);
+  const calendarPage = useAppSelector(
     (state) => state.calendarPages.calendarPages[calendarPageIdx]
   );
-  const calendarThisOption = calendarPage.calendarOption[calendarKey];
+  const calendarThisOption = calendarPage.widgetList[calendarKey]?.option;
 
   const usingTextColor = [
     "text-red-300",
@@ -56,7 +56,7 @@ export default function CalendarCell({
     }
   }
 
-  let selectColor;
+  let selectColor: string;
   if (dayObj.day === 0 || isHoliday) {
     selectColor = "red";
   } else if (dayObj.day === 6) {

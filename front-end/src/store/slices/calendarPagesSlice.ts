@@ -144,7 +144,6 @@ const calendarPagesSlice = createSlice({
       }
     },
     saveCalendarPages: (state, action: PayloadAction<string>) => {
-      // TODO: 구조 변경에 따라, 파일화 과정 역시 변화 필요
       const jsonData = JSON.stringify(arrangeCalendarPages(state));
       if (action.payload === "local") {
         // https://codesandbox.io/p/sandbox/export-js-object-to-json-download-file-react-4t2xb?file=%2Fsrc%2FApp.js%3A69%2C5-69%2C18
