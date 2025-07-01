@@ -1,11 +1,14 @@
-import { useSelector } from "react-redux";
+import React from "react";
+import { useAppSelector } from "../../../store/hooks";
+
+import type DayObject from "../../../class/DayObject";
 
 import CalendarRow from "./CalendarRow";
 import CalendarTopRow from "./CalendarTopRow";
 
 export default function CalendarTable({ calendarKey, holidays, sizeState }) {
-  let selectedYear = useSelector((state) => state.selectedMonth.year);
-  let selectedMonth = useSelector((state) => state.selectedMonth.month);
+  let selectedYear = useAppSelector((state) => state.selectedMonth.year);
+  let selectedMonth = useAppSelector((state) => state.selectedMonth.month);
   let inputDay = new Date(selectedYear, selectedMonth - 1, 1);
   while (inputDay.getDay() > 0) {
     inputDay = new Date(inputDay.valueOf() - 86400000);
@@ -19,10 +22,10 @@ export default function CalendarTable({ calendarKey, holidays, sizeState }) {
 
   selectedMonth = (selectedMonth + 11) % 12;
 
-  let calendarRows = [];
+  let calendarRows: Array<React.JSX.Element> = [];
   let i = 0;
   do {
-    let dayList = [];
+    let dayList: Array<DayObject> = [];
     for (let j = 0; j < 7; j++) {
       dayList.push({
         year: inputDay.getFullYear(),

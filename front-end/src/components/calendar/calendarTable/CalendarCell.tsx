@@ -1,19 +1,17 @@
 import React from "react";
 import { useAppSelector } from "../../../store/hooks";
 
-export default function CalendarCell({
-  calendarKey,
-  dayObj,
-  holidays,
-  sizeState,
-}) {
+import type CalendarCellInput from "../../../class/CalendarCellInput";
+
+export default function CalendarCell(inputData: CalendarCellInput) {
   let selectedMonth = useAppSelector((state) => state.selectedMonth.month);
   const isFront = useAppSelector((state) => state.selectedMonth.front);
   const calendarPageIdx = (selectedMonth << 1) + (isFront ? 1 : 0);
   const calendarPage = useAppSelector(
     (state) => state.calendarPages.calendarPages[calendarPageIdx]
   );
-  const calendarThisOption = calendarPage.widgetList[calendarKey]?.option;
+  const calendarThisOption =
+    calendarPage.widgetList[inputData.calendarKey]?.option;
 
   const usingTextColor = [
     "text-red-300",
@@ -27,29 +25,30 @@ export default function CalendarCell({
   let giveClass = "flex-center w-full h-full ";
   let isHoliday = false;
 
-  if (sizeState.width < 324) {
+  // TODO: sizeState에 대한 구체적인 Type 명시 필요
+  if (inputData.sizeState.width < 324) {
     giveClass += "text-xs ";
-  } else if (sizeState.width < 378) {
+  } else if (inputData.sizeState.width < 378) {
     giveClass += "text-sm ";
-  } else if (sizeState.width < 432) {
+  } else if (inputData.sizeState.width < 432) {
     giveClass += "text-base ";
-  } else if (sizeState.width < 486) {
+  } else if (inputData.sizeState.width < 486) {
     giveClass += "text-lg ";
-  } else if (sizeState.width < 540) {
+  } else if (inputData.sizeState.width < 540) {
     giveClass += "text-xl ";
-  } else if (sizeState.width < 648) {
+  } else if (inputData.sizeState.width < 648) {
     giveClass += "text-2xl ";
-  } else if (sizeState.width < 810) {
+  } else if (inputData.sizeState.width < 810) {
     giveClass += "text-3xl ";
   } else {
     giveClass += "text-4xl ";
   }
 
-  for (let i = 0; i < holidays.length; i++) {
+  for (let i = 0; i < inputData.holidays.length; i++) {
     if (
-      dayObj.year === holidays[i].year &&
-      dayObj.month === holidays[i].month &&
-      dayObj.date === holidays[i].date
+      inputData.dayObj.year === inputData.holidays[i].year &&
+      inputData.dayObj.month === inputData.holidays[i].month &&
+      inputData.dayObj.date === inputData.holidays[i].date
     ) {
       isHoliday = true;
       break;
@@ -57,9 +56,9 @@ export default function CalendarCell({
   }
 
   let selectColor: string;
-  if (dayObj.day === 0 || isHoliday) {
+  if (inputData.dayObj.day === 0 || isHoliday) {
     selectColor = "red";
-  } else if (dayObj.day === 6) {
+  } else if (inputData.dayObj.day === 6) {
     selectColor = "blue";
   } else {
     selectColor = "stone";
@@ -68,9 +67,10 @@ export default function CalendarCell({
   selectedMonth = (selectedMonth + 11) % 12;
 
   giveClass += `text-${selectColor}-${
-    (dayObj.day === 0 || dayObj.day === 6 || isHoliday ? 300 : 400) <<
-    (selectedMonth === dayObj.month)
+    (inputData.dayObj.day === 0 || inputData.dayObj.day === 6 || isHoliday
+      ? 300
+      : 400) << (selectedMonth === inputData.dayObj.month ? 1 : 0)
   }`;
 
-  return <div className={giveClass}>{dayObj.date}</div>;
+  return <div className={giveClass}>{inputData.dayObj.date}</div>;
 }
