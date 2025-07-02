@@ -1,12 +1,23 @@
+import React from "react";
+
 import CalendarCell from "./CalendarCell";
+
+import type DayObject from "../../../class/DayObject";
+
+type CalendarRowInput = {
+  calendarKey: number;
+  dayList: Array<DayObject>;
+  holidays: Array<DayObject>;
+  sizeState: object;
+};
 
 export default function CalendarRow({
   calendarKey,
   dayList,
   holidays,
   sizeState,
-}) {
-  let calendarCells = [];
+}: CalendarRowInput) {
+  let calendarCells: Array<React.JSX.Element> = [];
   dayList.forEach((dayObj, i) => {
     calendarCells.push(
       <CalendarCell
