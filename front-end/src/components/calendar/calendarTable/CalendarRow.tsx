@@ -3,12 +3,13 @@ import React from "react";
 import CalendarCell from "./CalendarCell";
 
 import type DayObject from "../../../class/DayObject";
+import type WidgetSize from "../../../class/WidgetSize";
 
 type CalendarRowInput = {
   calendarKey: number;
   dayList: Array<DayObject>;
   holidays: Array<DayObject>;
-  sizeState: object;
+  sizeState: WidgetSize;
 };
 
 export default function CalendarRow({

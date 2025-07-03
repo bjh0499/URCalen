@@ -2,11 +2,22 @@ import React from "react";
 import { useAppSelector } from "../../../store/hooks";
 
 import type DayObject from "../../../class/DayObject";
+import type WidgetSize from "../../../class/WidgetSize";
 
 import CalendarRow from "./CalendarRow";
 import CalendarTopRow from "./CalendarTopRow";
 
-export default function CalendarTable({ calendarKey, holidays, sizeState }) {
+type CalendarTableInput = {
+  calendarKey: number;
+  holidays: Array<DayObject>;
+  sizeState: WidgetSize;
+};
+
+export default function CalendarTable({
+  calendarKey,
+  holidays,
+  sizeState,
+}: CalendarTableInput) {
   let selectedYear = useAppSelector((state) => state.selectedMonth.year);
   let selectedMonth = useAppSelector((state) => state.selectedMonth.month);
   let inputDay = new Date(selectedYear, selectedMonth - 1, 1);

@@ -10,6 +10,10 @@ import type UpdateImageInput from "../../class/UpdateImageInput";
 import type LoadCalendarPagesInput from "../../class/LoadCalendarPagesInput";
 import type CopyCalendarPageInput from "../../class/CopyCalendarPageInput";
 
+import type WidgetOption from "../../class/WidgetOption";
+import type WidgetPosition from "../../class/WidgetPosition";
+import type WidgetSize from "../../class/WidgetSize";
+
 import arrangeCalendarPages from "./utils/arrangeCalendarPages";
 
 const initialState: CalendarPagesSliceState = {
@@ -79,13 +83,12 @@ const calendarPagesSlice = createSlice({
         const type = action.payload.type;
         const newValue = action.payload.newValue;
 
-        // TODO: Union 타입을 분리하는 방안 필요
         if (type === "option") {
-          existingCalendar.option = newValue;
+          existingCalendar.option = newValue as WidgetOption;
         } else if (type === "position") {
-          existingCalendar.position = newValue;
+          existingCalendar.position = newValue as WidgetPosition;
         } else if (type === "size") {
-          existingCalendar.size = newValue;
+          existingCalendar.size = newValue as WidgetSize;
         }
       }
     },
@@ -133,13 +136,12 @@ const calendarPagesSlice = createSlice({
         const type = action.payload.type;
         const newValue = action.payload.newValue;
 
-        // TODO: Union 타입을 분리하는 방안 필요
         if (type === "option") {
-          existingImage.option = newValue;
+          existingImage.option = newValue as WidgetOption;
         } else if (type === "position") {
-          existingImage.position = newValue;
+          existingImage.position = newValue as WidgetPosition;
         } else if (type === "size") {
-          existingImage.size = newValue;
+          existingImage.size = newValue as WidgetSize;
         }
       }
     },

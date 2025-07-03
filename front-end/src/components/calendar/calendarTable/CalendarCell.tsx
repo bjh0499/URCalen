@@ -2,12 +2,13 @@ import React from "react";
 import { useAppSelector } from "../../../store/hooks";
 
 import type DayObject from "../../../class/DayObject";
+import type WidgetSize from "../../../class/WidgetSize";
 
 type CalendarCellInput = {
   calendarKey: number;
   dayObj: DayObject;
   holidays: Array<DayObject>;
-  sizeState: object;
+  sizeState: WidgetSize;
 };
 
 export default function CalendarCell({
