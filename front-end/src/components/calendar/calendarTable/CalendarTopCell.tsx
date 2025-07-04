@@ -1,13 +1,25 @@
-import { useSelector } from "react-redux";
+import React from "react";
+import { useAppSelector } from "../../../store/hooks";
+
+import type CalendarOption from "../../../class/CalendarOption";
+import type WidgetSize from "../../../class/WidgetSize";
+
+type CalendarTopCellInput = {
+  idx: number;
+  calendarKey: number;
+  day: string;
+  sizeState: WidgetSize;
+};
 
 export default function CalendarTopCell({ idx, calendarKey, day, sizeState }) {
-  const selectedMonth = useSelector((state) => state.selectedMonth.month);
-  const isFront = useSelector((state) => state.selectedMonth.front);
-  const calendarPageIdx = (selectedMonth << 1) + !isFront;
-  const calendarPage = useSelector(
+  const selectedMonth = useAppSelector((state) => state.selectedMonth.month);
+  const isFront = useAppSelector((state) => state.selectedMonth.front);
+  const calendarPageIdx = (selectedMonth << 1) + (isFront ? 0 : 1);
+  const calendarPage = useAppSelector(
     (state) => state.calendarPages.calendarPages[calendarPageIdx]
   );
-  const calendarThisOption = calendarPage.calendarOption[calendarKey];
+  const calendarThisOption = calendarPage.widgetList[calendarKey]
+    ?.option as CalendarOption;
 
   let giveClass = "flex-center w-full h-full ";
 
