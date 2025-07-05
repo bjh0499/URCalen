@@ -18,8 +18,8 @@ export default function CalendarTopCell({ idx, calendarKey, day, sizeState }) {
   const calendarPage = useAppSelector(
     (state) => state.calendarPages.calendarPages[calendarPageIdx]
   );
-  const calendarThisOption = calendarPage.widgetList[calendarKey]
-    ?.option as CalendarOption;
+  const calendarThisOption = calendarPage.widgetList[calendarKey]!
+    .option as CalendarOption;
 
   let giveClass = "flex-center w-full h-full ";
 

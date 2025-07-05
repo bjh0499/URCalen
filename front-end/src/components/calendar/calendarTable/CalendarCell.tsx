@@ -23,7 +23,7 @@ export default function CalendarCell({
   const calendarPage = useAppSelector(
     (state) => state.calendarPages.calendarPages[calendarPageIdx]
   );
-  const calendarThisOption = calendarPage.widgetList[calendarKey]?.option;
+  const calendarThisOption = calendarPage.widgetList[calendarKey]!.option;
 
   const usingTextColor = [
     "text-red-300",

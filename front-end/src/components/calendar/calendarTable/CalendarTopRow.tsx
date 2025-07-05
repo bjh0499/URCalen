@@ -13,8 +13,8 @@ export default function CalendarTopRow({ calendarKey, sizeState }) {
     (state) => state.calendarPages.calendarPages[calendarPageIdx]
   );
 
-  const calendarThisOption = calendarPage.widgetList[calendarKey]
-    ?.option as CalendarOption;
+  const calendarThisOption = calendarPage.widgetList[calendarKey]!
+    .option as CalendarOption;
   const dayArr =
     calendarThisOption && calendarThisOption.lang === "EN"
       ? ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]

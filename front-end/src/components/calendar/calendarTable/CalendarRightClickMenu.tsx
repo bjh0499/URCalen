@@ -1,4 +1,5 @@
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 
 import { deleteCalendar } from "../../../store/slices/calendarPagesSlice";
 
@@ -7,11 +8,11 @@ export default function CalendarRightClickMenu({
   setRightClickPosition,
   setModalOption,
 }) {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const selectedMonth = useSelector((state) => state.selectedMonth.month);
-  const isFront = useSelector((state) => state.selectedMonth.front);
-  const calendarPageIdx = (selectedMonth << 1) + !isFront;
+  const selectedMonth = useAppSelector((state) => state.selectedMonth.month);
+  const isFront = useAppSelector((state) => state.selectedMonth.front);
+  const calendarPageIdx = (selectedMonth << 1) + (isFront ? 0 : 1);
 
   const handleMenuClick = (e) => {
     e.preventDefault();
@@ -25,7 +26,7 @@ export default function CalendarRightClickMenu({
   const handleItemClick = () => {
     const deleteObj = {
       idx: calendarPageIdx,
-      calendarKey: rightClickPosition.key,
+      deleteCalendarKey: rightClickPosition.key,
     };
     dispatch(deleteCalendar(deleteObj));
 

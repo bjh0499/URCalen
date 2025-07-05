@@ -1,4 +1,5 @@
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 
 import { Resizable } from "react-resizable";
 import Draggable from "react-draggable";
@@ -8,21 +9,23 @@ import CalendarTable from "./calendarTable/CalendarTable";
 
 import { updateCalendar } from "../../store/slices/calendarPagesSlice";
 
+import type UpdateCalendarInput from "../../class/UpdateCalendarInput";
+
 export default function Calendar({
   calendarKey,
   holidays,
   setRightClickPosition,
 }) {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const selectedMonth = useSelector((state) => state.selectedMonth.month);
-  const isFront = useSelector((state) => state.selectedMonth.front);
-  const calendarPageIdx = (selectedMonth << 1) + !isFront;
-  const calendarPage = useSelector(
+  const selectedMonth = useAppSelector((state) => state.selectedMonth.month);
+  const isFront = useAppSelector((state) => state.selectedMonth.front);
+  const calendarPageIdx = (selectedMonth << 1) + (!isFront ? 0 : 1);
+  const calendarPage = useAppSelector(
     (state) => state.calendarPages.calendarPages[calendarPageIdx]
   );
-  const sizeState = calendarPage.calendarSize[calendarKey];
-  const positionState = calendarPage.calendarPosition[calendarKey];
+  const sizeState = calendarPage.widgetList[calendarKey]!.size;
+  const positionState = calendarPage.widgetList[calendarKey]!.position;
 
   const handleOnResize = (e, { node, size, handle }) => {
     const sizeObj = {
@@ -30,11 +33,11 @@ export default function Calendar({
       height: size.height,
     };
 
-    const updateCalendarObj = {
+    const updateCalendarObj: UpdateCalendarInput = {
       idx: calendarPageIdx,
-      calendarKey: calendarKey,
-      type: "calendarSize",
-      obj: sizeObj,
+      updateCalendarKey: calendarKey,
+      type: "size",
+      newValue: sizeObj,
     };
 
     dispatch(updateCalendar(updateCalendarObj));
@@ -42,8 +45,8 @@ export default function Calendar({
 
   const handleOnResizeStop = (e, { node, size, handle }) => {
     const positionObj = {
-      x: positionState.x,
-      y: positionState.y,
+      x: positionState!.x,
+      y: positionState!.y,
     };
 
     if (positionObj.x + size.width > 1060) {
@@ -54,11 +57,11 @@ export default function Calendar({
       positionObj.y = 750 - size.height;
     }
 
-    const updateCalendarObj = {
+    const updateCalendarObj: UpdateCalendarInput = {
       idx: calendarPageIdx,
-      calendarKey: calendarKey,
-      type: "calendarPosition",
-      obj: positionObj,
+      updateCalendarKey: calendarKey,
+      type: "position",
+      newValue: positionObj,
     };
 
     setTimeout(() => {
@@ -83,8 +86,8 @@ export default function Calendar({
 
       const parts1 = /^translate\((-?\d{1,})px\)$/.exec(styleTransform);
       if (parts1) {
-        clickObj.calendarX = parseInt(parts1[1], 10);
-        clickObj.calendarY = 0;
+        clickObj.clickX = parseInt(parts1[1], 10);
+        clickObj.clickY = 0;
         setRightClickPosition(() => clickObj);
         return;
       } else {
@@ -93,8 +96,8 @@ export default function Calendar({
         );
 
         if (parts2) {
-          clickObj.calendarX = parseInt(parts2[1], 10);
-          clickObj.calendarY = parseInt(parts2[2], 10);
+          clickObj.clickX = parseInt(parts2[1], 10);
+          clickObj.clickY = parseInt(parts2[2], 10);
           setRightClickPosition(() => clickObj);
           return;
         } else {
@@ -110,11 +113,11 @@ export default function Calendar({
       y: data.y,
     };
 
-    const updateCalendarObj = {
+    const updateCalendarObj: UpdateCalendarInput = {
       idx: calendarPageIdx,
-      calendarKey: calendarKey,
-      type: "calendarPosition",
-      obj: positionObj,
+      updateCalendarKey: calendarKey,
+      type: "position",
+      newValue: positionObj,
     };
 
     dispatch(updateCalendar(updateCalendarObj));
@@ -124,13 +127,16 @@ export default function Calendar({
     <Draggable
       bounds="parent"
       cancel={".react-resizable-handle"}
-      position={{ x: positionState.x, y: positionState.y }}
+      position={{
+        x: positionState ? positionState.x : -1,
+        y: positionState ? positionState.y : -1,
+      }}
       onStop={handleDragStop}
     >
       <Resizable
         className="hover-handles"
-        width={sizeState.width}
-        height={sizeState.height}
+        width={sizeState!.width}
+        height={sizeState!.height}
         minConstraints={[320, 320]}
         maxConstraints={[1060, 750]}
         onResize={handleOnResize}
@@ -139,8 +145,8 @@ export default function Calendar({
         <div
           className="w-full h-full"
           style={{
-            width: sizeState.width + "px",
-            height: sizeState.height + "px",
+            width: sizeState!.width + "px",
+            height: sizeState!.height + "px",
           }}
           onContextMenu={handleRightClick}
         >
