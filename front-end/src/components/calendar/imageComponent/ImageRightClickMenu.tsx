@@ -1,16 +1,19 @@
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 
 import { deleteImage } from "../../../store/slices/calendarPagesSlice";
+
+import DeleteImageInput from "../../../class/DeleteImageInput";
 
 export default function ImageRightClickMenu({
   rightClickPosition,
   setRightClickPosition,
 }) {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const selectedMonth = useSelector((state) => state.selectedMonth.month);
-  const isFront = useSelector((state) => state.selectedMonth.front);
-  const calendarPageIdx = (selectedMonth << 1) + !isFront;
+  const selectedMonth = useAppSelector((state) => state.selectedMonth.month);
+  const isFront = useAppSelector((state) => state.selectedMonth.front);
+  const calendarPageIdx = (selectedMonth << 1) + (isFront ? 0 : 1);
 
   const handleMenuClick = (e) => {
     e.preventDefault();
@@ -22,9 +25,9 @@ export default function ImageRightClickMenu({
   };
 
   const handleItemClick = () => {
-    const deleteObj = {
+    const deleteObj: DeleteImageInput = {
       idx: calendarPageIdx,
-      imageId: rightClickPosition.key,
+      deleteImageKey: rightClickPosition.key,
     };
     dispatch(deleteImage(deleteObj));
 

@@ -1,23 +1,26 @@
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 
 import { Resizable } from "react-resizable";
 import Draggable from "react-draggable";
 
 import { updateImage } from "../../../store/slices/calendarPagesSlice";
 
-export default function ImageComponent({ imageId, setRightClickPosition }) {
-  const dispatch = useDispatch();
+import type UpdateImageInput from "../../../class/UpdateImageInput";
 
-  const selectedMonth = useSelector((state) => state.selectedMonth.month);
-  const isFront = useSelector((state) => state.selectedMonth.front);
-  const calendarPageIdx = (selectedMonth << 1) + !isFront;
-  const calendarPage = useSelector(
+export default function ImageComponent({ imageId, setRightClickPosition }) {
+  const dispatch = useAppDispatch();
+
+  const selectedMonth = useAppSelector((state) => state.selectedMonth.month);
+  const isFront = useAppSelector((state) => state.selectedMonth.front);
+  const calendarPageIdx = (selectedMonth << 1) + (isFront ? 0 : 1);
+  const calendarPage = useAppSelector(
     (state) => state.calendarPages.calendarPages[calendarPageIdx]
   );
 
-  const imageData = calendarPage.imageData[imageId];
-  const imagePosition = calendarPage.imagePosition[imageId];
-  const imageSize = calendarPage.imageSize[imageId];
+  const imageData = calendarPage.widgetList[imageId]!.data;
+  const imagePosition = calendarPage.widgetList[imageId]!.position;
+  const imageSize = calendarPage.widgetList[imageId]!.size;
 
   const handleOnResize = (e, { node, size, handle }) => {
     const sizeObj = {
@@ -25,11 +28,11 @@ export default function ImageComponent({ imageId, setRightClickPosition }) {
       height: size.height,
     };
 
-    const updateImageObj = {
+    const updateImageObj: UpdateImageInput = {
       idx: calendarPageIdx,
-      imageId: imageId,
-      type: "imageSize",
-      obj: sizeObj,
+      updateImageKey: imageId,
+      type: "size",
+      newValue: sizeObj,
     };
 
     dispatch(updateImage(updateImageObj));
@@ -49,11 +52,11 @@ export default function ImageComponent({ imageId, setRightClickPosition }) {
       positionObj.y = 750 - size.height;
     }
 
-    const updateImageObj = {
+    const updateImageObj: UpdateImageInput = {
       idx: calendarPageIdx,
-      imageId: imageId,
-      type: "imagePosition",
-      obj: positionObj,
+      updateImageKey: imageId,
+      type: "position",
+      newValue: positionObj,
     };
 
     setTimeout(() => {
@@ -78,8 +81,8 @@ export default function ImageComponent({ imageId, setRightClickPosition }) {
 
       const parts1 = /^translate\((-?\d{1,})px\)$/.exec(styleTransform);
       if (parts1) {
-        clickObj.imageX = parseInt(parts1[1], 10);
-        clickObj.imageY = 0;
+        clickObj.clickX = parseInt(parts1[1], 10);
+        clickObj.clickY = 0;
         setRightClickPosition(() => clickObj);
         return;
       } else {
@@ -88,8 +91,8 @@ export default function ImageComponent({ imageId, setRightClickPosition }) {
         );
 
         if (parts2) {
-          clickObj.imageX = parseInt(parts2[1], 10);
-          clickObj.imageY = parseInt(parts2[2], 10);
+          clickObj.clickX = parseInt(parts2[1], 10);
+          clickObj.clickY = parseInt(parts2[2], 10);
           setRightClickPosition(() => clickObj);
           return;
         } else {
@@ -105,11 +108,11 @@ export default function ImageComponent({ imageId, setRightClickPosition }) {
       y: data.y,
     };
 
-    const updateImageObj = {
+    const updateImageObj: UpdateImageInput = {
       idx: calendarPageIdx,
-      imageId: imageId,
-      type: "imagePosition",
-      obj: positionObj,
+      updateImageKey: imageId,
+      type: "position",
+      newValue: positionObj,
     };
 
     dispatch(updateImage(updateImageObj));
