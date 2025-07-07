@@ -40,7 +40,7 @@ const calendarPagesSlice = createSlice({
       const idx = action.payload;
       const newCalendarId = state.calendarPages[idx].lastWidgetId;
       state.calendarPages[idx].widgetList[newCalendarId] = {
-        widgetType: "calendar",
+        widgetType: "Calendar",
         data: null,
         option: {
           lang: "KO",
@@ -96,7 +96,7 @@ const calendarPagesSlice = createSlice({
       const idx = action.payload.idx;
       const newImageId = state.calendarPages[idx].lastWidgetId;
       state.calendarPages[idx].widgetList[newImageId] = {
-        widgetType: "image",
+        widgetType: "Image",
         data: action.payload.img,
         option: {},
         position: {
