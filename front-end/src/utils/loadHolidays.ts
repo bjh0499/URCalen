@@ -1,4 +1,6 @@
-export default function loadHolidays() {
+import DayObject from "../class/DayObject";
+
+export default function loadHolidays(): Array<DayObject> {
   return [
     { year: 2024, month: 0, date: 1, desc: "신정" },
     { year: 2024, month: 1, date: 8, desc: "설날" },
