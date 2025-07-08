@@ -1,12 +1,13 @@
+import React from "react";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "../../store/hooks";
 
 import Modal from "../utils/Modal";
 
 import { saveCalendarPages } from "../../store/slices/calendarPagesSlice";
 
 export default function SaveMenu({ setModalOption }) {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const [formData, setFormData] = useState({
     isPublic: false,
@@ -17,12 +18,12 @@ export default function SaveMenu({ setModalOption }) {
   };
 
   const handleFileSave = () => {
-    dispatch(saveCalendarPages({ type: "local" }));
+    dispatch(saveCalendarPages("local"));
     setModalOption(() => ({}));
   };
 
   const handleServerSave = async () => {
-    dispatch(saveCalendarPages({ type: "server" }));
+    dispatch(saveCalendarPages("server"));
     setModalOption(() => ({}));
   };
 

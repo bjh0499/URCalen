@@ -1,18 +1,19 @@
+import React from "react";
 import { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 
 import Modal from "../utils/Modal";
 
 import { copyCalendarPage } from "../../store/slices/calendarPagesSlice";
 
 export default function CopyCalendarMenu({ setModalOption }) {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const [dstMonth, setDstMonth] = useState(0);
   const [dstFront, setDstFront] = useState(true);
 
-  const srcMonth = useSelector((state) => state.selectedMonth.month);
-  const srcFront = useSelector((state) => state.selectedMonth.front);
+  const srcMonth = useAppSelector((state) => state.selectedMonth.month);
+  const srcFront = useAppSelector((state) => state.selectedMonth.front);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -34,7 +35,7 @@ export default function CopyCalendarMenu({ setModalOption }) {
     setDstFront(() => e.target.value === "true");
   };
 
-  const optionList = [];
+  const optionList: Array<React.JSX.Element> = [];
   for (let i = 0; i < 13; i++) {
     optionList.push(
       <option key={i} value={i}>
@@ -43,6 +44,7 @@ export default function CopyCalendarMenu({ setModalOption }) {
     );
   }
 
+  // TODO: TypeScript의 경우 input의 value에 boolean을 넣을 수 없어 string으로 대체했는데, 이에 따라 다른 부분의 수정이 필요할 수 있음
   return (
     <Modal>
       <form onSubmit={handleSubmit}>
@@ -62,7 +64,7 @@ export default function CopyCalendarMenu({ setModalOption }) {
             <input
               type="radio"
               name="inputFront"
-              value={true}
+              value="true"
               checked={dstFront === true}
               onChange={handleChangeFront}
             />
@@ -72,7 +74,7 @@ export default function CopyCalendarMenu({ setModalOption }) {
             <input
               type="radio"
               name="inputFront"
-              value={false}
+              value="false"
               checked={dstFront === false}
               onChange={handleChangeFront}
             />

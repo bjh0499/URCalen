@@ -41,7 +41,6 @@ const calendarPagesSlice = createSlice({
       const newCalendarId = state.calendarPages[idx].lastWidgetId;
       state.calendarPages[idx].widgetList[newCalendarId] = {
         widgetType: "Calendar",
-        data: null,
         option: {
           lang: "KO",
         },

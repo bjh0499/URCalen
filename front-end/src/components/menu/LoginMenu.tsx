@@ -1,5 +1,6 @@
+import React from "react";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "../../store/hooks";
 
 import authApi from "../../api/authApi";
 import { login } from "../../store/slices/authSlice";
@@ -12,7 +13,7 @@ export default function LoginMenu({ setModalOption }) {
     password: "",
   });
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const handleFormInput = (e) => {
     const { name, value } = e.target;

@@ -1,5 +1,6 @@
+import React from "react";
 import { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 
 import Modal from "../utils/Modal";
 
@@ -7,10 +8,10 @@ import { setCalendarTitle } from "../../store/slices/calendarPagesSlice";
 
 export default function GlobalOptionMenu({ setModalOption }) {
   const [formData, setFormData] = useState({
-    calendarTitle: useSelector((state) => state.calendarPages.calendarTitle),
+    calendarTitle: useAppSelector((state) => state.calendarPages.calendarTitle),
   });
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const handleFormInput = (e) => {
     const { name, value } = e.target;

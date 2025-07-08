@@ -1,7 +1,7 @@
 import type CalendarPage from "./CalendarPage";
 
 type CalendarPagesSliceState = {
-  calendarTitle: string | null;
+  calendarTitle: string;
   calendarPages: Array<CalendarPage>;
 };
 
