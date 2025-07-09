@@ -1,4 +1,5 @@
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 
 import {
   addCalendar,
@@ -13,11 +14,14 @@ import NormalNavDivButton from "./NormalNavDivButton";
 
 import jsonToCalendarPages from "./utils/jsonToCalendarPages";
 
+import type NormalNavDivButtonInput from "../../class/NormalNavDivButtonInput";
+import type MonthChangeButtonInput from "../../class/MonthChangeButtonInput";
+
 export default function Nav({ setModalOption }) {
-  const dispatch = useDispatch();
-  const selectedMonth = useSelector((state) => state.selectedMonth.month);
-  const isFront = useSelector((state) => state.selectedMonth.front);
-  const idx = (selectedMonth << 1) + !isFront;
+  const dispatch = useAppDispatch();
+  const selectedMonth = useAppSelector((state) => state.selectedMonth.month);
+  const isFront = useAppSelector((state) => state.selectedMonth.front);
+  const idx = (selectedMonth << 1) + (isFront ? 0 : 1);
 
   const prevYear = () => {
     dispatch(minusYear());
@@ -51,7 +55,7 @@ export default function Nav({ setModalOption }) {
       const reader = new FileReader();
 
       reader.addEventListener("load", () => {
-        dispatch(addImage({ idx: idx, img: reader.result }));
+        dispatch(addImage({ idx: idx, img: reader.result as string }));
       });
 
       if (!file) {
@@ -125,7 +129,7 @@ export default function Nav({ setModalOption }) {
     setModalOption(() => ({ type: "signup" }));
   };
 
-  const calendarPageButtonPropsList1 = [];
+  const calendarPageButtonPropsList1: Array<MonthChangeButtonInput> = [];
   for (let i = 0; i < 14; i++) {
     calendarPageButtonPropsList1.push({
       text: i ? (i === 13 ? "끝" : i + "월") : "시작",
@@ -135,7 +139,7 @@ export default function Nav({ setModalOption }) {
     });
   }
 
-  const calendarPageButtonPropsList2 = [];
+  const calendarPageButtonPropsList2: Array<MonthChangeButtonInput> = [];
   calendarPageButtonPropsList2.push({
     text: "앞",
     type: "front",
@@ -149,7 +153,7 @@ export default function Nav({ setModalOption }) {
     value: false,
   });
 
-  const calendarButtonPropsList = [];
+  const calendarButtonPropsList: Array<NormalNavDivButtonInput> = [];
   calendarButtonPropsList.push({ text: "작년", clickFunc: prevYear });
   calendarButtonPropsList.push({ text: "내년", clickFunc: nextYear });
   calendarButtonPropsList.push({
@@ -177,7 +181,7 @@ export default function Nav({ setModalOption }) {
     clickFunc: handleRestoreCalendar,
   });
 
-  const userButtonPropsList = [];
+  const userButtonPropsList: Array<NormalNavDivButtonInput> = [];
   userButtonPropsList.push({ text: "로그인", clickFunc: login });
   userButtonPropsList.push({ text: "가입", clickFunc: signUp });
 
