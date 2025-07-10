@@ -1,3 +1,5 @@
+import React from "react";
+
 export default function Header() {
   return (
     <div className="grow-0 flex justify-between items-center h-fit w-full">

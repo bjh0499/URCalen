@@ -1,3 +1,4 @@
+import React from "react";
 import { useState } from "react";
 
 import Nav from "../../components/nav/Nav";
@@ -12,10 +13,15 @@ import GlobalOptionMenu from "../../components/menu/GlobalOptionMenu";
 import CopyCalendarMenu from "../../components/menu/CopyCalendarMenu";
 import CalendarArea from "../../components/calendar/CalendarArea";
 
-export default function Home() {
-  const [rightClickPosition, setRightClickPosition] = useState({});
+import type ClickPosition from "../../class/ClickPosition";
+import ModalOption from "../../class/ModalOption";
 
-  const [modalOption, setModalOption] = useState({});
+export default function Home() {
+  const [rightClickPosition, setRightClickPosition] = useState<ClickPosition>(
+    {}
+  );
+
+  const [modalOption, setModalOption] = useState<ModalOption>({});
 
   const handleClick = () => {
     if (rightClickPosition.clickX !== undefined) {
