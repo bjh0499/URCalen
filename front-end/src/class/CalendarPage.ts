@@ -1,7 +1,7 @@
 import type Widget from "./Widget";
 
 type CalendarPage = {
-  lastWidgetId: number;
+  lastWidgetId?: number;
   widgetKeyList: Array<number>;
   widgetList: Array<Widget | null>;
 };

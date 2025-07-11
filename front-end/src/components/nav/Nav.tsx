@@ -89,7 +89,7 @@ export default function Nav({ setModalOption }) {
       const reader = new FileReader();
 
       reader.addEventListener("load", () => {
-        const loadCalendarData = jsonToCalendarPages(reader.result);
+        const loadCalendarData = jsonToCalendarPages(reader.result as string);
         if (loadCalendarData !== null) {
           dispatch(resetCalendarPages());
           setTimeout(() => {

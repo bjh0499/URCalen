@@ -3,7 +3,7 @@ import type WidgetPosition from "./WidgetPosition";
 import type WidgetSize from "./WidgetSize";
 
 type Widget = {
-  widgetType: "Calendar" | "Image";
+  widgetType: "" | "Calendar" | "Image";
   data?: string;
   option: WidgetOption;
   position: WidgetPosition;
