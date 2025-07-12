@@ -20,7 +20,7 @@ export default function Calendar({
 
   const selectedMonth = useAppSelector((state) => state.selectedMonth.month);
   const isFront = useAppSelector((state) => state.selectedMonth.front);
-  const calendarPageIdx = (selectedMonth << 1) + (!isFront ? 0 : 1);
+  const calendarPageIdx = (selectedMonth << 1) + (isFront ? 0 : 1);
   const calendarPage = useAppSelector(
     (state) => state.calendarPages.calendarPages[calendarPageIdx]
   );
