@@ -17,11 +17,11 @@ export default function arrangeCalendarPages(
     };
 
     for (let j = 0; j < calendarPages[i].widgetKeyList.length; j++) {
-      calendarPage.widgetKeyList.push(calendarPage.lastWidgetId);
+      calendarPage.widgetKeyList.push(calendarPage.lastWidgetId!);
       calendarPage.widgetList.push(
         calendarPages[i].widgetList[calendarPages[i].widgetKeyList[j]]
       );
-      calendarPage.lastWidgetId++;
+      calendarPage.lastWidgetId!++;
     }
 
     calendarData.calendarPages.push(calendarPage);

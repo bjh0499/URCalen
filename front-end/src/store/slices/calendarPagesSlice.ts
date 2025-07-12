@@ -38,7 +38,7 @@ const calendarPagesSlice = createSlice({
     },
     addCalendar: (state, action: PayloadAction<number>) => {
       const idx = action.payload;
-      const newCalendarId = state.calendarPages[idx].lastWidgetId;
+      const newCalendarId = state.calendarPages[idx].lastWidgetId!;
       state.calendarPages[idx].widgetList[newCalendarId] = {
         widgetType: "Calendar",
         option: {
@@ -57,7 +57,7 @@ const calendarPagesSlice = createSlice({
 
       state.calendarPages[idx].widgetKeyList.push(newCalendarId);
 
-      state.calendarPages[idx].lastWidgetId++;
+      state.calendarPages[idx].lastWidgetId!++;
     },
     deleteCalendar: (state, action: PayloadAction<DeleteCalendarInput>) => {
       const idx = action.payload.idx;
@@ -93,7 +93,7 @@ const calendarPagesSlice = createSlice({
     },
     addImage: (state, action: PayloadAction<AddImageInput>) => {
       const idx = action.payload.idx;
-      const newImageId = state.calendarPages[idx].lastWidgetId;
+      const newImageId = state.calendarPages[idx].lastWidgetId!;
       state.calendarPages[idx].widgetList[newImageId] = {
         widgetType: "Image",
         data: action.payload.img,
@@ -111,7 +111,7 @@ const calendarPagesSlice = createSlice({
 
       state.calendarPages[idx].widgetKeyList.push(newImageId);
 
-      state.calendarPages[idx].lastWidgetId++;
+      state.calendarPages[idx].lastWidgetId!++;
     },
     deleteImage: (state, action: PayloadAction<DeleteImageInput>) => {
       const idx = action.payload.idx;
