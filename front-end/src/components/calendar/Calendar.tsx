@@ -86,8 +86,7 @@ export default function Calendar({
 
       const parts1 = /^translate\((-?\d{1,})px\)$/.exec(styleTransform);
       if (parts1) {
-        clickObj.clickX = parseInt(parts1[1], 10);
-        clickObj.clickY = 0;
+        clickObj.clickX += parseInt(parts1[1], 10);
         setRightClickPosition(() => clickObj);
         return;
       } else {
@@ -96,8 +95,8 @@ export default function Calendar({
         );
 
         if (parts2) {
-          clickObj.clickX = parseInt(parts2[1], 10);
-          clickObj.clickY = parseInt(parts2[2], 10);
+          clickObj.clickX += parseInt(parts2[1], 10);
+          clickObj.clickY += parseInt(parts2[2], 10);
           setRightClickPosition(() => clickObj);
           return;
         } else {
