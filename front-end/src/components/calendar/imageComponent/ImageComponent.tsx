@@ -42,6 +42,7 @@ export default function ImageComponent({ imageId, setRightClickPosition }) {
     const positionObj = {
       x: imagePosition.x,
       y: imagePosition.y,
+      z: imagePosition.z,
     };
 
     if (positionObj.x + size.width > 1060) {
@@ -106,6 +107,7 @@ export default function ImageComponent({ imageId, setRightClickPosition }) {
     const positionObj = {
       x: data.x,
       y: data.y,
+      z: imagePosition.z,
     };
 
     const updateImageObj: UpdateImageInput = {

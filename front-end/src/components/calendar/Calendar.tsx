@@ -45,8 +45,9 @@ export default function Calendar({
 
   const handleOnResizeStop = (e, { node, size, handle }) => {
     const positionObj = {
-      x: positionState!.x,
-      y: positionState!.y,
+      x: positionState.x,
+      y: positionState.y,
+      z: positionState.z,
     };
 
     if (positionObj.x + size.width > 1060) {
@@ -110,6 +111,7 @@ export default function Calendar({
     const positionObj = {
       x: data.x,
       y: data.y,
+      z: positionState.z,
     };
 
     const updateCalendarObj: UpdateCalendarInput = {
@@ -127,15 +129,15 @@ export default function Calendar({
       bounds="parent"
       cancel={".react-resizable-handle"}
       position={{
-        x: positionState ? positionState.x : -1,
-        y: positionState ? positionState.y : -1,
+        x: positionState.x,
+        y: positionState.y,
       }}
       onStop={handleDragStop}
     >
       <Resizable
         className="hover-handles"
-        width={sizeState!.width}
-        height={sizeState!.height}
+        width={sizeState.width}
+        height={sizeState.height}
         minConstraints={[320, 320]}
         maxConstraints={[1060, 750]}
         onResize={handleOnResize}
@@ -144,8 +146,8 @@ export default function Calendar({
         <div
           className="w-full h-full"
           style={{
-            width: sizeState!.width + "px",
-            height: sizeState!.height + "px",
+            width: sizeState.width + "px",
+            height: sizeState.height + "px",
           }}
           onContextMenu={handleRightClick}
         >
