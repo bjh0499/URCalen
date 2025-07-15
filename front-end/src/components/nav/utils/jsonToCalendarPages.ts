@@ -18,12 +18,6 @@ export default function jsonToCalendarPages(jsonData: string) {
     newCalendarData.calendarTitle = loadedCalendarData.calendarTitle;
 
     for (let i = 0; i < 28; i++) {
-      newCalendarData.calendarPages[i] = {
-        lastWidgetId: loadedCalendarData.calendarPages[i].widgetList.length,
-        widgetKeyList: [],
-        widgetList: [],
-      };
-
       const widgetArray = loadedCalendarData.calendarPages[i].widgetList;
       const loadedCalendarPage: CalendarPage = {
         lastWidgetId: widgetArray.length,
