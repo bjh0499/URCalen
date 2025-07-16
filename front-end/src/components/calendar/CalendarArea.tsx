@@ -32,6 +32,8 @@ export default function CalendarArea({ setRightClickPosition }) {
                   <ImageComponent
                     key={key}
                     imageId={key}
+                    calendarPageIdx={calendarPageIdx}
+                    calendarPage={calendarPage}
                     setRightClickPosition={setRightClickPosition}
                   />
                 );
@@ -41,6 +43,9 @@ export default function CalendarArea({ setRightClickPosition }) {
                     key={key}
                     calendarKey={key}
                     holidays={holidays}
+                    selectedMonth={selectedMonth}
+                    calendarPageIdx={calendarPageIdx}
+                    calendarPage={calendarPage}
                     setRightClickPosition={setRightClickPosition}
                   />
                 );

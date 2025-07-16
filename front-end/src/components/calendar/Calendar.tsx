@@ -14,16 +14,15 @@ import type UpdateCalendarInput from "../../class/UpdateCalendarInput";
 export default function Calendar({
   calendarKey,
   holidays,
+  selectedMonth,
+  calendarPageIdx,
+  calendarPage,
   setRightClickPosition,
 }) {
   const dispatch = useAppDispatch();
 
-  const selectedMonth = useAppSelector((state) => state.selectedMonth.month);
-  const isFront = useAppSelector((state) => state.selectedMonth.front);
-  const calendarPageIdx = (selectedMonth << 1) + (isFront ? 0 : 1);
-  const calendarPage = useAppSelector(
-    (state) => state.calendarPages.calendarPages[calendarPageIdx]
-  );
+  const selectedYear = useAppSelector((state) => state.selectedMonth.year);
+
   const sizeState = calendarPage.widgetList[calendarKey]!.size;
   const positionState = calendarPage.widgetList[calendarKey]!.position;
 
@@ -151,10 +150,16 @@ export default function Calendar({
           }}
           onContextMenu={handleRightClick}
         >
-          <CalendarHeader />
+          <CalendarHeader
+            selectedYear={selectedYear}
+            selectedMonth={selectedMonth}
+          />
           <CalendarTable
             calendarKey={calendarKey}
             holidays={holidays}
+            selectedYear={selectedYear}
+            selectedMonth={selectedMonth}
+            calendarPage={calendarPage}
             sizeState={sizeState}
           />
         </div>

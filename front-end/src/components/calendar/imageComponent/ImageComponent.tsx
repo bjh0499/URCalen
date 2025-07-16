@@ -8,15 +8,13 @@ import { updateImage } from "../../../store/slices/calendarPagesSlice";
 
 import type UpdateImageInput from "../../../class/UpdateImageInput";
 
-export default function ImageComponent({ imageId, setRightClickPosition }) {
+export default function ImageComponent({
+  imageId,
+  calendarPageIdx,
+  calendarPage,
+  setRightClickPosition,
+}) {
   const dispatch = useAppDispatch();
-
-  const selectedMonth = useAppSelector((state) => state.selectedMonth.month);
-  const isFront = useAppSelector((state) => state.selectedMonth.front);
-  const calendarPageIdx = (selectedMonth << 1) + (isFront ? 0 : 1);
-  const calendarPage = useAppSelector(
-    (state) => state.calendarPages.calendarPages[calendarPageIdx]
-  );
 
   const imageData = calendarPage.widgetList[imageId]!.data;
   const imagePosition = calendarPage.widgetList[imageId]!.position;

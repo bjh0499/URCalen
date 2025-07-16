@@ -1,25 +1,29 @@
 import React from "react";
-import { useAppSelector } from "../../../store/hooks";
 
 import type DayObject from "../../../class/DayObject";
 import type WidgetSize from "../../../class/WidgetSize";
 
 import CalendarRow from "./CalendarRow";
 import CalendarTopRow from "./CalendarTopRow";
+import CalendarPage from "../../../class/CalendarPage";
 
 type CalendarTableInput = {
   calendarKey: number;
   holidays: Array<DayObject>;
+  selectedYear: number;
+  selectedMonth: number;
+  calendarPage: CalendarPage;
   sizeState: WidgetSize;
 };
 
 export default function CalendarTable({
   calendarKey,
   holidays,
+  selectedYear,
+  selectedMonth,
+  calendarPage,
   sizeState,
 }: CalendarTableInput) {
-  let selectedYear = useAppSelector((state) => state.selectedMonth.year);
-  let selectedMonth = useAppSelector((state) => state.selectedMonth.month);
   let inputDay = new Date(selectedYear, selectedMonth - 1, 1);
   while (inputDay.getDay() > 0) {
     inputDay = new Date(inputDay.valueOf() - 86400000);
@@ -52,6 +56,8 @@ export default function CalendarTable({
         calendarKey={calendarKey}
         dayList={dayList}
         holidays={holidays}
+        selectedMonth={selectedMonth}
+        calendarPage={calendarPage}
         sizeState={sizeState}
       />
     );
@@ -64,7 +70,11 @@ export default function CalendarTable({
 
   return (
     <div className="flex-col-center h-4/5 w-full">
-      <CalendarTopRow calendarKey={calendarKey} sizeState={sizeState} />
+      <CalendarTopRow
+        calendarKey={calendarKey}
+        calendarPage={calendarPage}
+        sizeState={sizeState}
+      />
       {calendarRows}
     </div>
   );

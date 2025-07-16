@@ -1,13 +1,15 @@
 import React from "react";
-import { useAppSelector } from "../../../store/hooks";
 
 import type DayObject from "../../../class/DayObject";
 import type WidgetSize from "../../../class/WidgetSize";
+import CalendarPage from "../../../class/CalendarPage";
 
 type CalendarCellInput = {
   calendarKey: number;
   dayObj: DayObject;
   holidays: Array<DayObject>;
+  selectedMonth: number;
+  calendarPage: CalendarPage;
   sizeState: WidgetSize;
 };
 
@@ -15,14 +17,10 @@ export default function CalendarCell({
   calendarKey,
   dayObj,
   holidays,
+  selectedMonth,
+  calendarPage,
   sizeState,
 }: CalendarCellInput) {
-  let selectedMonth = useAppSelector((state) => state.selectedMonth.month);
-  const isFront = useAppSelector((state) => state.selectedMonth.front);
-  const calendarPageIdx = (selectedMonth << 1) + (isFront ? 0 : 1);
-  const calendarPage = useAppSelector(
-    (state) => state.calendarPages.calendarPages[calendarPageIdx]
-  );
   const calendarThisOption = calendarPage.widgetList[calendarKey]!.option;
 
   const usingTextColor = [
@@ -75,8 +73,6 @@ export default function CalendarCell({
   } else {
     selectColor = "stone";
   }
-
-  selectedMonth = (selectedMonth + 11) % 12;
 
   giveClass += `text-${selectColor}-${
     (dayObj.day === 0 || dayObj.day === 6 || isHoliday ? 300 : 400) <<
