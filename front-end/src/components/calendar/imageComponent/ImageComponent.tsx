@@ -1,5 +1,5 @@
 import React from "react";
-import { useAppDispatch, useAppSelector } from "../../../store/hooks";
+import { useAppDispatch } from "../../../store/hooks";
 
 import { Resizable } from "react-resizable";
 import Draggable from "react-draggable";
