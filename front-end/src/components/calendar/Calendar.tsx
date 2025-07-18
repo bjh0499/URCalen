@@ -145,6 +145,7 @@ export default function Calendar({
           style={{
             width: sizeState.width + "px",
             height: sizeState.height + "px",
+            zIndex: positionState.z,
           }}
           onContextMenu={handleRightClick}
         >

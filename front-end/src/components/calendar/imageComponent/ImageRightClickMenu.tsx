@@ -41,6 +41,7 @@ export default function ImageRightClickMenu({
         position: "absolute",
         left: `${rightClickPosition.clickX}px`,
         top: `${rightClickPosition.clickY}px`,
+        zIndex: "100",
       }}
       onClick={handleMenuClick}
       onContextMenu={handleMenuRightClick}

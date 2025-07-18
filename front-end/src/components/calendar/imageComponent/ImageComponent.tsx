@@ -139,6 +139,7 @@ export default function ImageComponent({
           style={{
             width: imageSize.width + "px",
             height: imageSize.height + "px",
+            zIndex: imagePosition.z,
           }}
           onContextMenu={handleRightClick}
         >
