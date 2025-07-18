@@ -1,7 +1,10 @@
 import React from "react";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 
-import { deleteImage } from "../../../store/slices/calendarPagesSlice";
+import {
+  updateImage,
+  deleteImage,
+} from "../../../store/slices/calendarPagesSlice";
 
 import DeleteImageInput from "../../../class/DeleteImageInput";
 
@@ -14,6 +17,12 @@ export default function ImageRightClickMenu({
   const selectedMonth = useAppSelector((state) => state.selectedMonth.month);
   const isFront = useAppSelector((state) => state.selectedMonth.front);
   const calendarPageIdx = (selectedMonth << 1) + (isFront ? 0 : 1);
+  const positionState = useAppSelector(
+    (state) =>
+      state.calendarPages.calendarPages[calendarPageIdx].widgetList[
+        rightClickPosition.key
+      ]!.position
+  );
 
   const handleMenuClick = (e) => {
     e.preventDefault();
@@ -34,6 +43,38 @@ export default function ImageRightClickMenu({
     setRightClickPosition(() => ({}));
   };
 
+  const handleItemClick2 = () => {
+    const positionObj = {
+      x: positionState.x,
+      y: positionState.y,
+      z: positionState.z + (positionState.z == 20 ? 0 : 1),
+    };
+    dispatch(
+      updateImage({
+        idx: calendarPageIdx,
+        updateImageKey: rightClickPosition.key,
+        type: "position",
+        newValue: positionObj,
+      })
+    );
+  };
+
+  const handleItemClick3 = () => {
+    const positionObj = {
+      x: positionState.x,
+      y: positionState.y,
+      z: positionState.z - (positionState.z == 0 ? 0 : 1),
+    };
+    dispatch(
+      updateImage({
+        idx: calendarPageIdx,
+        updateImageKey: rightClickPosition.key,
+        type: "position",
+        newValue: positionObj,
+      })
+    );
+  };
+
   return (
     <div
       className="menu-box bg-slate-100"
@@ -47,6 +88,9 @@ export default function ImageRightClickMenu({
       onContextMenu={handleMenuRightClick}
     >
       <div onClick={handleItemClick}>이미지 삭제</div>
+      <div>현재 높이: {positionState.z}</div>
+      <div onClick={handleItemClick2}>높이 증가</div>
+      <div onClick={handleItemClick3}>높이 감소</div>
     </div>
   );
 }

@@ -1,7 +1,10 @@
 import React from "react";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 
-import { deleteCalendar } from "../../../store/slices/calendarPagesSlice";
+import {
+  deleteCalendar,
+  updateCalendar,
+} from "../../../store/slices/calendarPagesSlice";
 
 export default function CalendarRightClickMenu({
   rightClickPosition,
@@ -13,6 +16,12 @@ export default function CalendarRightClickMenu({
   const selectedMonth = useAppSelector((state) => state.selectedMonth.month);
   const isFront = useAppSelector((state) => state.selectedMonth.front);
   const calendarPageIdx = (selectedMonth << 1) + (isFront ? 0 : 1);
+  const positionState = useAppSelector(
+    (state) =>
+      state.calendarPages.calendarPages[calendarPageIdx].widgetList[
+        rightClickPosition.key
+      ]!.position
+  );
 
   const handleMenuClick = (e) => {
     e.preventDefault();
@@ -43,6 +52,38 @@ export default function CalendarRightClickMenu({
     setRightClickPosition(() => ({}));
   };
 
+  const handleItemClick3 = () => {
+    const positionObj = {
+      x: positionState.x,
+      y: positionState.y,
+      z: positionState.z + (positionState.z == 20 ? 0 : 1),
+    };
+    dispatch(
+      updateCalendar({
+        idx: calendarPageIdx,
+        updateCalendarKey: rightClickPosition.key,
+        type: "position",
+        newValue: positionObj,
+      })
+    );
+  };
+
+  const handleItemClick4 = () => {
+    const positionObj = {
+      x: positionState.x,
+      y: positionState.y,
+      z: positionState.z - (positionState.z == 0 ? 0 : 1),
+    };
+    dispatch(
+      updateCalendar({
+        idx: calendarPageIdx,
+        updateCalendarKey: rightClickPosition.key,
+        type: "position",
+        newValue: positionObj,
+      })
+    );
+  };
+
   return (
     <div
       className="menu-box bg-slate-100"
@@ -57,6 +98,9 @@ export default function CalendarRightClickMenu({
     >
       <div onClick={handleItemClick}>달력 삭제</div>
       <div onClick={handleItemClick2}>달력 스타일</div>
+      <div>현재 높이: {positionState.z}</div>
+      <div onClick={handleItemClick3}>높이 증가</div>
+      <div onClick={handleItemClick4}>높이 감소</div>
     </div>
   );
 }

@@ -29,6 +29,7 @@ for (let i = 0; i < 28; i++) {
   });
 }
 
+// TODO: 달력과 이미지가 서로 파편화된 reducer를 widget 단위로 통합하는 시도 고려 중
 const calendarPagesSlice = createSlice({
   name: "calendarPages",
   initialState,
@@ -47,7 +48,7 @@ const calendarPagesSlice = createSlice({
         position: {
           x: 0,
           y: 0,
-          z: 0,
+          z: 10,
         },
         size: {
           width: 320,
