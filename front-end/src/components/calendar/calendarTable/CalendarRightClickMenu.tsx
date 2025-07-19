@@ -2,8 +2,8 @@ import React from "react";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 
 import {
-  deleteCalendar,
-  updateCalendar,
+  deleteWidget,
+  updateWidget,
 } from "../../../store/slices/calendarPagesSlice";
 
 export default function CalendarRightClickMenu({
@@ -35,9 +35,9 @@ export default function CalendarRightClickMenu({
   const handleItemClick = () => {
     const deleteObj = {
       idx: calendarPageIdx,
-      deleteCalendarKey: rightClickPosition.key,
+      deleteWidgetKey: rightClickPosition.key,
     };
-    dispatch(deleteCalendar(deleteObj));
+    dispatch(deleteWidget(deleteObj));
 
     setRightClickPosition(() => ({}));
   };
@@ -59,9 +59,9 @@ export default function CalendarRightClickMenu({
       z: positionState.z + (positionState.z == 20 ? 0 : 1),
     };
     dispatch(
-      updateCalendar({
+      updateWidget({
         idx: calendarPageIdx,
-        updateCalendarKey: rightClickPosition.key,
+        updateWidgetKey: rightClickPosition.key,
         type: "position",
         newValue: positionObj,
       })
@@ -75,9 +75,9 @@ export default function CalendarRightClickMenu({
       z: positionState.z - (positionState.z == 0 ? 0 : 1),
     };
     dispatch(
-      updateCalendar({
+      updateWidget({
         idx: calendarPageIdx,
-        updateCalendarKey: rightClickPosition.key,
+        updateWidgetKey: rightClickPosition.key,
         type: "position",
         newValue: positionObj,
       })

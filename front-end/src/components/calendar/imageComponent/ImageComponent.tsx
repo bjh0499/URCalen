@@ -4,9 +4,9 @@ import { useAppDispatch } from "../../../store/hooks";
 import { Resizable } from "react-resizable";
 import Draggable from "react-draggable";
 
-import { updateImage } from "../../../store/slices/calendarPagesSlice";
+import { updateWidget } from "../../../store/slices/calendarPagesSlice";
 
-import type UpdateImageInput from "../../../class/UpdateImageInput";
+import type UpdateWidgetInput from "../../../class/UpdateWidgetInput";
 
 export default function ImageComponent({
   imageId,
@@ -26,14 +26,14 @@ export default function ImageComponent({
       height: size.height,
     };
 
-    const updateImageObj: UpdateImageInput = {
+    const updateImageObj: UpdateWidgetInput = {
       idx: calendarPageIdx,
-      updateImageKey: imageId,
+      updateWidgetKey: imageId,
       type: "size",
       newValue: sizeObj,
     };
 
-    dispatch(updateImage(updateImageObj));
+    dispatch(updateWidget(updateImageObj));
   };
 
   const handleOnResizeStop = (e, { node, size, handle }) => {
@@ -51,15 +51,15 @@ export default function ImageComponent({
       positionObj.y = 750 - size.height;
     }
 
-    const updateImageObj: UpdateImageInput = {
+    const updateImageObj: UpdateWidgetInput = {
       idx: calendarPageIdx,
-      updateImageKey: imageId,
+      updateWidgetKey: imageId,
       type: "position",
       newValue: positionObj,
     };
 
     setTimeout(() => {
-      dispatch(updateImage(updateImageObj));
+      dispatch(updateWidget(updateImageObj));
     }, 10);
   };
 
@@ -108,14 +108,14 @@ export default function ImageComponent({
       z: imagePosition.z,
     };
 
-    const updateImageObj: UpdateImageInput = {
+    const updateImageObj: UpdateWidgetInput = {
       idx: calendarPageIdx,
-      updateImageKey: imageId,
+      updateWidgetKey: imageId,
       type: "position",
       newValue: positionObj,
     };
 
-    dispatch(updateImage(updateImageObj));
+    dispatch(updateWidget(updateImageObj));
   };
 
   return (

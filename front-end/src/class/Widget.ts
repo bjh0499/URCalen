@@ -5,7 +5,7 @@ import type WidgetSize from "./WidgetSize";
 type Widget = {
   widgetType: "" | "Calendar" | "Image";
   data?: string;
-  option: WidgetOption;
+  option?: WidgetOption;
   position: WidgetPosition;
   size: WidgetSize;
 };

@@ -44,7 +44,6 @@ export default function CopyCalendarMenu({ setModalOption }) {
     );
   }
 
-  // TODO: TypeScript의 경우 input의 value에 boolean을 넣을 수 없어 string으로 대체했는데, 이에 따라 다른 부분의 수정이 필요할 수 있음
   return (
     <Modal>
       <form onSubmit={handleSubmit}>

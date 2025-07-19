@@ -3,8 +3,8 @@ import { useAppDispatch, useAppSelector } from "../../store/hooks";
 
 import Modal from "../utils/Modal";
 
-import { updateCalendar } from "../../store/slices/calendarPagesSlice";
-import UpdateCalendarInput from "../../class/UpdateCalendarInput";
+import { updateWidget } from "../../store/slices/calendarPagesSlice";
+import UpdateWidgetInput from "../../class/UpdateWidgetInput";
 import CalendarOption from "../../class/CalendarOption";
 
 export default function StyleMenu({ calendarKey }) {
@@ -35,14 +35,14 @@ export default function StyleMenu({ calendarKey }) {
       lang: langValue,
     };
 
-    const updateCalendarObj: UpdateCalendarInput = {
+    const updateCalendarObj: UpdateWidgetInput = {
       idx: calendarPageIdx,
-      updateCalendarKey: calendarKey,
+      updateWidgetKey: calendarKey,
       type: "option",
       newValue: optionObj,
     };
 
-    dispatch(updateCalendar(updateCalendarObj));
+    dispatch(updateWidget(updateCalendarObj));
   };
 
   return (

@@ -2,11 +2,11 @@ import React from "react";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 
 import {
-  updateImage,
-  deleteImage,
+  updateWidget,
+  deleteWidget,
 } from "../../../store/slices/calendarPagesSlice";
 
-import DeleteImageInput from "../../../class/DeleteImageInput";
+import DeleteWidgetInput from "../../../class/DeleteWidgetInput";
 
 export default function ImageRightClickMenu({
   rightClickPosition,
@@ -34,11 +34,11 @@ export default function ImageRightClickMenu({
   };
 
   const handleItemClick = () => {
-    const deleteObj: DeleteImageInput = {
+    const deleteObj: DeleteWidgetInput = {
       idx: calendarPageIdx,
-      deleteImageKey: rightClickPosition.key,
+      deleteWidgetKey: rightClickPosition.key,
     };
-    dispatch(deleteImage(deleteObj));
+    dispatch(deleteWidget(deleteObj));
 
     setRightClickPosition(() => ({}));
   };
@@ -50,9 +50,9 @@ export default function ImageRightClickMenu({
       z: positionState.z + (positionState.z == 20 ? 0 : 1),
     };
     dispatch(
-      updateImage({
+      updateWidget({
         idx: calendarPageIdx,
-        updateImageKey: rightClickPosition.key,
+        updateWidgetKey: rightClickPosition.key,
         type: "position",
         newValue: positionObj,
       })
@@ -66,9 +66,9 @@ export default function ImageRightClickMenu({
       z: positionState.z - (positionState.z == 0 ? 0 : 1),
     };
     dispatch(
-      updateImage({
+      updateWidget({
         idx: calendarPageIdx,
-        updateImageKey: rightClickPosition.key,
+        updateWidgetKey: rightClickPosition.key,
         type: "position",
         newValue: positionObj,
       })

@@ -2,8 +2,7 @@ import React from "react";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 
 import {
-  addCalendar,
-  addImage,
+  addWidget,
   loadCalendarPages,
   resetCalendarPages,
 } from "../../store/slices/calendarPagesSlice";
@@ -44,7 +43,7 @@ export default function Nav({ setModalOption }) {
   const handleAddCalendar = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    dispatch(addCalendar(idx));
+    dispatch(addWidget({ idx: idx, type: "Calendar" }));
   };
 
   const handleAddImage = (e) => {
@@ -55,7 +54,9 @@ export default function Nav({ setModalOption }) {
       const reader = new FileReader();
 
       reader.addEventListener("load", () => {
-        dispatch(addImage({ idx: idx, img: reader.result as string }));
+        dispatch(
+          addWidget({ idx: idx, type: "Image", data: reader.result as string })
+        );
       });
 
       if (!file) {

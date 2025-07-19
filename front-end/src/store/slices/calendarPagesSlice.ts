@@ -2,14 +2,13 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
 import type CalendarPagesSliceState from "../../class/CalendarPagesSliceState";
-import type DeleteCalendarInput from "../../class/DeleteCalendarInput";
-import type UpdateCalendarInput from "../../class/UpdateCalendarInput";
-import type AddImageInput from "../../class/AddImageInput";
-import type DeleteImageInput from "../../class/DeleteImageInput";
-import type UpdateImageInput from "../../class/UpdateImageInput";
+import type AddWidgetInput from "../../class/AddWidgetInput";
+import type UpdateWidgetInput from "../../class/UpdateWidgetInput";
+import type DeleteWidgetInput from "../../class/DeleteWidgetInput";
 import type LoadCalendarPagesInput from "../../class/LoadCalendarPagesInput";
 import type CopyCalendarPageInput from "../../class/CopyCalendarPageInput";
 
+import type Widget from "../../class/Widget";
 import type WidgetOption from "../../class/WidgetOption";
 import type WidgetPosition from "../../class/WidgetPosition";
 import type WidgetSize from "../../class/WidgetSize";
@@ -29,7 +28,6 @@ for (let i = 0; i < 28; i++) {
   });
 }
 
-// TODO: 달력과 이미지가 서로 파편화된 reducer를 widget 단위로 통합하는 시도 고려 중
 const calendarPagesSlice = createSlice({
   name: "calendarPages",
   initialState,
@@ -37,14 +35,9 @@ const calendarPagesSlice = createSlice({
     setCalendarTitle: (state, action: PayloadAction<string>) => {
       state.calendarTitle = action.payload;
     },
-    addCalendar: (state, action: PayloadAction<number>) => {
-      const idx = action.payload;
-      const newCalendarId = state.calendarPages[idx].lastWidgetId!;
-      state.calendarPages[idx].widgetList[newCalendarId] = {
-        widgetType: "Calendar",
-        option: {
-          lang: "KO",
-        },
+    addWidget: (state, action: PayloadAction<AddWidgetInput>) => {
+      const newWidget: Widget = {
+        widgetType: action.payload.type,
         position: {
           x: 0,
           y: 0,
@@ -56,94 +49,53 @@ const calendarPagesSlice = createSlice({
         },
       };
 
-      state.calendarPages[idx].widgetKeyList.push(newCalendarId);
+      switch (action.payload.type) {
+        case "Calendar":
+          newWidget.option = {
+            lang: "KO",
+          };
+        case "Image":
+          newWidget.option = {};
+          break;
+        default:
+          break;
+      }
 
+      const idx = action.payload.idx;
+      const newWidgetId = state.calendarPages[idx].lastWidgetId!;
+      state.calendarPages[idx].widgetList[newWidgetId] = newWidget;
+      state.calendarPages[idx].widgetKeyList.push(newWidgetId);
       state.calendarPages[idx].lastWidgetId!++;
     },
-    deleteCalendar: (state, action: PayloadAction<DeleteCalendarInput>) => {
+    updateWidget: (state, action: PayloadAction<UpdateWidgetInput>) => {
       const idx = action.payload.idx;
-      const deleteCalendarKey = action.payload.deleteCalendarKey;
+      const updateWidgetId = action.payload.updateWidgetKey;
+      const existingWidget =
+        state.calendarPages[idx].widgetList[updateWidgetId];
 
+      if (existingWidget) {
+        const type = action.payload.type;
+        const newValue = action.payload.newValue;
+
+        if (type === "option") {
+          existingWidget.option = newValue as WidgetOption;
+        } else if (type === "position") {
+          existingWidget.position = newValue as WidgetPosition;
+        } else if (type === "size") {
+          existingWidget.size = newValue as WidgetSize;
+        }
+      }
+    },
+    deleteWidget: (state, action: PayloadAction<DeleteWidgetInput>) => {
+      const { idx, deleteWidgetKey } = action.payload;
       const prev = state.calendarPages[idx].widgetKeyList;
-      const removeIndex = prev.indexOf(deleteCalendarKey);
+      const removeIndex = prev.indexOf(deleteWidgetKey);
       state.calendarPages[idx].widgetKeyList = [
         ...prev.slice(0, removeIndex),
         ...prev.slice(removeIndex + 1, prev.length),
       ];
 
-      state.calendarPages[idx].widgetList[deleteCalendarKey] = null;
-    },
-    updateCalendar: (state, action: PayloadAction<UpdateCalendarInput>) => {
-      const idx = action.payload.idx;
-      const updateCalendarId = action.payload.updateCalendarKey;
-      const existingCalendar =
-        state.calendarPages[idx].widgetList[updateCalendarId];
-
-      if (existingCalendar) {
-        const type = action.payload.type;
-        const newValue = action.payload.newValue;
-
-        if (type === "option") {
-          existingCalendar.option = newValue as WidgetOption;
-        } else if (type === "position") {
-          existingCalendar.position = newValue as WidgetPosition;
-        } else if (type === "size") {
-          existingCalendar.size = newValue as WidgetSize;
-        }
-      }
-    },
-    addImage: (state, action: PayloadAction<AddImageInput>) => {
-      const idx = action.payload.idx;
-      const newImageId = state.calendarPages[idx].lastWidgetId!;
-      state.calendarPages[idx].widgetList[newImageId] = {
-        widgetType: "Image",
-        data: action.payload.img,
-        option: {},
-        position: {
-          x: 0,
-          y: 0,
-          z: 0,
-        },
-        size: {
-          width: 320,
-          height: 320,
-        },
-      };
-
-      state.calendarPages[idx].widgetKeyList.push(newImageId);
-
-      state.calendarPages[idx].lastWidgetId!++;
-    },
-    deleteImage: (state, action: PayloadAction<DeleteImageInput>) => {
-      const idx = action.payload.idx;
-      const deleteImageKey = action.payload.deleteImageKey;
-
-      const prev = state.calendarPages[idx].widgetKeyList;
-      const removeIndex = prev.indexOf(deleteImageKey);
-      state.calendarPages[idx].widgetKeyList = [
-        ...prev.slice(0, removeIndex),
-        ...prev.slice(removeIndex + 1, prev.length),
-      ];
-
-      state.calendarPages[idx].widgetList[deleteImageKey] = null;
-    },
-    updateImage: (state, action: PayloadAction<UpdateImageInput>) => {
-      const idx = action.payload.idx;
-      const updateImageKey = action.payload.updateImageKey;
-      const existingImage = state.calendarPages[idx].widgetList[updateImageKey];
-
-      if (existingImage) {
-        const type = action.payload.type;
-        const newValue = action.payload.newValue;
-
-        if (type === "option") {
-          existingImage.option = newValue as WidgetOption;
-        } else if (type === "position") {
-          existingImage.position = newValue as WidgetPosition;
-        } else if (type === "size") {
-          existingImage.size = newValue as WidgetSize;
-        }
-      }
+      state.calendarPages[idx].widgetList[deleteWidgetKey] = null;
     },
     saveCalendarPages: (state, action: PayloadAction<string>) => {
       const jsonData = JSON.stringify(arrangeCalendarPages(state));
@@ -219,12 +171,9 @@ const calendarPagesSlice = createSlice({
 
 export const {
   setCalendarTitle,
-  addCalendar,
-  deleteCalendar,
-  updateCalendar,
-  addImage,
-  deleteImage,
-  updateImage,
+  addWidget,
+  updateWidget,
+  deleteWidget,
   saveCalendarPages,
   loadCalendarPages,
   resetCalendarPages,

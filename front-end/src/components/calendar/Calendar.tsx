@@ -7,9 +7,9 @@ import Draggable from "react-draggable";
 import CalendarHeader from "./calendarHeader/CalendarHeader";
 import CalendarTable from "./calendarTable/CalendarTable";
 
-import { updateCalendar } from "../../store/slices/calendarPagesSlice";
+import { updateWidget } from "../../store/slices/calendarPagesSlice";
 
-import type UpdateCalendarInput from "../../class/UpdateCalendarInput";
+import type UpdateWidgetInput from "../../class/UpdateWidgetInput";
 
 export default function Calendar({
   calendarKey,
@@ -32,14 +32,14 @@ export default function Calendar({
       height: size.height,
     };
 
-    const updateCalendarObj: UpdateCalendarInput = {
+    const updateCalendarObj: UpdateWidgetInput = {
       idx: calendarPageIdx,
-      updateCalendarKey: calendarKey,
+      updateWidgetKey: calendarKey,
       type: "size",
       newValue: sizeObj,
     };
 
-    dispatch(updateCalendar(updateCalendarObj));
+    dispatch(updateWidget(updateCalendarObj));
   };
 
   const handleOnResizeStop = (e, { node, size, handle }) => {
@@ -57,15 +57,15 @@ export default function Calendar({
       positionObj.y = 750 - size.height;
     }
 
-    const updateCalendarObj: UpdateCalendarInput = {
+    const updateCalendarObj: UpdateWidgetInput = {
       idx: calendarPageIdx,
-      updateCalendarKey: calendarKey,
+      updateWidgetKey: calendarKey,
       type: "position",
       newValue: positionObj,
     };
 
     setTimeout(() => {
-      dispatch(updateCalendar(updateCalendarObj));
+      dispatch(updateWidget(updateCalendarObj));
     }, 10);
   };
 
@@ -111,14 +111,14 @@ export default function Calendar({
       z: positionState.z,
     };
 
-    const updateCalendarObj: UpdateCalendarInput = {
+    const updateCalendarObj: UpdateWidgetInput = {
       idx: calendarPageIdx,
-      updateCalendarKey: calendarKey,
+      updateWidgetKey: calendarKey,
       type: "position",
       newValue: positionObj,
     };
 
-    dispatch(updateCalendar(updateCalendarObj));
+    dispatch(updateWidget(updateCalendarObj));
   };
 
   return (

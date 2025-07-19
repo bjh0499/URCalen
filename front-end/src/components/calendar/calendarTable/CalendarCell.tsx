@@ -35,7 +35,6 @@ export default function CalendarCell({
   let giveClass = "flex-center w-full h-full ";
   let isHoliday = false;
 
-  // TODO: sizeState에 대한 구체적인 Type 명시 필요
   if (sizeState.width < 324) {
     giveClass += "text-xs ";
   } else if (sizeState.width < 378) {

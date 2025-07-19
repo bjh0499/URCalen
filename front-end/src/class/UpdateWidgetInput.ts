@@ -2,11 +2,11 @@ import type WidgetOption from "./WidgetOption";
 import type WidgetPosition from "./WidgetPosition";
 import type WidgetSize from "./WidgetSize";
 
-type UpdateCalendarInput = {
+type UpdateWidgetInput = {
   idx: number;
-  updateCalendarKey: number;
+  updateWidgetKey: number;
   type: "option" | "position" | "size";
   newValue: WidgetOption | WidgetPosition | WidgetSize;
 };
 
-export default UpdateCalendarInput;
+export default UpdateWidgetInput;
