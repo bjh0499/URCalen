@@ -55,6 +55,7 @@ const calendarPagesSlice = createSlice({
             lang: "KO",
           };
         case "Image":
+          newWidget.data = action.payload.data;
           newWidget.option = {};
           break;
         default:

@@ -82,7 +82,6 @@ export default function Calendar({
     let element = e.target;
 
     do {
-      console.log(element);
       const styleTransform = element.style.transform;
 
       const parts1 = /^translate\((-?\d{1,})px\)$/.exec(styleTransform);
