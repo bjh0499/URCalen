@@ -1,6 +1,10 @@
 import type CalendarPagesSliceState from "../../../class/CalendarPagesSliceState";
-import type SavedCalendarPagesSliceState from "../../../class/SavedCalendarPagesSliceState";
 import type SavedCalendarPage from "../../../class/SavedCalendarPage";
+
+type SavedCalendarPagesSliceState = {
+  calendarTitle: string;
+  calendarPages: Array<SavedCalendarPage>;
+};
 
 export default function arrangeCalendarPages(
   state: CalendarPagesSliceState

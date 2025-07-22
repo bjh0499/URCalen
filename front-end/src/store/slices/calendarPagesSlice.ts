@@ -2,11 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
 import type CalendarPagesSliceState from "../../class/CalendarPagesSliceState";
-import type AddWidgetInput from "../../class/AddWidgetInput";
 import type UpdateWidgetInput from "../../class/UpdateWidgetInput";
 import type DeleteWidgetInput from "../../class/DeleteWidgetInput";
-import type LoadCalendarPagesInput from "../../class/LoadCalendarPagesInput";
-import type CopyCalendarPageInput from "../../class/CopyCalendarPageInput";
 
 import type Widget from "../../class/Widget";
 import type WidgetOption from "../../class/WidgetOption";
@@ -14,6 +11,24 @@ import type WidgetPosition from "../../class/WidgetPosition";
 import type WidgetSize from "../../class/WidgetSize";
 
 import arrangeCalendarPages from "./utils/arrangeCalendarPages";
+
+type AddWidgetInput = {
+  idx: number;
+  type: "Calendar" | "Image";
+  data?: string;
+};
+
+type LoadCalendarPagesInput = {
+  type: "local" | "server";
+  data: CalendarPagesSliceState | null;
+};
+
+type CopyCalendarPageInput = {
+  srcMonth: number;
+  srcFront: boolean;
+  dstMonth: number;
+  dstFront: boolean;
+};
 
 const initialState: CalendarPagesSliceState = {
   calendarTitle: "",

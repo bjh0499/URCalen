@@ -1,7 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
-import type SelectedMonthSliceState from "../../class/SelectedMonthSliceState";
+type SelectedMonthSliceState = {
+  year: number;
+  month: number;
+  front: boolean;
+  isChanged: boolean;
+};
 
 const initialState: SelectedMonthSliceState = {
   year: new Date().getFullYear(),
