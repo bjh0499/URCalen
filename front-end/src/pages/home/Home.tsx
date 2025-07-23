@@ -2,8 +2,6 @@ import React from "react";
 import { useState } from "react";
 
 import Nav from "../../components/nav/Nav";
-import CalendarRightClickMenu from "../../components/calendar/calendarTable/CalendarRightClickMenu";
-import ImageRightClickMenu from "../../components/calendar/imageComponent/ImageRightClickMenu";
 
 import StyleMenu from "../../components/menu/StyleMenu";
 import LoginMenu from "../../components/menu/LoginMenu";
@@ -11,10 +9,10 @@ import SignUpMenu from "../../components/menu/SignUpMenu";
 import SaveMenu from "../../components/menu/SaveMenu";
 import GlobalOptionMenu from "../../components/menu/GlobalOptionMenu";
 import CopyCalendarMenu from "../../components/menu/CopyCalendarMenu";
-import CalendarArea from "../../components/calendar/CalendarArea";
 
 import type ClickPosition from "../../class/ClickPosition";
-import ModalOption from "../../class/ModalOption";
+import type ModalOption from "../../class/ModalOption";
+import CalendarArea from "../../components/calendar/CalendarArea";
 
 export default function Home() {
   const [rightClickPosition, setRightClickPosition] = useState<ClickPosition>(
@@ -50,28 +48,14 @@ export default function Home() {
   }
 
   return (
-    <div className="grow flex-col-center w-full" onClick={handleClick}>
+    <main className="grow flex-col-center w-full" onClick={handleClick}>
       <Nav setModalOption={setModalOption} />
-      <CalendarArea setRightClickPosition={setRightClickPosition} />
-      {rightClickPosition.clickX !== undefined ? (
-        rightClickPosition.type === "calendar" ? (
-          <CalendarRightClickMenu
-            rightClickPosition={rightClickPosition}
-            setRightClickPosition={setRightClickPosition}
-            setModalOption={setModalOption}
-          />
-        ) : rightClickPosition.type === "image" ? (
-          <ImageRightClickMenu
-            rightClickPosition={rightClickPosition}
-            setRightClickPosition={setRightClickPosition}
-          />
-        ) : (
-          <></>
-        )
-      ) : (
-        <></>
-      )}
+      <CalendarArea
+        rightClickPosition={rightClickPosition}
+        setRightClickPosition={setRightClickPosition}
+        setModalOption={setModalOption}
+      />
       {modalContent}
-    </div>
+    </main>
   );
 }
