@@ -1,15 +1,15 @@
 import React from "react";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 
 import { Resizable } from "react-resizable";
 import Draggable from "react-draggable";
 
-import CalendarHeader from "./calendarHeader/CalendarHeader";
-import CalendarTable from "./calendarTable/CalendarTable";
+import CalendarHeader from "../calendarHeader/CalendarHeader";
+import CalendarTable from "./CalendarTable";
 
-import { updateWidget } from "../../store/slices/calendarPagesSlice";
+import { updateWidget } from "../../../store/slices/calendarPagesSlice";
 
-import type UpdateWidgetInput from "../../class/UpdateWidgetInput";
+import type UpdateWidgetInput from "../../../class/UpdateWidgetInput";
 
 export default function Calendar({
   calendarKey,

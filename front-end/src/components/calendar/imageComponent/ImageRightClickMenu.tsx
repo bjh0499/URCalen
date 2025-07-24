@@ -9,20 +9,15 @@ import {
 import DeleteWidgetInput from "../../../class/DeleteWidgetInput";
 
 export default function ImageRightClickMenu({
+  selectedPage,
   rightClickPosition,
   setRightClickPosition,
 }) {
   const dispatch = useAppDispatch();
 
-  const selectedMonth = useAppSelector((state) => state.selectedMonth.month);
-  const isFront = useAppSelector((state) => state.selectedMonth.front);
-  const calendarPageIdx = (selectedMonth << 1) + (isFront ? 0 : 1);
-  const positionState = useAppSelector(
-    (state) =>
-      state.calendarPages.calendarPages[calendarPageIdx].widgetList[
-        rightClickPosition.key
-      ]!.position
-  );
+  const { calendarPageIdx, calendarPage } = selectedPage;
+  const positionState =
+    calendarPage.widgetList[rightClickPosition.key]!.position;
 
   const handleMenuClick = (e) => {
     e.preventDefault();

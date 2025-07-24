@@ -1,5 +1,5 @@
 import React from "react";
-import { useAppDispatch, useAppSelector } from "../../../store/hooks";
+import { useAppDispatch } from "../../../store/hooks";
 
 import {
   deleteWidget,
@@ -7,21 +7,16 @@ import {
 } from "../../../store/slices/calendarPagesSlice";
 
 export default function CalendarRightClickMenu({
+  selectedPage,
   rightClickPosition,
   setRightClickPosition,
   setModalOption,
 }) {
   const dispatch = useAppDispatch();
 
-  const selectedMonth = useAppSelector((state) => state.selectedMonth.month);
-  const isFront = useAppSelector((state) => state.selectedMonth.front);
-  const calendarPageIdx = (selectedMonth << 1) + (isFront ? 0 : 1);
-  const positionState = useAppSelector(
-    (state) =>
-      state.calendarPages.calendarPages[calendarPageIdx].widgetList[
-        rightClickPosition.key
-      ]!.position
-  );
+  const { calendarPageIdx, calendarPage } = selectedPage;
+  const positionState =
+    calendarPage.widgetList[rightClickPosition.key]!.position;
 
   const handleMenuClick = (e) => {
     e.preventDefault();

@@ -1,5 +1,5 @@
 import React from "react";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { useAppDispatch } from "../../store/hooks";
 
 import Modal from "../utils/Modal";
 
@@ -7,15 +7,10 @@ import { updateWidget } from "../../store/slices/calendarPagesSlice";
 import UpdateWidgetInput from "../../class/UpdateWidgetInput";
 import CalendarOption from "../../class/CalendarOption";
 
-export default function StyleMenu({ calendarKey }) {
+export default function StyleMenu({ calendarKey, selectedPage }) {
   const dispatch = useAppDispatch();
 
-  const selectedMonth = useAppSelector((state) => state.selectedMonth.month);
-  const isFront = useAppSelector((state) => state.selectedMonth.front);
-  const calendarPageIdx = (selectedMonth << 1) + (isFront ? 0 : 1);
-  const calendarPage = useAppSelector(
-    (state) => state.calendarPages.calendarPages[calendarPageIdx]
-  );
+  const { calendarPageIdx, calendarPage } = selectedPage;
 
   const handleItemClick = (e) => {
     e.preventDefault();

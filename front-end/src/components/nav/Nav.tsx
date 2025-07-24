@@ -1,5 +1,5 @@
 import React from "react";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { useAppDispatch } from "../../store/hooks";
 
 import {
   addWidget,
@@ -16,11 +16,10 @@ import jsonToCalendarPages from "./utils/jsonToCalendarPages";
 import type NormalNavDivButtonInput from "../../class/NormalNavDivButtonInput";
 import type MonthChangeButtonInput from "../../class/MonthChangeButtonInput";
 
-export default function Nav({ setModalOption }) {
+export default function Nav({ setModalOption, selectedPage }) {
   const dispatch = useAppDispatch();
-  const selectedMonth = useAppSelector((state) => state.selectedMonth.month);
-  const isFront = useAppSelector((state) => state.selectedMonth.front);
-  const idx = (selectedMonth << 1) + (isFront ? 0 : 1);
+
+  const { selectedMonth, isFront, calendarPageIdx } = selectedPage;
 
   const prevYear = () => {
     dispatch(minusYear());
@@ -43,7 +42,7 @@ export default function Nav({ setModalOption }) {
   const handleAddCalendar = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    dispatch(addWidget({ idx: idx, type: "Calendar" }));
+    dispatch(addWidget({ idx: calendarPageIdx, type: "Calendar" }));
   };
 
   const handleAddImage = (e) => {
@@ -55,7 +54,11 @@ export default function Nav({ setModalOption }) {
 
       reader.addEventListener("load", () => {
         dispatch(
-          addWidget({ idx: idx, type: "Image", data: reader.result as string })
+          addWidget({
+            idx: calendarPageIdx,
+            type: "Image",
+            data: reader.result as string,
+          })
         );
       });
 
