@@ -1,10 +1,29 @@
 import React from "react";
+import SelectedPage from "../../../class/SelectedPage";
 
-export default function WidgetSidebar({ selectedPage }) {
+type WidgetSidebarInput = {
+  selectedPage: SelectedPage;
+};
+
+export default function WidgetSidebar({ selectedPage }: WidgetSidebarInput) {
+  const { widgetKeyList, widgetList } = selectedPage.calendarPage;
+
   return (
     <aside className="flex-none" style={{ width: "100px" }}>
-      <div>Widget1</div>
-      <div>Widget2</div>
+      {widgetKeyList.map((key) => {
+        let str = String(key);
+        switch (widgetList[key]!.widgetType) {
+          case "Calendar":
+            str += ": 달력";
+            break;
+          case "Image":
+            str += ": 이미지";
+            break;
+          default:
+            str += ": ??";
+        }
+        return <div>{str}</div>;
+      })}
     </aside>
   );
 }
