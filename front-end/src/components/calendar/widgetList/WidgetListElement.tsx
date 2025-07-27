@@ -1,4 +1,10 @@
 import React from "react";
+import { useAppDispatch } from "../../../store/hooks";
+
+import {
+  setSelectedWidgetKey,
+  resetSelectedWidgetKey,
+} from "../../../store/slices/selectedWidgetSlice";
 
 import type SelectedPage from "../../../class/SelectedPage";
 
@@ -11,12 +17,14 @@ export default function WidgetListElement({
   idx,
   selectedPage,
 }: WidgetListElementInput) {
+  const dispatch = useAppDispatch();
+
   const handleMouseEnter = (e) => {
-    console.log(idx + " O");
+    dispatch(setSelectedWidgetKey(idx));
   };
 
   const handleMouseLeave = (e) => {
-    console.log(idx + " X");
+    dispatch(resetSelectedWidgetKey());
   };
 
   let str = String(idx);

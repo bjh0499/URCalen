@@ -120,6 +120,11 @@ export default function Calendar({
     dispatch(updateWidget(updateCalendarObj));
   };
 
+  const { selectedWidgetKey } = useAppSelector((state) => state.selectedWidget);
+  const classNameStr = `w-full h-full border ${
+    selectedWidgetKey === calendarKey ? "border-black" : "border-white"
+  }`;
+
   return (
     <Draggable
       bounds="parent"
@@ -140,7 +145,7 @@ export default function Calendar({
         onResizeStop={handleOnResizeStop}
       >
         <div
-          className="w-full h-full"
+          className={classNameStr}
           style={{
             width: sizeState.width + "px",
             height: sizeState.height + "px",

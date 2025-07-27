@@ -2,10 +2,10 @@ import React from "react";
 
 import type DayObject from "../../../class/DayObject";
 import type WidgetSize from "../../../class/WidgetSize";
+import type CalendarPage from "../../../class/CalendarPage";
 
 import CalendarRow from "./CalendarRow";
 import CalendarTopRow from "./CalendarTopRow";
-import CalendarPage from "../../../class/CalendarPage";
 
 type CalendarTableInput = {
   calendarKey: number;
