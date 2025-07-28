@@ -17,7 +17,10 @@ export default function CalendarArea({
         selectedPage={selectedPage}
         setRightClickPosition={setRightClickPosition}
       />
-      <WidgetSidebar selectedPage={selectedPage} />
+      <WidgetSidebar
+        selectedPage={selectedPage}
+        setRightClickPosition={setRightClickPosition}
+      />
       {rightClickPosition.clickX !== undefined ? (
         rightClickPosition.type === "calendar" ? (
           <CalendarRightClickMenu
