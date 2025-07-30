@@ -1,5 +1,7 @@
 import React from "react";
-import { useState } from "react";
+import { useAppDispatch, useAppSelector } from "../../../store/hooks";
+
+import { setStartWidgetIdx } from "../../../store/slices/selectedWidgetSlice";
 
 import WidgetListElement from "./WidgetListElement";
 
@@ -14,17 +16,21 @@ export default function WidgetSidebar({
   selectedPage,
   setRightClickPosition,
 }: WidgetSidebarInput) {
-  const [widgetStartIdx, setWidgetStartIdx] = useState<number>(0);
+  const dispatch = useAppDispatch();
+
+  const widgetStartIdx = useAppSelector(
+    (state) => state.selectedWidget.startWidgetIdx
+  );
 
   const handleWidgetListUpButton = (e) => {
     if (widgetStartIdx > 0) {
-      setWidgetStartIdx(() => widgetStartIdx - 1);
+      dispatch(setStartWidgetIdx(widgetStartIdx - 1));
     }
   };
 
   const handleWidgetListDownButton = (e) => {
     if (widgetStartIdx < selectedPage.calendarPage.widgetList.length - 10) {
-      setWidgetStartIdx(() => widgetStartIdx + 1);
+      dispatch(setStartWidgetIdx(widgetStartIdx + 1));
     }
   };
 

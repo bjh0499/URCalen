@@ -7,6 +7,8 @@ import {
   setIsChanged,
 } from "../../store/slices/selectedMonthSlice";
 
+import { resetStartWidgetIdx } from "../../store/slices/selectedWidgetSlice";
+
 import type MonthChangeButtonInput from "../../class/MonthChangeButtonInput";
 
 export default function MonthChangeButton({
@@ -19,6 +21,7 @@ export default function MonthChangeButton({
 
   const handleClick = () => {
     dispatch(setIsChanged(true));
+    dispatch(resetStartWidgetIdx());
     if (type === "month") {
       dispatch(setMonth(value as number));
     } else if (type === "front") {

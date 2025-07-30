@@ -3,10 +3,12 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 
 type SelectedWidgetSliceState = {
   selectedWidgetKey: number;
+  startWidgetIdx: number;
 };
 
 const initialState: SelectedWidgetSliceState = {
   selectedWidgetKey: -1,
+  startWidgetIdx: 0,
 };
 
 const selectedWidgetSlice = createSlice({
@@ -19,10 +21,20 @@ const selectedWidgetSlice = createSlice({
     resetSelectedWidgetKey: (state) => {
       state.selectedWidgetKey = -1;
     },
+    setStartWidgetIdx: (state, action: PayloadAction<number>) => {
+      state.startWidgetIdx = action.payload;
+    },
+    resetStartWidgetIdx: (state) => {
+      state.startWidgetIdx = 0;
+    },
   },
 });
 
-export const { setSelectedWidgetKey, resetSelectedWidgetKey } =
-  selectedWidgetSlice.actions;
+export const {
+  setSelectedWidgetKey,
+  resetSelectedWidgetKey,
+  setStartWidgetIdx,
+  resetStartWidgetIdx,
+} = selectedWidgetSlice.actions;
 
 export default selectedWidgetSlice.reducer;
