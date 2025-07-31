@@ -22,14 +22,14 @@ export default function CalendarArea({
         setRightClickPosition={setRightClickPosition}
       />
       {rightClickPosition.clickX !== undefined ? (
-        rightClickPosition.type === "calendar" ? (
+        rightClickPosition.type === "Calendar" ? (
           <CalendarRightClickMenu
             selectedPage={selectedPage}
             rightClickPosition={rightClickPosition}
             setRightClickPosition={setRightClickPosition}
             setModalOption={setModalOption}
           />
-        ) : rightClickPosition.type === "image" ? (
+        ) : rightClickPosition.type === "Image" ? (
           <ImageRightClickMenu
             selectedPage={selectedPage}
             rightClickPosition={rightClickPosition}

@@ -1,5 +1,5 @@
 import React from "react";
-import { useAppDispatch } from "../../../store/hooks";
+import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 
 import { Resizable } from "react-resizable";
 import Draggable from "react-draggable";
@@ -68,7 +68,7 @@ export default function ImageComponent({
 
     const clickObj = {
       key: imageId,
-      type: "image",
+      type: "Image",
       clickX: e.clientX,
       clickY: e.clientY,
     };
@@ -114,6 +114,11 @@ export default function ImageComponent({
     dispatch(updateWidget(updateImageObj));
   };
 
+  const { selectedWidgetKey } = useAppSelector((state) => state.selectedWidget);
+  const classNameStr = `w-full h-full border ${
+    selectedWidgetKey === imageId ? "border-black" : "border-white"
+  }`;
+
   return (
     <Draggable
       bounds="parent"
@@ -131,7 +136,7 @@ export default function ImageComponent({
         onResizeStop={handleOnResizeStop}
       >
         <div
-          className="w-full h-full"
+          className={classNameStr}
           style={{
             width: imageSize.width + "px",
             height: imageSize.height + "px",

@@ -1,7 +1,7 @@
 type ClickPosition = {
   clickX?: number;
   clickY?: number;
-  type?: "calendar" | "image";
+  type?: "Calendar" | "Image";
 };
 
 export default ClickPosition;

@@ -25,21 +25,9 @@ export default function WidgetListElement({
   const handleRightClick = (e) => {
     e.preventDefault();
 
-    let type;
-    switch (widgetType) {
-      case "Calendar":
-        type = "calendar";
-        break;
-      case "Image":
-        type = "image";
-        break;
-      default:
-        break;
-    }
-
     const clickObj = {
       key: idx,
-      type: type,
+      type: widgetType,
       clickX: e.clientX,
       clickY: e.clientY,
     };
@@ -56,7 +44,7 @@ export default function WidgetListElement({
   };
 
   let str = String(idx);
-  switch (selectedPage.calendarPage.widgetList[idx]!.widgetType) {
+  switch (widgetType) {
     case "Calendar":
       str += ": 달력";
       break;
