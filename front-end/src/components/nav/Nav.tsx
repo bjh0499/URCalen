@@ -16,7 +16,7 @@ import jsonToCalendarPages from "./utils/jsonToCalendarPages";
 import type NormalNavDivButtonInput from "../../class/NormalNavDivButtonInput";
 import type MonthChangeButtonInput from "../../class/MonthChangeButtonInput";
 
-export default function Nav({ setModalOption, selectedPage }) {
+export default function Nav({ setModalOption, selectedPage, reactToPrintFn }) {
   const dispatch = useAppDispatch();
 
   const { selectedMonth, isFront, calendarPageIdx } = selectedPage;
@@ -183,6 +183,10 @@ export default function Nav({ setModalOption, selectedPage }) {
   calendarButtonPropsList.push({
     text: "달력 불러오기",
     clickFunc: handleRestoreCalendar,
+  });
+  calendarButtonPropsList.push({
+    text: "달력 출력",
+    clickFunc: reactToPrintFn,
   });
 
   const userButtonPropsList: Array<NormalNavDivButtonInput> = [];

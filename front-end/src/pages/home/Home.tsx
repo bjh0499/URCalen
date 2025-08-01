@@ -1,5 +1,7 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useRef } from "react";
+
+import { useReactToPrint } from "react-to-print";
 
 import { useAppSelector } from "../../store/hooks";
 
@@ -72,14 +74,22 @@ export default function Home() {
     modalContent = <CopyCalendarMenu setModalOption={setModalOption} />;
   }
 
+  const contentRef = useRef<HTMLDivElement>(null);
+  const reactToPrintFn = useReactToPrint({ contentRef });
+
   return (
     <main className="grow flex-col-center w-full" onClick={handleClick}>
-      <Nav setModalOption={setModalOption} selectedPage={selectedPage} />
+      <Nav
+        setModalOption={setModalOption}
+        selectedPage={selectedPage}
+        reactToPrintFn={reactToPrintFn}
+      />
       <CalendarArea
         selectedPage={selectedPage}
         rightClickPosition={rightClickPosition}
         setRightClickPosition={setRightClickPosition}
         setModalOption={setModalOption}
+        contentRef={contentRef}
       />
       {modalContent}
     </main>

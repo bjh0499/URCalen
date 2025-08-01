@@ -10,12 +10,14 @@ export default function CalendarArea({
   setModalOption,
   rightClickPosition,
   setRightClickPosition,
+  contentRef,
 }) {
   return (
     <article className="flex">
       <WidgetArea
         selectedPage={selectedPage}
         setRightClickPosition={setRightClickPosition}
+        contentRef={contentRef}
       />
       <WidgetSidebar
         selectedPage={selectedPage}
