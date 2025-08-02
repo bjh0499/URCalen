@@ -2,6 +2,7 @@ import React from "react";
 import { useState, useRef } from "react";
 
 import { useReactToPrint } from "react-to-print";
+import html2canvas from "html2canvas";
 
 import { useAppSelector } from "../../store/hooks";
 
@@ -77,12 +78,20 @@ export default function Home() {
   const contentRef = useRef<HTMLDivElement>(null);
   const reactToPrintFn = useReactToPrint({ contentRef });
 
+  const handleImaging = async () => {
+    const element = contentRef.current;
+    const canvas = await html2canvas(element!);
+    const data = canvas.toDataURL("image/png");
+    console.log(data);
+  };
+
   return (
     <main className="grow flex-col-center w-full" onClick={handleClick}>
       <Nav
         setModalOption={setModalOption}
         selectedPage={selectedPage}
         reactToPrintFn={reactToPrintFn}
+        handleImaging={handleImaging}
       />
       <CalendarArea
         selectedPage={selectedPage}
