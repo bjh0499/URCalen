@@ -7,8 +7,10 @@ import { login } from "../../store/slices/authSlice";
 
 import Modal from "../utils/Modal";
 
+import type LoginInput from "../../class/LoginInput";
+
 export default function LoginMenu({ setModalOption }) {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<LoginInput>({
     username: "",
     password: "",
   });

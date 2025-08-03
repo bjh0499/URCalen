@@ -4,8 +4,10 @@ import { useState } from "react";
 import authApi from "../../api/authApi";
 import Modal from "../utils/Modal";
 
+import type SignUpInput from "../../class/SignUpInput";
+
 export default function SignUpMenu({ setModalOption }) {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<SignUpInput>({
     username: "",
     password: "",
     email: "",

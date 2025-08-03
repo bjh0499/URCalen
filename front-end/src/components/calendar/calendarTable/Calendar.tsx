@@ -1,7 +1,7 @@
 import React from "react";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 
-import { Resizable } from "react-resizable";
+import { Resizable, ResizeCallbackData } from "react-resizable";
 import Draggable from "react-draggable";
 
 import CalendarHeader from "../calendarHeader/CalendarHeader";
@@ -26,7 +26,10 @@ export default function Calendar({
   const sizeState = calendarPage.widgetList[calendarKey]!.size;
   const positionState = calendarPage.widgetList[calendarKey]!.position;
 
-  const handleOnResize = (e, { node, size, handle }) => {
+  const handleOnResize = (
+    e: React.SyntheticEvent,
+    { node, size, handle }: ResizeCallbackData
+  ) => {
     const sizeObj = {
       width: size.width,
       height: size.height,
@@ -42,7 +45,10 @@ export default function Calendar({
     dispatch(updateWidget(updateCalendarObj));
   };
 
-  const handleOnResizeStop = (e, { node, size, handle }) => {
+  const handleOnResizeStop = (
+    e: React.SyntheticEvent,
+    { node, size, handle }: ResizeCallbackData
+  ) => {
     const positionObj = {
       x: positionState.x,
       y: positionState.y,
