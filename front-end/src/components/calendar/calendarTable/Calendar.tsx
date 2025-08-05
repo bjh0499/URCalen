@@ -30,16 +30,11 @@ export default function Calendar({
     e: React.SyntheticEvent,
     { node, size, handle }: ResizeCallbackData
   ) => {
-    const sizeObj = {
-      width: size.width,
-      height: size.height,
-    };
-
     const updateCalendarObj: UpdateWidgetInput = {
       idx: calendarPageIdx,
       updateWidgetKey: calendarKey,
       type: "size",
-      newValue: sizeObj,
+      newValue: size,
     };
 
     dispatch(updateWidget(updateCalendarObj));
@@ -75,7 +70,7 @@ export default function Calendar({
     }, 10);
   };
 
-  const handleRightClick = (e) => {
+  const handleRightClick = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
 
     const clickObj = {
@@ -85,7 +80,7 @@ export default function Calendar({
       clickY: e.clientY,
     };
 
-    let element = e.target;
+    let element: HTMLElement | null = e.currentTarget;
 
     do {
       const styleTransform = element.style.transform;
