@@ -3,12 +3,20 @@ import React from "react";
 import CalendarTopCell from "./CalendarTopCell";
 
 import type CalendarOption from "../../../class/CalendarOption";
+import type WidgetSize from "../../../class/WidgetSize";
+import type CalendarPage from "../../../class/CalendarPage";
+
+type CalendarTopRowInput = {
+  calendarKey: number;
+  calendarPage: CalendarPage;
+  sizeState: WidgetSize;
+};
 
 export default function CalendarTopRow({
   calendarKey,
   calendarPage,
   sizeState,
-}) {
+}: CalendarTopRowInput) {
   const calendarThisOption = calendarPage.widgetList[calendarKey]!
     .option as CalendarOption;
   const dayArr =

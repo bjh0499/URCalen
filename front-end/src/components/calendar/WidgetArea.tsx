@@ -6,11 +6,20 @@ import loadHolidays from "../../utils/loadHolidays";
 import Calendar from "./calendarTable/Calendar";
 import ImageComponent from "./imageComponent/ImageComponent";
 
+import type SelectedPage from "../../class/SelectedPage";
+import type ClickPosition from "../../class/ClickPosition";
+
+type WidgetAreaInput = {
+  selectedPage: SelectedPage;
+  setRightClickPosition: React.Dispatch<React.SetStateAction<ClickPosition>>;
+  contentRef: React.RefObject<HTMLDivElement>;
+};
+
 export default function WidgetArea({
   selectedPage,
   setRightClickPosition,
   contentRef,
-}) {
+}: WidgetAreaInput) {
   // TODO: 임시로 공휴일 정보를 해당 함수에서 지정하지만, 실제 배포 시에는 서버에서 받을 방침
   const holidays = loadHolidays();
 

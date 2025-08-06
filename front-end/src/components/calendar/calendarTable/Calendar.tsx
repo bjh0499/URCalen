@@ -2,7 +2,7 @@ import React from "react";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 
 import { Resizable, ResizeCallbackData } from "react-resizable";
-import Draggable from "react-draggable";
+import Draggable, { DraggableData, DraggableEvent } from "react-draggable";
 
 import CalendarHeader from "../calendarHeader/CalendarHeader";
 import CalendarTable from "./CalendarTable";
@@ -10,6 +10,18 @@ import CalendarTable from "./CalendarTable";
 import { updateWidget } from "../../../store/slices/calendarPagesSlice";
 
 import type UpdateWidgetInput from "../../../class/UpdateWidgetInput";
+import type DayObject from "../../../class/DayObject";
+import type CalendarPage from "../../../class/CalendarPage";
+import type ClickPosition from "../../../class/ClickPosition";
+
+type CalendarInput = {
+  calendarKey: number;
+  holidays: DayObject[];
+  selectedMonth: number;
+  calendarPageIdx: number;
+  calendarPage: CalendarPage;
+  setRightClickPosition: React.Dispatch<React.SetStateAction<ClickPosition>>;
+};
 
 export default function Calendar({
   calendarKey,
@@ -18,7 +30,7 @@ export default function Calendar({
   calendarPageIdx,
   calendarPage,
   setRightClickPosition,
-}) {
+}: CalendarInput) {
   const dispatch = useAppDispatch();
 
   const selectedYear = useAppSelector((state) => state.selectedMonth.year);
@@ -28,7 +40,7 @@ export default function Calendar({
 
   const handleOnResize = (
     e: React.SyntheticEvent,
-    { node, size, handle }: ResizeCallbackData
+    { size }: ResizeCallbackData
   ) => {
     const updateCalendarObj: UpdateWidgetInput = {
       idx: calendarPageIdx,
@@ -42,7 +54,7 @@ export default function Calendar({
 
   const handleOnResizeStop = (
     e: React.SyntheticEvent,
-    { node, size, handle }: ResizeCallbackData
+    { size }: ResizeCallbackData
   ) => {
     const positionObj = {
       x: positionState.x,
@@ -73,7 +85,7 @@ export default function Calendar({
   const handleRightClick = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
 
-    const clickObj = {
+    const clickObj: ClickPosition = {
       key: calendarKey,
       type: "Calendar",
       clickX: e.clientX,
@@ -104,7 +116,7 @@ export default function Calendar({
     } while (element);
   };
 
-  const handleDragStop = (e, data) => {
+  const handleDragStop = (e: DraggableEvent, data: DraggableData) => {
     const positionObj = {
       x: data.x,
       y: data.y,

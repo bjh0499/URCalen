@@ -22,7 +22,7 @@ export default function WidgetListElement({
   const dispatch = useAppDispatch();
   const widgetType = selectedPage.calendarPage.widgetList[idx]!.widgetType;
 
-  const handleRightClick = (e) => {
+  const handleRightClick = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
 
     const clickObj = {
@@ -35,11 +35,11 @@ export default function WidgetListElement({
     setRightClickPosition(() => clickObj);
   };
 
-  const handleMouseEnter = (e) => {
+  const handleMouseEnter = (e: React.MouseEvent<HTMLDivElement>) => {
     dispatch(setSelectedWidgetKey(idx));
   };
 
-  const handleMouseLeave = (e) => {
+  const handleMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
     dispatch(resetSelectedWidgetKey());
   };
 

@@ -22,13 +22,13 @@ export default function WidgetSidebar({
     (state) => state.selectedWidget.startWidgetIdx
   );
 
-  const handleWidgetListUpButton = (e) => {
+  const handleWidgetListUpButton = () => {
     if (widgetStartIdx > 0) {
       dispatch(setStartWidgetIdx(widgetStartIdx - 1));
     }
   };
 
-  const handleWidgetListDownButton = (e) => {
+  const handleWidgetListDownButton = () => {
     if (widgetStartIdx < selectedPage.calendarPage.widgetList.length - 10) {
       dispatch(setStartWidgetIdx(widgetStartIdx + 1));
     }
