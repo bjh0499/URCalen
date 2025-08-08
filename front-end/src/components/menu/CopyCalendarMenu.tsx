@@ -6,7 +6,9 @@ import Modal from "../utils/Modal";
 
 import { copyCalendarPage } from "../../store/slices/calendarPagesSlice";
 
-export default function CopyCalendarMenu({ setModalOption }) {
+import type DefaultMenuInput from "../../class/DefaultMenuInput";
+
+export default function CopyCalendarMenu({ setModalOption }: DefaultMenuInput) {
   const dispatch = useAppDispatch();
 
   const [dstMonth, setDstMonth] = useState(0);
@@ -15,7 +17,7 @@ export default function CopyCalendarMenu({ setModalOption }) {
   const srcMonth = useAppSelector((state) => state.selectedMonth.month);
   const srcFront = useAppSelector((state) => state.selectedMonth.front);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const inputData = {
       dstMonth: dstMonth,
@@ -27,11 +29,11 @@ export default function CopyCalendarMenu({ setModalOption }) {
     setModalOption(() => ({}));
   };
 
-  const handleChangeMonth = (e) => {
-    setDstMonth(() => e.target.value);
+  const handleChangeMonth = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setDstMonth(() => Number(e.currentTarget.value));
   };
 
-  const handleChangeFront = (e) => {
+  const handleChangeFront = (e: React.ChangeEvent<HTMLInputElement>) => {
     setDstFront(() => e.target.value === "true");
   };
 

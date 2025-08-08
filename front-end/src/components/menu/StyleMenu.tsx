@@ -4,21 +4,31 @@ import { useAppDispatch } from "../../store/hooks";
 import Modal from "../utils/Modal";
 
 import { updateWidget } from "../../store/slices/calendarPagesSlice";
-import UpdateWidgetInput from "../../class/UpdateWidgetInput";
-import CalendarOption from "../../class/CalendarOption";
 
-export default function StyleMenu({ calendarKey, selectedPage }) {
+import type UpdateWidgetInput from "../../class/UpdateWidgetInput";
+import type CalendarOption from "../../class/CalendarOption";
+import type SelectedPage from "../../class/SelectedPage";
+
+type StyleMenuInput = {
+  calendarKey: number;
+  selectedPage: SelectedPage;
+};
+
+export default function StyleMenu({
+  calendarKey,
+  selectedPage,
+}: StyleMenuInput) {
   const dispatch = useAppDispatch();
 
   const { calendarPageIdx, calendarPage } = selectedPage;
 
-  const handleItemClick = (e) => {
+  const handleItemClick = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
     e.stopPropagation();
 
     const calendarThisOption = calendarPage.widgetList[calendarKey]!
       .option as CalendarOption;
-    let langValue;
+    let langValue: "KO" | "EN";
 
     if (calendarThisOption.lang === undefined) {
       langValue = "EN";
