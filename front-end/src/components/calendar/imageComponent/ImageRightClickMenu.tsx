@@ -1,37 +1,45 @@
 import React from "react";
-import { useAppDispatch, useAppSelector } from "../../../store/hooks";
+import { useAppDispatch } from "../../../store/hooks";
 
 import {
   updateWidget,
   deleteWidget,
 } from "../../../store/slices/calendarPagesSlice";
 
-import DeleteWidgetInput from "../../../class/DeleteWidgetInput";
+import type DeleteWidgetInput from "../../../class/DeleteWidgetInput";
+import type SelectedPage from "../../../class/SelectedPage";
+import type ClickPosition from "../../../class/ClickPosition";
+
+type ImageRightClickMenuInput = {
+  selectedPage: SelectedPage;
+  rightClickPosition: ClickPosition;
+  setRightClickPosition: React.Dispatch<React.SetStateAction<ClickPosition>>;
+};
 
 export default function ImageRightClickMenu({
   selectedPage,
   rightClickPosition,
   setRightClickPosition,
-}) {
+}: ImageRightClickMenuInput) {
   const dispatch = useAppDispatch();
 
   const { calendarPageIdx, calendarPage } = selectedPage;
   const positionState =
-    calendarPage.widgetList[rightClickPosition.key]!.position;
+    calendarPage.widgetList[rightClickPosition.key!]!.position;
 
-  const handleMenuClick = (e) => {
+  const handleMenuClick = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
     e.stopPropagation();
   };
 
-  const handleMenuRightClick = (e) => {
+  const handleMenuRightClick = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
   };
 
   const handleItemClick = () => {
     const deleteObj: DeleteWidgetInput = {
       idx: calendarPageIdx,
-      deleteWidgetKey: rightClickPosition.key,
+      deleteWidgetKey: rightClickPosition.key!,
     };
     dispatch(deleteWidget(deleteObj));
 
@@ -47,7 +55,7 @@ export default function ImageRightClickMenu({
     dispatch(
       updateWidget({
         idx: calendarPageIdx,
-        updateWidgetKey: rightClickPosition.key,
+        updateWidgetKey: rightClickPosition.key!,
         type: "position",
         newValue: positionObj,
       })
@@ -63,7 +71,7 @@ export default function ImageRightClickMenu({
     dispatch(
       updateWidget({
         idx: calendarPageIdx,
-        updateWidgetKey: rightClickPosition.key,
+        updateWidgetKey: rightClickPosition.key!,
         type: "position",
         newValue: positionObj,
       })

@@ -1,42 +1,52 @@
 import React from "react";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 
-import { Resizable } from "react-resizable";
-import Draggable from "react-draggable";
+import { Resizable, ResizeCallbackData } from "react-resizable";
+import Draggable, { DraggableData, DraggableEvent } from "react-draggable";
 
 import { updateWidget } from "../../../store/slices/calendarPagesSlice";
 
 import type UpdateWidgetInput from "../../../class/UpdateWidgetInput";
+import type CalendarPage from "../../../class/CalendarPage";
+import type ClickPosition from "../../../class/ClickPosition";
+
+type ImageComponentInput = {
+  imageId: number;
+  calendarPageIdx: number;
+  calendarPage: CalendarPage;
+  setRightClickPosition: React.Dispatch<React.SetStateAction<ClickPosition>>;
+};
 
 export default function ImageComponent({
   imageId,
   calendarPageIdx,
   calendarPage,
   setRightClickPosition,
-}) {
+}: ImageComponentInput) {
   const dispatch = useAppDispatch();
 
   const imageData = calendarPage.widgetList[imageId]!.data;
   const imagePosition = calendarPage.widgetList[imageId]!.position;
   const imageSize = calendarPage.widgetList[imageId]!.size;
 
-  const handleOnResize = (e, { node, size, handle }) => {
-    const sizeObj = {
-      width: size.width,
-      height: size.height,
-    };
-
+  const handleOnResize = (
+    e: React.SyntheticEvent,
+    { size }: ResizeCallbackData
+  ) => {
     const updateImageObj: UpdateWidgetInput = {
       idx: calendarPageIdx,
       updateWidgetKey: imageId,
       type: "size",
-      newValue: sizeObj,
+      newValue: size,
     };
 
     dispatch(updateWidget(updateImageObj));
   };
 
-  const handleOnResizeStop = (e, { node, size, handle }) => {
+  const handleOnResizeStop = (
+    e: React.SyntheticEvent,
+    { size }: ResizeCallbackData
+  ) => {
     const positionObj = {
       x: imagePosition.x,
       y: imagePosition.y,
@@ -63,17 +73,17 @@ export default function ImageComponent({
     }, 10);
   };
 
-  const handleRightClick = (e) => {
+  const handleRightClick = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
 
-    const clickObj = {
+    const clickObj: ClickPosition = {
       key: imageId,
       type: "Image",
       clickX: e.clientX,
       clickY: e.clientY,
     };
 
-    let element = e.target;
+    let element: HTMLElement | null = e.currentTarget;
 
     do {
       const styleTransform = element.style.transform;
@@ -97,7 +107,7 @@ export default function ImageComponent({
     } while (element);
   };
 
-  const handleDragStop = (e, data) => {
+  const handleDragStop = (e: DraggableEvent, data: DraggableData) => {
     const positionObj = {
       x: data.x,
       y: data.y,

@@ -6,31 +6,43 @@ import {
   updateWidget,
 } from "../../../store/slices/calendarPagesSlice";
 
+import type DeleteWidgetInput from "../../../class/DeleteWidgetInput";
+import type SelectedPage from "../../../class/SelectedPage";
+import type ModalOption from "../../../class/ModalOption";
+import type ClickPosition from "../../../class/ClickPosition";
+
+type CalendarRightClickMenuInput = {
+  selectedPage: SelectedPage;
+  setModalOption: React.Dispatch<React.SetStateAction<ModalOption>>;
+  rightClickPosition: ClickPosition;
+  setRightClickPosition: React.Dispatch<React.SetStateAction<ClickPosition>>;
+};
+
 export default function CalendarRightClickMenu({
   selectedPage,
   rightClickPosition,
   setRightClickPosition,
   setModalOption,
-}) {
+}: CalendarRightClickMenuInput) {
   const dispatch = useAppDispatch();
 
   const { calendarPageIdx, calendarPage } = selectedPage;
   const positionState =
-    calendarPage.widgetList[rightClickPosition.key]!.position;
+    calendarPage.widgetList[rightClickPosition.key!]!.position;
 
-  const handleMenuClick = (e) => {
+  const handleMenuClick = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
     e.stopPropagation();
   };
 
-  const handleMenuRightClick = (e) => {
+  const handleMenuRightClick = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
   };
 
   const handleItemClick = () => {
-    const deleteObj = {
+    const deleteObj: DeleteWidgetInput = {
       idx: calendarPageIdx,
-      deleteWidgetKey: rightClickPosition.key,
+      deleteWidgetKey: rightClickPosition.key!,
     };
     dispatch(deleteWidget(deleteObj));
 
@@ -56,7 +68,7 @@ export default function CalendarRightClickMenu({
     dispatch(
       updateWidget({
         idx: calendarPageIdx,
-        updateWidgetKey: rightClickPosition.key,
+        updateWidgetKey: rightClickPosition.key!,
         type: "position",
         newValue: positionObj,
       })
@@ -72,7 +84,7 @@ export default function CalendarRightClickMenu({
     dispatch(
       updateWidget({
         idx: calendarPageIdx,
-        updateWidgetKey: rightClickPosition.key,
+        updateWidgetKey: rightClickPosition.key!,
         type: "position",
         newValue: positionObj,
       })

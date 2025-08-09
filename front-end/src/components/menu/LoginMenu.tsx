@@ -7,15 +7,18 @@ import { login } from "../../store/slices/authSlice";
 
 import Modal from "../utils/Modal";
 
-export default function LoginMenu({ setModalOption }) {
-  const [formData, setFormData] = useState({
+import type LoginInput from "../../class/LoginInput";
+import type DefaultMenuInput from "../../class/DefaultMenuInput";
+
+export default function LoginMenu({ setModalOption }: DefaultMenuInput) {
+  const [formData, setFormData] = useState<LoginInput>({
     username: "",
     password: "",
   });
 
   const dispatch = useAppDispatch();
 
-  const handleFormInput = (e) => {
+  const handleFormInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
@@ -23,7 +26,7 @@ export default function LoginMenu({ setModalOption }) {
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       const response = await authApi.login(formData);

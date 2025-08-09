@@ -13,15 +13,26 @@ import NormalNavDivButton from "./NormalNavDivButton";
 
 import jsonToCalendarPages from "./utils/jsonToCalendarPages";
 
+import type { UseReactToPrintFn } from "react-to-print";
+
 import type NormalNavDivButtonInput from "../../class/NormalNavDivButtonInput";
 import type MonthChangeButtonInput from "../../class/MonthChangeButtonInput";
+import type ModalOption from "../../class/ModalOption";
+import type SelectedPage from "../../class/SelectedPage";
+
+type NavInput = {
+  setModalOption: React.Dispatch<React.SetStateAction<ModalOption>>;
+  selectedPage: SelectedPage;
+  reactToPrintFn: UseReactToPrintFn;
+  handleImaging: () => Promise<void>;
+}
 
 export default function Nav({
   setModalOption,
   selectedPage,
   reactToPrintFn,
   handleImaging,
-}) {
+} : NavInput) {
   const dispatch = useAppDispatch();
 
   const { selectedMonth, isFront, calendarPageIdx } = selectedPage;
@@ -34,27 +45,28 @@ export default function Nav({
     dispatch(plusYear());
   };
 
-  const handleGlobalOption = (e) => {
+  const handleGlobalOption = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
     setModalOption(() => ({ type: "globalOption" }));
   };
 
-  const handleCopyCalendar = (e) => {
+  const handleCopyCalendar = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
     setModalOption(() => ({ type: "copyCalendar" }));
   };
 
-  const handleAddCalendar = (e) => {
+  const handleAddCalendar = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
     e.stopPropagation();
     dispatch(addWidget({ idx: calendarPageIdx, type: "Calendar" }));
   };
 
-  const handleAddImage = (e) => {
+  const handleAddImage = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
     e.stopPropagation();
-    const addImageProcess = (e) => {
-      const file = e.target.files[0];
+    const addImageProcess = (e: Event) => {
+      const element = e.target as HTMLInputElement
+      const file = element.files![0];
       const reader = new FileReader();
 
       reader.addEventListener("load", () => {
@@ -86,15 +98,17 @@ export default function Nav({
     file.remove();
   };
 
-  const handleSaveCalendar = (e) => {
+  const handleSaveCalendar = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
     setModalOption(() => ({ type: "save" }));
   };
 
   const handleRestoreCalendar = () => {
     // 해당 과정을 state에서 진행 시, illegal operation attempted on a revoked proxy 라는 오류가 발생하므로 이곳에서 실행
-    const restoreProcess = (e) => {
-      const file = e.target.files[0];
+    const restoreProcess = (e: Event
+      ) => {
+      const element = e.target as HTMLInputElement;
+      const file = element.files![0];
       const reader = new FileReader();
 
       reader.addEventListener("load", () => {
@@ -128,12 +142,12 @@ export default function Nav({
     file.remove();
   };
 
-  const login = (e) => {
+  const login = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
     setModalOption(() => ({ type: "login" }));
   };
 
-  const signUp = (e) => {
+  const signUp = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
     setModalOption(() => ({ type: "signup" }));
   };

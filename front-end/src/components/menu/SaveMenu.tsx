@@ -6,14 +6,16 @@ import Modal from "../utils/Modal";
 
 import { saveCalendarPages } from "../../store/slices/calendarPagesSlice";
 
-export default function SaveMenu({ setModalOption }) {
+import type DefaultMenuInput from "../../class/DefaultMenuInput";
+
+export default function SaveMenu({ setModalOption }: DefaultMenuInput) {
   const dispatch = useAppDispatch();
 
   const [formData, setFormData] = useState({
     isPublic: false,
   });
 
-  const handleFormInput = (e) => {
+  const handleFormInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData(() => ({ isPublic: e.target.checked }));
   };
 

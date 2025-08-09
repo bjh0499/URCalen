@@ -4,15 +4,18 @@ import { useState } from "react";
 import authApi from "../../api/authApi";
 import Modal from "../utils/Modal";
 
-export default function SignUpMenu({ setModalOption }) {
-  const [formData, setFormData] = useState({
+import type SignUpInput from "../../class/SignUpInput";
+import type DefaultMenuInput from "../../class/DefaultMenuInput";
+
+export default function SignUpMenu({ setModalOption }: DefaultMenuInput) {
+  const [formData, setFormData] = useState<SignUpInput>({
     username: "",
     password: "",
     email: "",
     nickname: "",
   });
 
-  const handleFormInput = (e) => {
+  const handleFormInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
@@ -20,7 +23,7 @@ export default function SignUpMenu({ setModalOption }) {
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       await authApi.signup(formData);

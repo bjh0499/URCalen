@@ -1,6 +1,16 @@
 import React from "react";
 
 import type CalendarOption from "../../../class/CalendarOption";
+import type CalendarPage from "../../../class/CalendarPage";
+import type WidgetSize from "../../../class/WidgetSize";
+
+type CalendarTopCellInput = {
+  idx: number;
+  calendarKey: number;
+  day: string;
+  calendarPage: CalendarPage;
+  sizeState: WidgetSize;
+};
 
 export default function CalendarTopCell({
   idx,
@@ -8,7 +18,7 @@ export default function CalendarTopCell({
   day,
   calendarPage,
   sizeState,
-}) {
+}: CalendarTopCellInput) {
   const calendarThisOption = calendarPage.widgetList[calendarKey]!
     .option as CalendarOption;
 

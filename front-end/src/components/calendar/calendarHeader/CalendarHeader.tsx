@@ -1,6 +1,14 @@
 import React from "react";
 
-export default function CalendarHeader({ selectedYear, selectedMonth }) {
+type CalendarHeaderInput = {
+  selectedYear: number;
+  selectedMonth: number;
+};
+
+export default function CalendarHeader({
+  selectedYear,
+  selectedMonth,
+}: CalendarHeaderInput) {
   return (
     <div className="flex-center h-1/5 w-full">
       <div className="p-1 text-5xl">

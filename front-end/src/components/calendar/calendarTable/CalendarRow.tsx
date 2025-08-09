@@ -4,7 +4,7 @@ import CalendarCell from "./CalendarCell";
 
 import type DayObject from "../../../class/DayObject";
 import type WidgetSize from "../../../class/WidgetSize";
-import CalendarPage from "../../../class/CalendarPage";
+import type CalendarPage from "../../../class/CalendarPage";
 
 type CalendarRowInput = {
   calendarKey: number;
